@@ -4,6 +4,7 @@ import { MONSTERS } from '../monsters.data';
 export const ADVENTURE_5: Adventure = {
     id: '5',
     levelRange: [10, 11],
+    mapMusic: 'adventure-5/map.mp3',
     encounters: [
         {
             id: '5_1',
@@ -11,12 +12,14 @@ export const ADVENTURE_5: Adventure = {
             coordinates: { x: -200, y: 4300 },
             enemies: [MONSTERS.BLAZE_HYENA, MONSTERS.BLAZE_HYENA, MONSTERS.BLAZE_HYENA],
             unlocksCompanion: 'zahara',
+            battleMusic: 'adventure-5/combat-1.mp3',
         },
         {
             id: '5_2',
             type: EncounterType.BATTLE,
             coordinates: { x: 100, y: 3950 },
             enemies: [MONSTERS.EMBER_LIONESS, MONSTERS.EMBER_LIONESS, MONSTERS.EMBER_LIONESS],
+            battleMusic: 'adventure-5/combat-2.mp3',
         },
         {
             id: '5_3',
@@ -29,12 +32,14 @@ export const ADVENTURE_5: Adventure = {
             type: EncounterType.BATTLE,
             coordinates: { x: -250, y: 2300 },
             enemies: [MONSTERS.SUN_SCORCHED_RHINO, MONSTERS.BLAZE_HYENA, MONSTERS.BLAZE_HYENA],
+            battleMusic: 'adventure-5/combat-1.mp3',
         },
         {
             id: '5_5',
             type: EncounterType.BATTLE,
             coordinates: { x: 200, y: 2400 },
             enemies: [MONSTERS.EMBER_LIONESS, MONSTERS.EMBER_LIONESS, MONSTERS.BLAZE_HYENA, MONSTERS.BLAZE_HYENA],
+            battleMusic: 'adventure-5/combat-2.mp3',
         },
         {
             id: '5_6',
@@ -47,6 +52,7 @@ export const ADVENTURE_5: Adventure = {
             type: EncounterType.BATTLE,
             coordinates: { x: -100, y: 1700 },
             enemies: [MONSTERS.MIRAGE_SPIRIT, MONSTERS.MIRAGE_SPIRIT, MONSTERS.BLAZE_HYENA, MONSTERS.BLAZE_HYENA],
+            battleMusic: 'adventure-5/combat-1.mp3',
         },
         {
             id: '5_8',
@@ -59,6 +65,7 @@ export const ADVENTURE_5: Adventure = {
             type: EncounterType.BATTLE,
             coordinates: { x: -250, y: 1300 },
             enemies: [MONSTERS.SUN_SCORCHED_RHINO, MONSTERS.MIRAGE_SPIRIT, MONSTERS.BLAZE_HYENA, MONSTERS.BLAZE_HYENA],
+            battleMusic: 'adventure-5/combat-2.mp3',
         },
         {
             id: '5_10',
@@ -71,6 +78,7 @@ export const ADVENTURE_5: Adventure = {
             type: EncounterType.BOSS,
             coordinates: { x: 0, y: 600 },
             enemies: [MONSTERS.INFERNO_MANE],
+            battleMusic: 'adventure-5/combat-1.mp3',
         },
         {
             id: '5_12',
