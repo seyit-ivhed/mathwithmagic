@@ -11,6 +11,7 @@ export const ADVENTURE_2: Adventure = {
             type: EncounterType.BATTLE,
             coordinates: { x: -200, y: 700 },
             enemies: [MONSTERS.BANDIT_RAIDER, MONSTERS.BANDIT_RAIDER],
+            battleMusic: 'adventure-2/combat-1.mp3',
         },
         {
             id: '2_2',
@@ -23,6 +24,7 @@ export const ADVENTURE_2: Adventure = {
             type: EncounterType.BATTLE,
             coordinates: { x: 80, y: 1300 },
             enemies: [MONSTERS.BANDIT_RAIDER, MONSTERS.BANDIT_RAIDER, MONSTERS.BANDIT_RAIDER],
+            battleMusic: 'adventure-2/combat-2.mp3',
         },
 
         {
@@ -30,12 +32,14 @@ export const ADVENTURE_2: Adventure = {
             type: EncounterType.BATTLE,
             coordinates: { x: 0, y: 1700 },
             enemies: [MONSTERS.BANDIT_LEADER, MONSTERS.BANDIT_RAIDER, MONSTERS.BANDIT_RAIDER],
+            battleMusic: 'adventure-2/combat-1.mp3',
         },
         {
             id: '2_5',
             type: EncounterType.BATTLE,
             coordinates: { x: 0, y: 2400 },
             enemies: [MONSTERS.STONE_GUARDIAN, MONSTERS.STONE_GUARDIAN],
+            battleMusic: 'adventure-2/combat-2.mp3',
         },
         {
             id: '2_6',
@@ -49,6 +53,7 @@ export const ADVENTURE_2: Adventure = {
             type: EncounterType.BATTLE,
             coordinates: { x: 100, y: 2950 },
             enemies: [MONSTERS.ASSYRIAN_GUARDIAN, MONSTERS.STONE_GUARDIAN],
+            battleMusic: 'adventure-2/combat-1.mp3',
         },
         {
             id: '2_8',
@@ -61,6 +66,7 @@ export const ADVENTURE_2: Adventure = {
             type: EncounterType.BATTLE,
             coordinates: { x: 200, y: 4100 },
             enemies: [MONSTERS.ASSYRIAN_GUARDIAN, MONSTERS.ASSYRIAN_GUARDIAN],
+            battleMusic: 'adventure-2/combat-2.mp3',
         },
 
         {
@@ -68,6 +74,7 @@ export const ADVENTURE_2: Adventure = {
             type: EncounterType.BOSS,
             coordinates: { x: -300, y: 4100 },
             enemies: [MONSTERS.THE_STONE_EMPEROR],
+            battleMusic: 'adventure-2/combat-1.mp3',
         },
         {
             id: '2_11',
