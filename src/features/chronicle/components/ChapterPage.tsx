@@ -50,7 +50,6 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
     const isCompleted = status === AdventureStatus.COMPLETED;
     const illustration = getAdventureIllustration(adventure.id);
 
-    // Only play voiceover if the chapter is active and not locked
     useVoiceOver('chronicles', isActive && !isLocked ? `adventure-${adventure.id}` : '');
 
     return (

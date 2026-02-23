@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAudioStore } from '../stores/audio.store';
+import { useShallow } from 'zustand/react/shallow';
 
 const voiceOverMap = import.meta.glob<string>('/src/assets/voice/**/*.mp3', {
     import: 'default'
@@ -22,6 +23,7 @@ const resolveVoiceOverUrl = async (language: string, category: string, filename:
 export const useVoiceOver = (category: string, filename: string) => {
     const { i18n } = useTranslation();
     const { setVoiceOverPlaying } = useAudioStore();
+    const { volume, isMuted } = useAudioStore(useShallow(s => ({ volume: s.volume, isMuted: s.isMuted })));
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
     useEffect(() => {
@@ -86,8 +88,7 @@ export const useVoiceOver = (category: string, filename: string) => {
             return;
         }
 
-        const store = useAudioStore.getState();
-        audioRef.current.volume = store.volume;
-        audioRef.current.muted = store.isMuted;
-    });
+        audioRef.current.volume = volume;
+        audioRef.current.muted = isMuted;
+    }, [volume, isMuted]);
 };
