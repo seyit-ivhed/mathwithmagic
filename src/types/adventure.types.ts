@@ -40,16 +40,15 @@ export interface MapCoordinates {
 export * from './puzzle.types';
 import type { PuzzleConfig } from './puzzle.types';
 
-// Concept: An encounter is a single node on the map
 export interface Encounter {
     id: string;
     type: EncounterType;
     label?: string;
     coordinates?: MapCoordinates;
-    enemies?: AdventureMonster[]; // If type is BATTLE or BOSS
-    puzzleData?: PuzzleConfig;       // If type is PUZZLE
-    battleMusic?: string;           // Optional specific music for this encounter
-    unlocksCompanion?: string;      // Companion ID that joins when this encounter is started
+    enemies?: AdventureMonster[];
+    puzzleData?: PuzzleConfig;
+    battleMusic?: string;
+    unlocksCompanion?: string;
 
     storyBeat?: {
         text?: string;
@@ -57,21 +56,15 @@ export interface Encounter {
     };
 }
 
-// Adventure: Contains a linear sequence of encounters culminating in a boss fight
 export interface Adventure {
     id: AdventureId;
     title?: string;
-    storyHook?: string;   // Narrative hook for the storybook page
-    completionSummary?: string; // Summary shown after completion
-    illustration?: string; // Thumbnail/Illustration for the storybook page
-    mapImage?: string;     // The background image for the adventure map
-
-    // Background Music
-    mapMusic?: string;     // Music played during map exploration and puzzles
-
-    // The sequence of nodes for this adventure
+    storyHook?: string;
+    illustration?: string;
+    mapImage?: string;
+    mapMusic?: string;
     encounters: Encounter[];
-    levelRange?: [number, number]; // Recommended level range [min, max]
+    levelRange?: [number, number];
     requirements?: {
         minLevel?: number;
         previousAdventureId?: AdventureId;

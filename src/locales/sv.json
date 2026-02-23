@@ -25,8 +25,6 @@
         "1": {
             "title": "Den gömda ingången",
             "story_hook": "Amara är en modig ung utforskare från en avlägsen djungel. Hon reser till öknen för att besöka sin vän Tariq. De ser något konstigt nära den stora stenporten. Tillsammans går de för att undersöka en hemlig grotta som dök upp i sanden.",
-            "completion_summary": "Du besegrade Sandkolossen! Amara och Tariq är nu bästa vänner. De står vid grottingången, redo för sitt nästa äventyr.",
-            "mystery_path": "En mystisk väg in i det okända...",
             "nodes": {
                 "1_1": {
                     "label": "Stickande spanare"
@@ -66,8 +64,6 @@
         "2": {
             "title": "Ashurs ruiner",
             "story_hook": "Amara och Tariq går djupt in i en sval grotta. Där inne hittar de en gammal underjordisk stad som heter Ashur. Men se upp! Banditer gömmer sig i ruinerna, och stenarna rör sig som magi.",
-            "completion_summary": "Stenkejsaren är besegrad! Staden Ashur är säker. Amara och Tariq lovar att utforska hela världen tillsammans och hjälpa alla som behöver det.",
-            "mystery_path": "Djupt inne i ruinerna växer en ny skugga...",
             "nodes": {
                 "2_1": {
                     "label": "Banditutkik"
@@ -107,8 +103,6 @@
         "3": {
             "title": "De dimmiga fotbergen",
             "story_hook": "Amara och Tariq klättrar upp för de kalla bergstopparna. De träffar Kenji, en pojke med ett träsvärd. Han behöver hjälp! Elaka ninjor och en mörk dimma tar över hans berghem.",
-            "completion_summary": "Bra jobbat! Skurkarna sprang iväg och dimman är borta för stunden. Kenji bugar för att säga tack. Vägen upp för berget är säker igen.",
-            "mystery_path": "Stigen leder högre upp i de frusna höjderna...",
             "nodes": {
                 "3_1": {
                     "label": "Bambudungens bakhåll"
@@ -145,8 +139,6 @@
         "4": {
             "title": "Skuggmästarens uppgång",
             "story_hook": "Dimman lättar och våra hjältar ser en stor fästning. Skuggmästaren bor där! Du måste smyga förbi vakterna och lösa pussel för att öppna portarna.",
-            "completion_summary": "Du klarade det! Skuggmästaren är borta. Fästningen är tyst och bergstopparna är fria.",
-            "mystery_path": "Fästningen tornar upp sig framför er...",
             "nodes": {
                 "4_1": {
                     "label": "Skuggspanare"
@@ -189,8 +181,6 @@
         "5": {
             "title": "De Svedda Slätterna",
             "story_hook": "Amara, Tariq och Kenji reser till de Svedda Slätterna och träffar Zahara. Det är väldigt varmt här! Lejonen beter sig konstigt och andarna är upprörda. Zahara måste använda sin magi för att laga slätterna.",
-            "completion_summary": "Inferno-Man lugnar ner sig. Elden i hans ögon försvinner. Lejonen bugar för Zahara. Hettan svalnar och regnet är på väg.",
-            "mystery_path": "Horisonten brinner med en ny utmaning...",
             "nodes": {
                 "5_1": {
                     "label": "Plundrarens läger"
@@ -233,8 +223,6 @@
         "6": {
             "title": "Andevärlden",
             "story_hook": "Vännerna går in i Andevärlden. En mörk magi har tagit över Andekonungen och gjort honom vild och arg! Du måste strida mot honom för att bryta förtrollningen och laga världen.",
-            "completion_summary": "Du klarade det! Den mörka magin är bruten och Andekonungen är fri. Amara och hennes vänner har räddat dagen!",
-            "mystery_path": "Andarna viskar om ännu större prövningar...",
             "nodes": {
                 "6_1": {
                     "label": "Tomma skal"
