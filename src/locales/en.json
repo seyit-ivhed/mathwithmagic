@@ -314,13 +314,13 @@
         "reset": "Reset",
         "success": "Success!",
         "sequence": {
-            "instruction": "Connect the stars in order!"
+            "instruction": "Connect the stars in the correct order!"
         },
         "refill_canteen": {
             "instruction": "Refill your canteen by choosing the right amount of water"
         },
         "balance": {
-            "instruction": "Make both piles weigh the same!"
+            "instruction": "Make both piles of stones weigh equal!"
         },
         "number_path": {
             "instruction": "Create a continuous path by filling in the numbers!"
