@@ -105,7 +105,6 @@
 
 .instructionText {
     font-size: 1.2rem;
-    /* Reduced slightly to fit button better */
     color: var(--color-chronicle-text);
     margin: 0;
     line-height: 1.6;

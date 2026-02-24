@@ -66,13 +66,12 @@ const PuzzlePage = () => {
     const adventure = ADVENTURES.find(a => a.id === adventureId);
     const encounter = adventure?.encounters[nodeIndex - 1];
 
-    // Dynamically generate puzzle values based on difficulty
+
     const puzzleData = useMemo(() => {
         const pType = encounter?.puzzleData?.puzzleType;
         if (!pType) {
             return null;
         }
-        // Prefer explicit encounter difficulty if set, fallback to player preference
         const currentDifficulty = activeEncounterDifficulty as DifficultyLevel;
         return generatePuzzleData(pType, currentDifficulty);
     }, [encounter, activeEncounterDifficulty]);
@@ -119,15 +118,12 @@ const PuzzlePage = () => {
     if (!encounter || !puzzleData || !puzzleDef) {
         return (
             <div className={styles.errorContainer}>
-                <h2>{t('puzzle.not_found', 'Puzzle Not Found')}</h2>
-                <div style={{ margin: '1rem', color: '#666' }}>
-                    {`Node Index: ${nodeIndex}`}
-                </div>
+                <h2>{t('puzzle.not_found')}</h2>
                 <button
                     className={styles.backButton}
                     onClick={() => navigate(`/map/${adventureId}`)}
                 >
-                    {t('back_to_map', 'Back to Map')}
+                    {t('common.back_to_map')}
                 </button>
             </div>
         );
@@ -168,8 +164,6 @@ const PuzzlePage = () => {
                 />
             </main>
 
-
-            {/* Completion Modal */}
             {isCompleted && (
                 <EncounterCompletionModal
                     result="VICTORY"
