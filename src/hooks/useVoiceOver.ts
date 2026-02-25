@@ -27,6 +27,10 @@ export const useVoiceOver = (category: string, filename: string, replayKey?: num
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
     useEffect(() => {
+        if (!category && !filename) {
+            return;
+        }
+
         if (!category) {
             console.error('useVoiceOver: category is required');
             return;

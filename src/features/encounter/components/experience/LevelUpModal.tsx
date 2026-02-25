@@ -6,6 +6,7 @@ import styles from './LevelUpModal.module.css';
 import type { Companion } from '../../../../types/companion.types';
 import { getStatsForLevel } from '../../../../utils/progression.utils';
 import { getCompanionLevelUpImage } from '../../../../data/companion-sprites';
+import { useVoiceOver } from '../../../../hooks/useVoiceOver';
 
 interface LevelUpModalProps {
     companion: Companion;
@@ -22,6 +23,13 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({ companion, onConfirm
     // Detect evolution
     const isEvolution = !!companion.evolutions.find(e => e.atLevel === nextLevel);
     const [evolutionStage, setEvolutionStage] = useState<EvolutionStage>(isEvolution ? 'pre' : 'post');
+
+    // Voice Over Logic
+    const evolutionIndex = companion.stats?.evolutionIndex;
+    const categoryName = `companions/${companion.id}/evolution-${evolutionIndex}`;
+
+    // Play the voiceover once when the modal is mounted
+    useVoiceOver(categoryName, 'level-up');
 
     // Stats calculation
     const currentStats = companion.stats || getStatsForLevel(companion, currentLevel);

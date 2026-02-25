@@ -19,6 +19,8 @@ import './EncounterPage.css';
 import { ExperienceDistributionScreen } from './components/experience/ExperienceDistributionScreen';
 import { useEncounterNavigation } from './hooks/useEncounterNavigation';
 import { useEncounterInitializer } from './hooks/useEncounterInitializer';
+import { useVoiceOver } from '../../hooks/useVoiceOver';
+import { COMPANIONS } from '../../data/companions.data';
 
 const EncounterPage = () => {
     const { t } = useTranslation();
@@ -53,6 +55,15 @@ const EncounterPage = () => {
         unitId: string;
         targetId?: string;
     } | null>(null);
+
+    const [voiceOverData, setVoiceOverData] = useState<{
+        category: string;
+        filename: string;
+        replayKey: number;
+    } | null>(null);
+
+    // Call the voice over hook with the state
+    useVoiceOver(voiceOverData?.category || '', voiceOverData?.filename || '', voiceOverData?.replayKey);
 
     // Sync alive monsters but delay removal of dead ones for animations
     const visibleMonsterIds = useDelayedUnitRemoval(monsters);
@@ -101,6 +112,29 @@ const EncounterPage = () => {
 
     const handleChallengeComplete = (success: boolean) => {
         if (!activeChallenge) return;
+
+        // Play Success or Failure Voice Over
+        const unitId = activeChallenge.unitId;
+        const liveUnit = party.find(u => u.id === unitId);
+        const matchingCompanion = liveUnit ? COMPANIONS[liveUnit.templateId] : null;
+
+        if (matchingCompanion && liveUnit) {
+            const evolutionIndex = liveUnit.evolutionIndex || matchingCompanion.baseStats.evolutionIndex;
+            const category = `companions/${matchingCompanion.id}/evolution-${evolutionIndex}`;
+
+            let filename = 'failure';
+            if (success) {
+                // Randomly choose 1, 2, 3, or 4 for success Voice Over
+                const randomIndex = Math.floor(Math.random() * 4) + 1;
+                filename = `success/${randomIndex}`;
+            }
+
+            setVoiceOverData(prev => ({
+                category,
+                filename,
+                replayKey: (prev?.replayKey || 0) + 1
+            }));
+        }
 
         if (success) {
             const { type, targetId } = getVFXDetails(activeChallenge.unitId, party, monsters);

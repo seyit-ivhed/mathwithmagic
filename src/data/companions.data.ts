@@ -14,7 +14,8 @@ export const COMPANIONS: Record<string, Companion> = {
         level: 1,
         baseStats: {
             maxHealth: 75,
-            abilityDamage: 8
+            abilityDamage: 8,
+            evolutionIndex: 1
         },
         specialAbility: {
             id: 'precision_shot',
@@ -26,6 +27,7 @@ export const COMPANIONS: Record<string, Companion> = {
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_1,
                 title: 'companions.amara.evolution_1',
+                evolutionIndex: 2,
                 statsBonus: {
                     maxHealth: 15,
                     abilityDamage: 4
@@ -38,6 +40,7 @@ export const COMPANIONS: Record<string, Companion> = {
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_2,
                 title: 'companions.amara.evolution_2',
+                evolutionIndex: 3,
                 statsBonus: {
                     maxHealth: 20,
                     abilityDamage: 6
@@ -50,6 +53,7 @@ export const COMPANIONS: Record<string, Companion> = {
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_3,
                 title: 'companions.amara.evolution_3',
+                evolutionIndex: 4,
                 statsBonus: {
                     maxHealth: 30,
                     abilityDamage: 10
@@ -68,7 +72,8 @@ export const COMPANIONS: Record<string, Companion> = {
         level: 1,
         baseStats: {
             maxHealth: 85,
-            abilityDamage: 5
+            abilityDamage: 5,
+            evolutionIndex: 1
         },
         specialAbility: {
             id: 'elixir_of_life',
@@ -80,6 +85,7 @@ export const COMPANIONS: Record<string, Companion> = {
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_1,
                 title: 'companions.tariq.evolution_1',
+                evolutionIndex: 2,
                 statsBonus: {
                     maxHealth: 15,
                     abilityDamage: 3
@@ -92,6 +98,7 @@ export const COMPANIONS: Record<string, Companion> = {
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_2,
                 title: 'companions.tariq.evolution_2',
+                evolutionIndex: 3,
                 statsBonus: {
                     maxHealth: 20,
                     abilityDamage: 4
@@ -104,6 +111,7 @@ export const COMPANIONS: Record<string, Companion> = {
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_3,
                 title: 'companions.tariq.evolution_3',
+                evolutionIndex: 4,
                 statsBonus: {
                     maxHealth: 30,
                     abilityDamage: 6
@@ -122,7 +130,8 @@ export const COMPANIONS: Record<string, Companion> = {
         level: 1,
         baseStats: {
             maxHealth: 100,
-            abilityDamage: 7
+            abilityDamage: 7,
+            evolutionIndex: 1
         },
         specialAbility: {
             id: 'blade_barrier',
@@ -134,6 +143,7 @@ export const COMPANIONS: Record<string, Companion> = {
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_1,
                 title: 'companions.kenji.evolution_1',
+                evolutionIndex: 2,
                 statsBonus: {
                     maxHealth: 20,
                     abilityDamage: 3
@@ -146,6 +156,7 @@ export const COMPANIONS: Record<string, Companion> = {
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_2,
                 title: 'companions.kenji.evolution_2',
+                evolutionIndex: 3,
                 statsBonus: {
                     maxHealth: 25,
                     abilityDamage: 4
@@ -158,6 +169,7 @@ export const COMPANIONS: Record<string, Companion> = {
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_3,
                 title: 'companions.kenji.evolution_3',
+                evolutionIndex: 4,
                 statsBonus: {
                     maxHealth: 35,
                     abilityDamage: 5
@@ -176,7 +188,8 @@ export const COMPANIONS: Record<string, Companion> = {
         level: 1,
         baseStats: {
             maxHealth: 70,
-            abilityDamage: 8
+            abilityDamage: 8,
+            evolutionIndex: 1
         },
         specialAbility: {
             id: 'ancestral_storm',
@@ -188,6 +201,7 @@ export const COMPANIONS: Record<string, Companion> = {
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_1,
                 title: 'companions.zahara.evolution_1',
+                evolutionIndex: 2,
                 statsBonus: {
                     maxHealth: 10,
                     abilityDamage: 5
@@ -200,6 +214,7 @@ export const COMPANIONS: Record<string, Companion> = {
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_2,
                 title: 'companions.zahara.evolution_2',
+                evolutionIndex: 3,
                 statsBonus: {
                     maxHealth: 15,
                     abilityDamage: 7
@@ -212,6 +227,7 @@ export const COMPANIONS: Record<string, Companion> = {
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_3,
                 title: 'companions.zahara.evolution_3',
+                evolutionIndex: 4,
                 statsBonus: {
                     maxHealth: 20,
                     abilityDamage: 10

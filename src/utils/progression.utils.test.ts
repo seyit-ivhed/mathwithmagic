@@ -1,9 +1,8 @@
-import { describe, it, expect } from 'vitest';
 import { getStatsForLevel, calculateAdventureStars, canEarnExperience, getEvolutionAtLevel } from './progression.utils';
 import type { Companion } from '../types/companion.types';
 import { EncounterType, type Encounter } from '../types/adventure.types';
 import type { EncounterResult } from '../stores/game/interfaces';
-import { vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
 describe('progression.utils', () => {
     beforeEach(() => {
@@ -19,7 +18,8 @@ describe('progression.utils', () => {
             name: 'Test',
             baseStats: {
                 maxHealth: 100,
-                abilityDamage: 10
+                abilityDamage: 10,
+                evolutionIndex: 1
             },
             specialAbility: {
                 id: 'test_ultimate',
@@ -33,6 +33,7 @@ describe('progression.utils', () => {
             expect(stats.maxHealth).toBe(100);
             expect(stats.abilityDamage).toBe(10);
             expect(stats.specialAbilityVariables!.damage).toBe(50);
+            expect(stats.evolutionIndex).toBe(1);
         });
 
         it('should scale stats linearly (10% per level)', () => {
@@ -41,6 +42,7 @@ describe('progression.utils', () => {
             expect(stats.maxHealth).toBe(110);
             expect(stats.abilityDamage).toBe(11);
             expect(stats.specialAbilityVariables!.damage).toBe(55);
+            expect(stats.evolutionIndex).toBe(1);
         });
 
         it('should handle level 10 scaling', () => {
@@ -49,6 +51,7 @@ describe('progression.utils', () => {
             expect(stats.maxHealth).toBe(190);
             expect(stats.abilityDamage).toBe(19);
             expect(stats.specialAbilityVariables!.damage).toBe(95);
+            expect(stats.evolutionIndex).toBe(1);
         });
 
         it('should apply evolution bonuses', () => {
@@ -58,6 +61,7 @@ describe('progression.utils', () => {
                     {
                         atLevel: 5,
                         title: 'Evolved',
+                        evolutionIndex: 2,
                         statsBonus: {
                             maxHealth: 20,
                             abilityDamage: 5
@@ -72,10 +76,12 @@ describe('progression.utils', () => {
             // Lvl 4: 1 + 0.3 = 1.3 -> 130 HP, 13 DMG
             expect(statsLvl4.maxHealth).toBe(130);
             expect(statsLvl4.abilityDamage).toBe(13);
+            expect(statsLvl4.evolutionIndex).toBe(1);
 
             // Lvl 5: 1 + 0.4 = 1.4 -> 140 HP + 20 = 160 HP, 14 DMG + 5 = 19 DMG
             expect(statsLvl5.maxHealth).toBe(160);
             expect(statsLvl5.abilityDamage).toBe(19);
+            expect(statsLvl5.evolutionIndex).toBe(2);
         });
         it('should throw error if companion is missing', () => {
             expect(() => getStatsForLevel(null as unknown as Companion, 1)).toThrow('Companion is required');
@@ -110,7 +116,7 @@ describe('progression.utils', () => {
         it('should handle missing abilityDamage in baseStats', () => {
             const companionNoDamage = {
                 ...mockCompanion,
-                baseStats: { maxHealth: 100 }
+                baseStats: { maxHealth: 100, evolutionIndex: 1 }
             } as unknown as Companion;
 
             const stats = getStatsForLevel(companionNoDamage, 2);
@@ -124,6 +130,7 @@ describe('progression.utils', () => {
                     {
                         atLevel: 2,
                         title: 'Partial Evolved',
+                        evolutionIndex: 2,
                         statsBonus: {}
                     }
                 ]
@@ -133,6 +140,7 @@ describe('progression.utils', () => {
             // 1.1 scaling -> 110 HP, 11 DMG. No bonus added.
             expect(stats.maxHealth).toBe(110);
             expect(stats.abilityDamage).toBe(11);
+            expect(stats.evolutionIndex).toBe(2);
         });
 
         it('should handle multiple evolutions and new special abilities', () => {
@@ -142,11 +150,13 @@ describe('progression.utils', () => {
                     {
                         atLevel: 5,
                         title: 'Evo 1',
+                        evolutionIndex: 2,
                         statsBonus: { maxHealth: 10 }
                     },
                     {
                         atLevel: 10,
                         title: 'Evo 2',
+                        evolutionIndex: 3,
                         newSpecialAbility: { id: 'super_ability', variables: { power: 100 } },
                         statsBonus: { maxHealth: 50 }
                     }
@@ -160,6 +170,7 @@ describe('progression.utils', () => {
             expect(stats.title).toBe('Evo 2');
             expect(stats.specialAbilityId).toBe('super_ability');
             expect(stats.specialAbilityVariables!.power).toBe(190);
+            expect(stats.evolutionIndex).toBe(3);
         });
 
         it('should handle special ability with no variables', () => {
@@ -172,6 +183,8 @@ describe('progression.utils', () => {
             expect(stats.specialAbilityVariables).toEqual({});
         });
     });
+
+
 
     describe('getEvolutionAtLevel', () => {
         const mockCompanion = {

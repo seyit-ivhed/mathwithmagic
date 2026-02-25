@@ -45,6 +45,7 @@ export interface EncounterUnit extends BattleUnit {
     // Visuals
     image?: string;
     isBoss?: boolean;
+    evolutionIndex?: number;
 }
 
 export interface EncounterState {

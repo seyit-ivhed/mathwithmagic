@@ -9,11 +9,13 @@ export interface CompanionStats {
     abilityDamage?: number;
     specialAbilityId?: string;
     specialAbilityVariables?: Record<string, number>;
+    evolutionIndex: number;
 }
 
 export interface CompanionEvolution {
     atLevel: number;
     title: string;
+    evolutionIndex: number;
     image?: string;
     statsBonus?: Partial<CompanionStats>;
     newSpecialAbility?: SpecialAbility;
