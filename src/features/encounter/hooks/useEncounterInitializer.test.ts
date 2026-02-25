@@ -19,6 +19,7 @@ vi.mock('react-i18next', () => ({
 function mockEncounterStore(overrides: Partial<EncounterStore> = {}) {
     vi.mocked(useEncounterStore).mockReturnValue({
         initializeEncounter: mockInitializeEncounter,
+        resetEncounter: mockResetEncounter,
         party: [],
         monsters: [],
         nodeIndex: 0,
@@ -42,6 +43,7 @@ function mockBuildData(overrides: Partial<BattleEncounterData> | null = {}) {
 }
 
 const mockInitializeEncounter = vi.fn();
+const mockResetEncounter = vi.fn();
 
 describe('useEncounterInitializer', () => {
     beforeEach(() => {

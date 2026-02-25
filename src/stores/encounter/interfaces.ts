@@ -3,6 +3,7 @@ import type { AdventureMonster } from '../../types/adventure.types';
 
 export interface EncounterFlowSlice {
     initializeEncounter: (partyIds: string[], enemies: AdventureMonster[], nodeIndex: number, difficulty: number, companionStats: Record<string, { level: number }>) => void;
+    resetEncounter: () => void;
     endPlayerTurn: () => void;
     processMonsterTurn: () => void;
 }
