@@ -24,11 +24,8 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({ companion, onConfirm
     const isEvolution = !!companion.evolutions.find(e => e.atLevel === nextLevel);
     const [evolutionStage, setEvolutionStage] = useState<EvolutionStage>(isEvolution ? 'pre' : 'post');
 
-    // Voice Over Logic
     const evolutionIndex = companion.stats?.evolutionIndex;
     const categoryName = `companions/${companion.id}/evolution-${evolutionIndex}`;
-
-    // Play the voiceover once when the modal is mounted
     useVoiceOver(categoryName, 'level-up');
 
     // Stats calculation

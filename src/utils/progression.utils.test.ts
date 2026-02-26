@@ -184,8 +184,6 @@ describe('progression.utils', () => {
         });
     });
 
-
-
     describe('getEvolutionAtLevel', () => {
         const mockCompanion = {
             evolutions: [

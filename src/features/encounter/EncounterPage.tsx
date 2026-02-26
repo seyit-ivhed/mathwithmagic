@@ -62,7 +62,6 @@ const EncounterPage = () => {
         replayKey: number;
     } | null>(null);
 
-    // Call the voice over hook with the state
     useVoiceOver(voiceOverData?.category || '', voiceOverData?.filename || '', voiceOverData?.replayKey);
 
     // Sync alive monsters but delay removal of dead ones for animations
@@ -124,7 +123,6 @@ const EncounterPage = () => {
 
             let filename = 'failure';
             if (success) {
-                // Randomly choose 1, 2, 3, or 4 for success Voice Over
                 const randomIndex = Math.floor(Math.random() * 4) + 1;
                 filename = `success/${randomIndex}`;
             }
