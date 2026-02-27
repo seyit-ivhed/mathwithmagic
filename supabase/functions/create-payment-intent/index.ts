@@ -88,8 +88,8 @@ export const handler = async (req: Request) => {
         }
 
         if (existingEntitlement) {
-            return new Response(JSON.stringify({ error: 'You already own this content.' }), {
-                status: 400,
+            return new Response(JSON.stringify({ alreadyOwned: true }), {
+                status: 200,
                 headers: { ...headers, 'Content-Type': 'application/json' },
             })
         }
@@ -128,13 +128,40 @@ export const handler = async (req: Request) => {
             const diffHours = (now.getTime() - createdDate.getTime()) / (1000 * 60 * 60)
 
             if (diffHours < 24) {
-                console.log('Reusing existing pending intent:', existingIntent.stripe_payment_intent_id)
+                console.log('Fetching status of existing intent:', existingIntent.stripe_payment_intent_id)
                 const intent = await stripe.paymentIntents.retrieve(existingIntent.stripe_payment_intent_id)
 
-                return new Response(
-                    JSON.stringify({ clientSecret: intent.client_secret }),
-                    { headers: { ...headers, 'Content-Type': 'application/json' } }
-                )
+                if (intent.status === 'succeeded') {
+                    // The webhook might have failed, but Stripe got the money. Self-heal.
+                    await supabaseAdmin.from('purchase_intents')
+                        .update({ status: 'succeeded', updated_at: new Date().toISOString() })
+                        .eq('id', existingIntent.id)
+
+                    await supabaseAdmin.from('player_entitlements')
+                        .upsert({
+                            player_id: profile.id,
+                            content_pack_id: contentPackId,
+                            purchase_intent_id: existingIntent.id,
+                        }, { onConflict: 'player_id, content_pack_id' })
+
+                    return new Response(JSON.stringify({ alreadyOwned: true }), {
+                        status: 200,
+                        headers: { ...headers, 'Content-Type': 'application/json' },
+                    })
+                }
+
+                if (intent.status === 'canceled') {
+                    // Update DB and fall through to create a new intent
+                    await supabaseAdmin.from('purchase_intents')
+                        .update({ status: 'canceled', updated_at: new Date().toISOString() })
+                        .eq('id', existingIntent.id)
+                } else {
+                    console.log('Reusing existing pending intent:', existingIntent.stripe_payment_intent_id)
+                    return new Response(
+                        JSON.stringify({ clientSecret: intent.client_secret }),
+                        { headers: { ...headers, 'Content-Type': 'application/json' } }
+                    )
+                }
             } else {
                 // Mark as abandoned if too old
                 await supabaseAdmin

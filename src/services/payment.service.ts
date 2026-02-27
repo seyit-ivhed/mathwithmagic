@@ -26,9 +26,9 @@ export class PaymentService {
     /**
      * Create a Payment Intent via Supabase Edge Function.
      * @param contentPackId The ID of the content pack to purchase (e.g., 'premium_base')
-     * @returns The client secret to initialize Stripe Elements
+     * @returns The client secret to initialize Stripe Elements or an alreadyOwned status.
      */
-    static async createPaymentIntent(contentPackId: string): Promise<{ clientSecret: string }> {
+    static async createPaymentIntent(contentPackId: string): Promise<{ clientSecret?: string, alreadyOwned?: boolean }> {
         const { data, error } = await supabase.functions.invoke('create-payment-intent', {
             body: { contentPackId },
         });

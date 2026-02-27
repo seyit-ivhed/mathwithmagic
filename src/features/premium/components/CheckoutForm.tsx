@@ -18,6 +18,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
     const elements = useElements();
     const [isProcessing, setIsProcessing] = useState(false);
     const [isVerifying, setIsVerifying] = useState(false);
+    const [paymentSucceeded, setPaymentSucceeded] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const verifyEntitlement = async (): Promise<boolean> => {
@@ -86,6 +87,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
                         setErrorMessage(t('premium.store.verification_timeout', 'Payment succeeded, but we are still processing your access. It will appear in your account shortly.'));
                         setIsProcessing(false);
                         setIsVerifying(false);
+                        setPaymentSucceeded(true);
                     }
                 } else {
                     console.warn('Payment intent status is not succeeded:', paymentIntent.status);
@@ -143,7 +145,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
                     type="submit"
                     variant="gold"
                     radiate={true}
-                    disabled={isProcessing || !stripe || !elements}
+                    disabled={isProcessing || !stripe || !elements || paymentSucceeded}
                     style={{ width: '100%' }}
                 >
                     {isProcessing ? t('common.processing', 'Processing...') : t('premium.store.buy_now')}

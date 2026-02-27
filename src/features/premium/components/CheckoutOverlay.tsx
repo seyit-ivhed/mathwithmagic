@@ -32,14 +32,22 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
         lastFetchedIdRef.current = contentPackId;
         PaymentService.createPaymentIntent(contentPackId)
             .then(data => {
-                setClientSecret(data.clientSecret);
+                if (data.alreadyOwned) {
+                    onSuccess();
+                    return;
+                }
+                if (data.clientSecret) {
+                    setClientSecret(data.clientSecret);
+                } else {
+                    throw new Error('No client secret returned');
+                }
             })
             .catch(err => {
                 console.error('Failed to create payment intent:', err);
                 lastFetchedIdRef.current = null; // Reset on error to allow retry
                 setError(t('premium.store.error_loading_payment', 'Failed to initialize payment. Please try again.'));
             });
-    }, [contentPackId, t]);
+    }, [contentPackId, onSuccess, t]);
 
     if (error) {
         return (
