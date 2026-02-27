@@ -1,119 +1,3 @@
-/* Encounter Page Styles */
-
-.container {
-    min-height: 100vh;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    transition: background-image 0.5s ease-in-out;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    /* Header, Body, Footer/Action */
-    grid-template-columns: 1fr;
-    overflow: hidden;
-    /* Prevent scrolling if possible */
-}
-
-.encounterBody {
-    display: grid;
-    grid-template-columns: 1fr minmax(200px, auto) 1fr;
-    /* Player Area, VS/Effect Area, Enemy Area */
-    gap: 2rem;
-    padding: 0 4rem;
-    align-items: center;
-    width: 100%;
-    max-width: 1800px;
-    margin: 0 auto;
-    height: 100%;
-}
-
-.arena {
-    display: contents;
-    width: 100%;
-}
-
-.playerZone {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    align-items: flex-start;
-    /* Align to left/center depending on taste */
-    justify-content: center;
-    height: 100%;
-    padding-left: 2rem;
-}
-
-.enemyZone {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    align-items: flex-end;
-    /* Align to right */
-    justify-content: center;
-    height: 100%;
-    padding-right: 2rem;
-}
-
-.centerZone {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.encounterParticipant {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.playerShip {
-    width: 200px;
-    height: 140px;
-    background: #4A90E2;
-    clip-path: polygon(0 0, 100% 50%, 0 100%);
-    filter: drop-shadow(0 0 20px rgba(74, 144, 226, 0.4));
-    transition: transform 0.3s ease;
-}
-
-.enemyShip {
-    width: 180px;
-    height: 180px;
-    background: var(--color-ui-error);
-    border-radius: 50%;
-    filter: drop-shadow(0 0 20px rgba(239, 68, 68, 0.4));
-    transition: transform 0.3s ease;
-}
-
-.vsText {
-    font-size: 4rem;
-    font-weight: 900;
-    color: rgba(74, 55, 33, 0.15);
-    font-style: italic;
-}
-
-.controls {
-    background: rgba(10, 14, 39, 0.9);
-    padding: 2rem;
-    border-radius: 16px;
-    border: 2px solid var(--color-accent-primary);
-    text-align: center;
-}
-
-.actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    margin-top: 1rem;
-}
-
-.lockedButton {
-    opacity: 0.5;
-}
-
-/* Spotlight Overlay */
 .spotlightContainer {
     position: fixed;
     top: 0;
@@ -121,7 +5,6 @@
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.85);
-    /* Dimmed */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -131,11 +14,9 @@
 }
 
 .spotlightCardWrapper {
-    /* Initial scale will be handled by popIn, end state is scale(2.2) */
     transform: scale(2.2);
     filter: drop-shadow(0 0 50px rgba(255, 215, 0, 0.5));
     animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    /* Enable pointer events for children */
     pointer-events: auto;
 }
 
@@ -159,48 +40,4 @@
         transform: scale(2.2);
         opacity: 1;
     }
-}
-
-/* End Screens */
-.endScreen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    backdrop-filter: blur(8px);
-}
-
-.endScreenContent {
-    background: var(--color-bg-card);
-    padding: 4rem;
-    border-radius: 24px;
-    border: 3px solid var(--color-accent-primary);
-    text-align: center;
-    min-width: 600px;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
-}
-
-.endScreenContent h2 {
-    font-size: 4rem;
-    margin-bottom: 1.5rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.endScreenContent p {
-    font-size: 1.5rem;
-    margin-bottom: 3rem;
-    color: var(--color-text-secondary);
-}
-
-.endScreenContent button {
-    margin: 0.5rem;
-    font-size: 1.2rem;
-    padding: 1rem 2rem;
 }

@@ -15,6 +15,7 @@ import { LatinSquarePuzzle } from './puzzles/latin-square/LatinSquarePuzzle';
 import { NumberPathPuzzle } from './puzzles/number-path/NumberPathPuzzle';
 import { EquationPuzzle } from './puzzles/equation/EquationPuzzle';
 import { EncounterCompletionModal } from './components/EncounterCompletionModal';
+import { PrimaryButton } from '../../components/ui/PrimaryButton';
 import { useVoiceOver } from '../../hooks/useVoiceOver';
 import { Header } from '../../components/Header';
 import styles from './PuzzlePage.module.css';
@@ -120,15 +121,15 @@ const PuzzlePage = () => {
         return (
             <div className={styles.errorContainer}>
                 <h2>{t('puzzle.not_found')}</h2>
-                <button
-                    className={styles.backButton}
+                <PrimaryButton
                     onClick={() => navigate(`/map/${adventureId}`)}
                 >
                     {t('common.back_to_map')}
-                </button>
+                </PrimaryButton>
             </div>
         );
     }
+
 
     const { Component: PuzzleComponent } = puzzleDef;
 

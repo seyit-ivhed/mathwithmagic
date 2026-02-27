@@ -6,7 +6,9 @@ interface HeaderProps {
     leftIcon?: ReactNode;
     onLeftClick?: () => void;
     leftAriaLabel?: string;
+    leftTestId?: string;
     title?: string | ReactNode;
+    titleTestId?: string;
     rightContent?: ReactNode;
     className?: string;
 }
@@ -14,8 +16,10 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
     leftIcon,
     onLeftClick,
-    leftAriaLabel = 'Back',
+    leftAriaLabel,
+    leftTestId,
     title,
+    titleTestId,
     rightContent,
     className = ''
 }) => {
@@ -28,6 +32,7 @@ export const Header: React.FC<HeaderProps> = ({
                         onClick={onLeftClick}
                         aria-label={leftAriaLabel}
                         title={leftAriaLabel}
+                        data-testid={leftTestId}
                     >
                         {leftIcon}
                     </button>
@@ -37,7 +42,7 @@ export const Header: React.FC<HeaderProps> = ({
             {title && (
                 <div className={styles.centerSection}>
                     {typeof title === 'string' ? (
-                        <h1 className={styles.title}>{title}</h1>
+                        <h1 className={styles.title} data-testid={titleTestId}>{title}</h1>
                     ) : (
                         title
                     )}
