@@ -124,12 +124,12 @@
           {
             "companionId": "amara",
             "levelBefore": 5,
-            "levelAfter": 5
+            "levelAfter": 6
           },
           {
             "companionId": "tariq",
             "levelBefore": 5,
-            "levelAfter": 5
+            "levelAfter": 6
           }
         ]
       },
@@ -137,12 +137,12 @@
         "party": [
           {
             "companionId": "amara",
-            "levelBefore": 5,
+            "levelBefore": 6,
             "levelAfter": 6
           },
           {
             "companionId": "tariq",
-            "levelBefore": 5,
+            "levelBefore": 6,
             "levelAfter": 6
           }
         ]
@@ -166,12 +166,12 @@
           {
             "companionId": "amara",
             "levelBefore": 6,
-            "levelAfter": 6
+            "levelAfter": 7
           },
           {
             "companionId": "tariq",
             "levelBefore": 6,
-            "levelAfter": 6
+            "levelAfter": 7
           }
         ]
       },
@@ -179,12 +179,12 @@
         "party": [
           {
             "companionId": "amara",
-            "levelBefore": 6,
+            "levelBefore": 7,
             "levelAfter": 7
           },
           {
             "companionId": "tariq",
-            "levelBefore": 6,
+            "levelBefore": 7,
             "levelAfter": 7
           }
         ]
@@ -251,12 +251,12 @@
           {
             "companionId": "amara",
             "levelBefore": 7,
-            "levelAfter": 7
+            "levelAfter": 8
           },
           {
             "companionId": "tariq",
             "levelBefore": 7,
-            "levelAfter": 7
+            "levelAfter": 8
           },
           {
             "companionId": "kenji",
@@ -269,13 +269,13 @@
         "party": [
           {
             "companionId": "amara",
-            "levelBefore": 7,
-            "levelAfter": 7
+            "levelBefore": 8,
+            "levelAfter": 8
           },
           {
             "companionId": "tariq",
-            "levelBefore": 7,
-            "levelAfter": 7
+            "levelBefore": 8,
+            "levelAfter": 8
           },
           {
             "companionId": "kenji",
@@ -288,12 +288,12 @@
         "party": [
           {
             "companionId": "amara",
-            "levelBefore": 7,
+            "levelBefore": 8,
             "levelAfter": 8
           },
           {
             "companionId": "tariq",
-            "levelBefore": 7,
+            "levelBefore": 8,
             "levelAfter": 8
           },
           {
@@ -332,12 +332,12 @@
           {
             "companionId": "amara",
             "levelBefore": 8,
-            "levelAfter": 8
+            "levelAfter": 9
           },
           {
             "companionId": "tariq",
             "levelBefore": 8,
-            "levelAfter": 8
+            "levelAfter": 9
           },
           {
             "companionId": "kenji",
@@ -350,13 +350,13 @@
         "party": [
           {
             "companionId": "amara",
-            "levelBefore": 8,
-            "levelAfter": 8
+            "levelBefore": 9,
+            "levelAfter": 9
           },
           {
             "companionId": "tariq",
-            "levelBefore": 8,
-            "levelAfter": 8
+            "levelBefore": 9,
+            "levelAfter": 9
           },
           {
             "companionId": "kenji",
@@ -369,13 +369,13 @@
         "party": [
           {
             "companionId": "amara",
-            "levelBefore": 8,
-            "levelAfter": 8
+            "levelBefore": 9,
+            "levelAfter": 9
           },
           {
             "companionId": "tariq",
-            "levelBefore": 8,
-            "levelAfter": 8
+            "levelBefore": 9,
+            "levelAfter": 9
           },
           {
             "companionId": "kenji",
@@ -388,12 +388,12 @@
         "party": [
           {
             "companionId": "amara",
-            "levelBefore": 8,
+            "levelBefore": 9,
             "levelAfter": 9
           },
           {
             "companionId": "tariq",
-            "levelBefore": 8,
+            "levelBefore": 9,
             "levelAfter": 9
           },
           {
@@ -446,12 +446,12 @@
           {
             "companionId": "amara",
             "levelBefore": 9,
-            "levelAfter": 9
+            "levelAfter": 10
           },
           {
             "companionId": "tariq",
             "levelBefore": 9,
-            "levelAfter": 9
+            "levelAfter": 10
           },
           {
             "companionId": "kenji",
@@ -464,13 +464,13 @@
         "party": [
           {
             "companionId": "amara",
-            "levelBefore": 9,
-            "levelAfter": 9
+            "levelBefore": 10,
+            "levelAfter": 10
           },
           {
             "companionId": "tariq",
-            "levelBefore": 9,
-            "levelAfter": 9
+            "levelBefore": 10,
+            "levelAfter": 10
           },
           {
             "companionId": "kenji",
@@ -488,13 +488,13 @@
         "party": [
           {
             "companionId": "amara",
-            "levelBefore": 9,
-            "levelAfter": 9
+            "levelBefore": 10,
+            "levelAfter": 10
           },
           {
             "companionId": "tariq",
-            "levelBefore": 9,
-            "levelAfter": 9
+            "levelBefore": 10,
+            "levelAfter": 10
           },
           {
             "companionId": "kenji",
@@ -512,12 +512,12 @@
         "party": [
           {
             "companionId": "amara",
-            "levelBefore": 9,
+            "levelBefore": 10,
             "levelAfter": 10
           },
           {
             "companionId": "tariq",
-            "levelBefore": 9,
+            "levelBefore": 10,
             "levelAfter": 10
           },
           {
@@ -585,12 +585,12 @@
           {
             "companionId": "amara",
             "levelBefore": 10,
-            "levelAfter": 10
+            "levelAfter": 11
           },
           {
             "companionId": "tariq",
             "levelBefore": 10,
-            "levelAfter": 10
+            "levelAfter": 11
           },
           {
             "companionId": "kenji",
@@ -608,13 +608,13 @@
         "party": [
           {
             "companionId": "amara",
-            "levelBefore": 10,
-            "levelAfter": 10
+            "levelBefore": 11,
+            "levelAfter": 11
           },
           {
             "companionId": "tariq",
-            "levelBefore": 10,
-            "levelAfter": 10
+            "levelBefore": 11,
+            "levelAfter": 11
           },
           {
             "companionId": "kenji",
@@ -632,13 +632,13 @@
         "party": [
           {
             "companionId": "amara",
-            "levelBefore": 10,
-            "levelAfter": 10
+            "levelBefore": 11,
+            "levelAfter": 11
           },
           {
             "companionId": "tariq",
-            "levelBefore": 10,
-            "levelAfter": 10
+            "levelBefore": 11,
+            "levelAfter": 11
           },
           {
             "companionId": "kenji",
@@ -661,12 +661,12 @@
         "party": [
           {
             "companionId": "amara",
-            "levelBefore": 10,
+            "levelBefore": 11,
             "levelAfter": 11
           },
           {
             "companionId": "tariq",
-            "levelBefore": 10,
+            "levelBefore": 11,
             "levelAfter": 11
           },
           {
@@ -734,12 +734,12 @@
           {
             "companionId": "amara",
             "levelBefore": 11,
-            "levelAfter": 11
+            "levelAfter": 12
           },
           {
             "companionId": "tariq",
             "levelBefore": 11,
-            "levelAfter": 11
+            "levelAfter": 12
           },
           {
             "companionId": "kenji",
@@ -757,13 +757,13 @@
         "party": [
           {
             "companionId": "amara",
-            "levelBefore": 11,
-            "levelAfter": 11
+            "levelBefore": 12,
+            "levelAfter": 12
           },
           {
             "companionId": "tariq",
-            "levelBefore": 11,
-            "levelAfter": 11
+            "levelBefore": 12,
+            "levelAfter": 12
           },
           {
             "companionId": "kenji",
@@ -781,13 +781,13 @@
         "party": [
           {
             "companionId": "amara",
-            "levelBefore": 11,
-            "levelAfter": 11
+            "levelBefore": 12,
+            "levelAfter": 12
           },
           {
             "companionId": "tariq",
-            "levelBefore": 11,
-            "levelAfter": 11
+            "levelBefore": 12,
+            "levelAfter": 12
           },
           {
             "companionId": "kenji",
@@ -805,12 +805,12 @@
         "party": [
           {
             "companionId": "amara",
-            "levelBefore": 11,
+            "levelBefore": 12,
             "levelAfter": 12
           },
           {
             "companionId": "tariq",
-            "levelBefore": 11,
+            "levelBefore": 12,
             "levelAfter": 12
           },
           {
