@@ -27,50 +27,6 @@
     height: 100%;
 }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 2rem;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(4px);
-}
-
-.header h2 {
-    font-size: 2rem;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    margin: 0;
-}
-
-.headerControls {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.abortLink {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-    color: rgba(255, 255, 255, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.abortLink:hover {
-    color: #fff;
-    transform: translateX(-4px);
-}
-
-.abortLink:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-    transform: none;
-}
-
 .arena {
     display: contents;
     width: 100%;
@@ -129,12 +85,6 @@
     border-radius: 50%;
     filter: drop-shadow(0 0 20px rgba(239, 68, 68, 0.4));
     transition: transform 0.3s ease;
-}
-
-
-.vsContainer {
-    /* Deprecated or kept for center area */
-    opacity: 0.5;
 }
 
 .vsText {

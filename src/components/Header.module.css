@@ -1,0 +1,77 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 90;
+    background: transparent;
+    pointer-events: none;
+    /* Let clicks pass through empty areas */
+}
+
+/* Ensure interactive elements receive clicks */
+.leftSection,
+.centerSection,
+.rightSection {
+    pointer-events: auto;
+}
+
+.leftSection {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.centerSection {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rightSection {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1;
+}
+
+.iconButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.iconButton:hover {
+    color: #fff;
+    transform: translateX(-4px);
+}
+
+.iconButton:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.title {
+    font-size: 2.25rem;
+    font-weight: 900;
+    background: linear-gradient(to bottom, #fde047, #ca8a04);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+    margin: 0;
+    font-family: var(--font-display);
+    text-align: center;
+}

@@ -136,13 +136,6 @@
     border-color: #475569;
 }
 
-.settingsContainer {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    z-index: 150;
-}
-
 .settingsTrigger {
     background: none;
     border: none;

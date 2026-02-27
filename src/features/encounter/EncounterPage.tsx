@@ -15,13 +15,13 @@ import { Battlefield } from './components/Battlefield';
 import { SpecialChallengeOverlay } from './components/SpecialChallengeOverlay';
 import { useDelayedUnitRemoval } from './hooks/useDelayedUnitRemoval';
 import { getVFXDetails, checkIsEncounterOver } from './utils/encounter-logic';
-import styles from './EncounterPage.module.css';
 import './EncounterPage.css';
 import { ExperienceDistributionScreen } from './components/experience/ExperienceDistributionScreen';
 import { useEncounterNavigation } from './hooks/useEncounterNavigation';
 import { useEncounterInitializer } from './hooks/useEncounterInitializer';
 import { useVoiceOver } from '../../hooks/useVoiceOver';
 import { COMPANIONS } from '../../data/companions.data';
+import { Header } from '../../components/Header';
 
 const EncounterPage = () => {
     const { t } = useTranslation();
@@ -158,19 +158,11 @@ const EncounterPage = () => {
 
     return (
         <div className="encounter-page">
-            <header className={styles.header}>
-                <div className={styles.headerControls}>
-                    <button
-                        className={styles.abortLink}
-                        onClick={() => navigate(`/map/${adventureId}`, { state: { focalNode: nodeIndex } })}
-                        disabled={!!activeChallenge || !!activeVFX || isEncounterOver}
-                        aria-label={t('common.back_to_map')}
-                        title={t('common.back_to_map')}
-                    >
-                        <Map size={32} />
-                    </button>
-                </div>
-            </header>
+            <Header
+                leftIcon={<Map size={32} />}
+                onLeftClick={() => navigate(`/map/${adventureId}`, { state: { focalNode: nodeIndex } })}
+                leftAriaLabel={t('common.back_to_map')}
+            />
 
             <TurnAnnouncer phase={phase} />
 

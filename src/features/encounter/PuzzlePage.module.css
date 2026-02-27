@@ -15,61 +15,6 @@
     color: white;
 }
 
-.header {
-    display: flex;
-    align-items: center;
-    padding: 1rem 2rem;
-    background: transparent;
-    border-bottom: 1px solid rgba(74, 55, 33, 0.1);
-}
-
-.backButton {
-    background: transparent;
-    color: var(--color-chronicle-text);
-    border: 1px solid var(--color-chronicle-text);
-    border-radius: var(--radius-sm);
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    font-family: var(--font-display);
-    font-weight: bold;
-    font-size: 0.9rem;
-    transition: all 0.2s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.backButton:hover {
-    background: rgba(74, 55, 33, 0.1);
-    transform: translateY(-1px);
-}
-
-.iconButton {
-    background: none !important;
-    border: none !important;
-    padding: 8px !important;
-    color: rgba(255, 255, 255, 0.8) !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.iconButton:hover {
-    color: #fff !important;
-    transform: translateX(-4px) !important;
-    background: none !important;
-}
-
-.title {
-    flex: 1;
-    text-align: center;
-    font-size: 1.5rem;
-    font-family: var(--font-display);
-    font-weight: 700;
-    color: var(--color-chronicle-text-dark);
-    margin: 0;
-}
-
 .puzzleContent {
     flex: 1;
     display: flex;

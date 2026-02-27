@@ -16,6 +16,7 @@ import { NumberPathPuzzle } from './puzzles/number-path/NumberPathPuzzle';
 import { EquationPuzzle } from './puzzles/equation/EquationPuzzle';
 import { EncounterCompletionModal } from './components/EncounterCompletionModal';
 import { useVoiceOver } from '../../hooks/useVoiceOver';
+import { Header } from '../../components/Header';
 import styles from './PuzzlePage.module.css';
 
 interface PuzzleDefinition {
@@ -133,16 +134,11 @@ const PuzzlePage = () => {
 
     return (
         <div className={styles.puzzlePage}>
-            <header className={styles.header}>
-                <button
-                    className={`${styles.backButton} ${styles.iconButton}`}
-                    onClick={handleBack}
-                    aria-label={t('common.back_to_map')}
-                    title={t('common.back_to_map')}
-                >
-                    <Map size={32} />
-                </button>
-            </header>
+            <Header
+                leftIcon={<Map size={32} />}
+                onLeftClick={handleBack}
+                leftAriaLabel={t('common.back_to_map')}
+            />
 
             {instruction && (
                 <div className={styles.instructionContainer}>

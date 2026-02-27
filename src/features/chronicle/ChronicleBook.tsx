@@ -13,6 +13,7 @@ import { BookCover } from './components/Book/BookCover';
 import { BookLogin } from './components/Book/BookLogin';
 import { BookDifficulty } from './components/Book/BookDifficulty';
 import { getBookStateFromUrl, calculatePageZIndex } from './utils/chronicle.utils';
+import { Header } from '../../components/Header';
 
 export const ChronicleBook: React.FC = () => {
     const { adventureStatuses, isAdventureUnlocked, encounterResults, setEncounterDifficulty } = useGameStore();
@@ -114,6 +115,7 @@ export const ChronicleBook: React.FC = () => {
 
     return (
         <>
+            <Header />
             <BookLayout isOpen={bookState !== 'COVER'}>
                 {/* COVER PAGE */}
                 <BookPage

@@ -8,7 +8,8 @@ import './AdventurePage.css';
 import { ADVENTURES } from '../../data/adventures.data';
 import { EncounterType, type Encounter } from '../../types/adventure.types';
 import { FantasyMap } from './components/FantasyMap';
-import { AdventureHeader } from './components/AdventureHeader';
+import { Header } from '../../components/Header';
+import { BookOpen } from 'lucide-react';
 
 const AdventurePage = () => {
     const { t } = useTranslation();
@@ -86,10 +87,11 @@ const AdventurePage = () => {
     return (
         <div className="adventure-page custom-scrollbar">
             <main className="adventure-content">
-                <AdventureHeader
-                    adventureId={adventure.id}
-                    adventureTitle={t(`adventures.${adventureId}.title`, adventure.title || t('common.adventure', 'Adventure'))}
-                    onBack={() => navigate(`/chronicle/${adventureId}`)}
+                <Header
+                    leftIcon={<BookOpen size={32} />}
+                    onLeftClick={() => navigate(`/chronicle/${adventureId}`)}
+                    leftAriaLabel={t('common.back')}
+                    title={t(`adventures.${adventureId}.title`, adventure.title || t('common.adventure', 'Adventure')) as string}
                 />
 
                 <FantasyMap
