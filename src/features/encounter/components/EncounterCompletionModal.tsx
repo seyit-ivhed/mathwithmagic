@@ -1,4 +1,5 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { Star } from 'lucide-react';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
@@ -21,7 +22,7 @@ export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> =
 
     const isVictory = result === 'VICTORY';
 
-    return (
+    return createPortal(
         <div className={`completion-overlay ${isVictory ? 'victory' : 'defeat'}`}>
             {isVictory && (
                 <div className="particles-backdrop">
@@ -68,6 +69,7 @@ export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> =
                     </PrimaryButton>
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 };

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, Sword } from 'lucide-react';
@@ -66,7 +67,7 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({ companion, onConfirm
 
     const showHUD = evolutionStage === 'post';
 
-    return (
+    return createPortal(
         <div className={styles.modalOverlay} data-testid="level-up-modal">
             <motion.div
                 className={styles.levelUpFullScreen}
@@ -189,7 +190,8 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({ companion, onConfirm
                     </div>
                 )}
             </motion.div>
-        </div>
+        </div>,
+        document.body
     );
 };
 

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useDebugCommands } from '../features/debug/hooks/useDebugCommands';
 import { FormCloseButton } from './ui/FormCloseButton';
 import styles from './DebugConsole.module.css';
@@ -40,7 +41,7 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
         setInput('');
     };
 
-    return (
+    return createPortal(
         <div className={styles.overlay} onClick={onClose}>
             <div className={styles.modal} onClick={e => e.stopPropagation()}>
                 <div className={styles.header}>
@@ -66,6 +67,7 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
                     />
                 </form>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 };

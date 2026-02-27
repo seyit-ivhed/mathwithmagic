@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Settings } from 'lucide-react';
 import { usePlayerStore } from '../stores/player.store';
 import { DebugConsole } from './DebugConsole';
@@ -52,7 +53,7 @@ const SettingsMenu: React.FC = () => {
                 <Settings size={32} />
             </button>
 
-            {isOpen && (
+            {isOpen && createPortal(
                 <div className={styles.modalOverlay}>
                     <div className={styles.modalContent} ref={modalRef} data-testid="settings-menu">
                         <FormCloseButton onClick={() => setIsOpen(false)} size={32} />
@@ -88,7 +89,8 @@ const SettingsMenu: React.FC = () => {
                             </button>
                         </div>
                     </div>
-                </div>
+                </div>,
+                document.body
             )}
 
             {isDebugOpen && (

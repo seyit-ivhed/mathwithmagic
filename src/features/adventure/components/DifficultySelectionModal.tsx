@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { Star, ChevronDown } from 'lucide-react';
 import { FormCloseButton } from '../../../components/ui/FormCloseButton';
@@ -64,7 +65,7 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
 
     const displayDifficulty = hoveredDifficulty ?? selectedDifficulty;
 
-    return (
+    return createPortal(
         <div className={styles.modalOverlay} data-testid="difficulty-modal">
             <div className={styles.modalContent}>
                 <FormCloseButton onClick={onClose} size={32} />
@@ -148,6 +149,7 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
                     </PrimaryButton>
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 };
