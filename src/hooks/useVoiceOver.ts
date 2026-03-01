@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAudioStore } from '../stores/audio.store';
+import { usePlayerStore } from '../stores/player.store';
 import { useShallow } from 'zustand/react/shallow';
 
 const voiceOverMap = import.meta.glob<string>('/src/assets/voice/**/*.mp3', {
@@ -22,8 +22,8 @@ const resolveVoiceOverUrl = async (language: string, category: string, filename:
 
 export const useVoiceOver = (category: string, filename: string, replayKey?: number) => {
     const { i18n } = useTranslation();
-    const { setVoiceOverPlaying } = useAudioStore();
-    const { volume, isMuted } = useAudioStore(useShallow(s => ({ volume: s.volume, isMuted: s.isMuted })));
+    const { setVoiceOverPlaying } = usePlayerStore();
+    const { masterVolume, voiceVolume, isMuted } = usePlayerStore(useShallow(s => ({ masterVolume: s.masterVolume, voiceVolume: s.voiceVolume, isMuted: s.isMuted })));
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
     useEffect(() => {
@@ -59,8 +59,8 @@ export const useVoiceOver = (category: string, filename: string, replayKey?: num
             }
 
             const audio = new Audio(audioUrl);
-            const store = useAudioStore.getState();
-            audio.volume = store.volume;
+            const store = usePlayerStore.getState();
+            audio.volume = store.masterVolume * store.voiceVolume;
             audio.muted = store.isMuted;
 
             audio.onended = () => setVoiceOverPlaying(false);
@@ -92,7 +92,7 @@ export const useVoiceOver = (category: string, filename: string, replayKey?: num
             return;
         }
 
-        audioRef.current.volume = volume;
+        audioRef.current.volume = masterVolume * voiceVolume;
         audioRef.current.muted = isMuted;
-    }, [volume, isMuted]);
+    }, [masterVolume, voiceVolume, isMuted]);
 };

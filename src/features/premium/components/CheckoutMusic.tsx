@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
-import { useAudioStore } from '../../../stores/audio.store';
+import { usePlayerStore } from '../../../stores/player.store';
 import successTrack from '../../../assets/music/success/success-2.mp3?url';
 
 export const CheckoutMusic: React.FC = () => {
     const audioRef = useRef<HTMLAudioElement | null>(null);
-    const { isMuted, volume, isVoiceOverPlaying } = useAudioStore();
+    const { isMuted, masterVolume, musicVolume, isVoiceOverPlaying } = usePlayerStore();
 
     useEffect(() => {
         if (!audioRef.current) return;
@@ -18,10 +18,11 @@ export const CheckoutMusic: React.FC = () => {
     // Volume control effect
     useEffect(() => {
         if (audioRef.current) {
-            const currentVolume = isVoiceOverPlaying ? volume * 0.25 : volume;
+            const baseVolume = masterVolume * musicVolume;
+            const currentVolume = isVoiceOverPlaying ? baseVolume * 0.25 : baseVolume;
             audioRef.current.volume = isMuted ? 0 : currentVolume;
         }
-    }, [isMuted, volume, isVoiceOverPlaying]);
+    }, [isMuted, masterVolume, musicVolume, isVoiceOverPlaying]);
 
     // Global interaction listener to retry playback if blocked
     useEffect(() => {

@@ -1,5 +1,5 @@
 import { type Adventure } from '../../types/adventure.types';
-import { useAudioStore } from '../../stores/audio.store';/**
+import { usePlayerStore } from '../../stores/player.store';/**
  * Determines which background music track should play based on the current pathname and state.
  */
 export const getTargetMusicTrack = (
@@ -73,12 +73,12 @@ export const getRandomSuccessTrack = (musicFileKeys: string[]): string | null =>
  * @param soundPath relative path inside src/assets/sfx/ without the .mp3 extension
  */
 export const playSfx = (soundPath: string) => {
-    const { volume, isMuted } = useAudioStore.getState();
+    const { masterVolume, sfxVolume, isMuted } = usePlayerStore.getState();
     if (isMuted) return;
 
     try {
         const audio = new Audio(`/src/assets/sfx/${soundPath}.mp3`);
-        audio.volume = volume;
+        audio.volume = masterVolume * sfxVolume;
         audio.play().catch(e => console.warn('SFX autoplay prevented:', e));
     } catch (e) {
         console.warn('SFX initialization failed:', e);

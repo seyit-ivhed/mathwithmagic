@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { Settings } from 'lucide-react';
+import { Settings, Volume2, VolumeX } from 'lucide-react';
 import { usePlayerStore } from '../stores/player.store';
 import { DebugConsole } from './DebugConsole';
 import { FormCloseButton } from './ui/FormCloseButton';
@@ -12,7 +12,14 @@ import { useTranslation } from 'react-i18next';
 const SettingsMenu: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isDebugOpen, setIsDebugOpen] = useState(false);
-    const { language, setLanguage } = usePlayerStore();
+    const {
+        language, setLanguage,
+        isMuted, toggleMute,
+        masterVolume, setMasterVolume,
+        musicVolume, setMusicVolume,
+        sfxVolume, setSfxVolume,
+        voiceVolume, setVoiceVolume
+    } = usePlayerStore();
     const { i18n, t } = useTranslation();
     const modalRef = useRef<HTMLDivElement>(null);
 
@@ -41,6 +48,7 @@ const SettingsMenu: React.FC = () => {
     const handleLanguageChange = (lang: 'en' | 'sv') => {
         setLanguage(lang);
         i18n.changeLanguage(lang);
+        playSfx('interface/click');
     };
 
     return (
@@ -81,6 +89,71 @@ const SettingsMenu: React.FC = () => {
                                 >
                                     🇸🇪 SV
                                 </button>
+                            </div>
+                        </div>
+
+                        <div className={styles.settingsSection}>
+                            <h4 className={styles.sectionTitle}>{t('settings.sound', 'Sound')}</h4>
+
+                            <div className={styles.soundControlRow}>
+                                <label className={styles.soundLabel}>{t('settings.mute', 'Mute All Sound')}</label>
+                                <button
+                                    className={styles.muteBtn}
+                                    onClick={() => {
+                                        toggleMute();
+                                        if (isMuted) playSfx('interface/click');
+                                    }}
+                                    aria-label={t('settings.mute', 'Mute All Sound')}
+                                >
+                                    {isMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
+                                </button>
+                            </div>
+
+                            <div className={styles.soundControlRow}>
+                                <label className={styles.soundLabel}>{t('settings.master_volume', 'Master Volume')}</label>
+                                <input
+                                    type="range"
+                                    min="0" max="1" step="0.05"
+                                    value={masterVolume}
+                                    onChange={(e) => setMasterVolume(parseFloat(e.target.value))}
+                                    className={styles.volumeSlider}
+                                />
+                            </div>
+
+                            <div className={styles.soundControlRow}>
+                                <label className={styles.soundLabel}>{t('settings.music_volume', 'Music Volume')}</label>
+                                <input
+                                    type="range"
+                                    min="0" max="1" step="0.05"
+                                    value={musicVolume}
+                                    onChange={(e) => setMusicVolume(parseFloat(e.target.value))}
+                                    className={styles.volumeSlider}
+                                />
+                            </div>
+
+                            <div className={styles.soundControlRow}>
+                                <label className={styles.soundLabel}>{t('settings.sfx_volume', 'SFX Volume')}</label>
+                                <input
+                                    type="range"
+                                    min="0" max="1" step="0.05"
+                                    value={sfxVolume}
+                                    onChange={(e) => {
+                                        setSfxVolume(parseFloat(e.target.value));
+                                        playSfx('interface/click');
+                                    }}
+                                    className={styles.volumeSlider}
+                                />
+                            </div>
+
+                            <div className={styles.soundControlRow}>
+                                <label className={styles.soundLabel}>{t('settings.voice_volume', 'Voice Volume')}</label>
+                                <input
+                                    type="range"
+                                    min="0" max="1" step="0.05"
+                                    value={voiceVolume}
+                                    onChange={(e) => setVoiceVolume(parseFloat(e.target.value))}
+                                    className={styles.volumeSlider}
+                                />
                             </div>
                         </div>
 

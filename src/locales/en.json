@@ -537,6 +537,12 @@
     "settings": {
         "title": "Settings",
         "language": "Language",
-        "debug_console": "Open Debug Console"
+        "debug_console": "Open Debug Console",
+        "sound": "Sound",
+        "mute": "Mute All Sound",
+        "master_volume": "Master Volume",
+        "music_volume": "Music Volume",
+        "sfx_volume": "SFX Volume",
+        "voice_volume": "Voice Volume"
     }
 }

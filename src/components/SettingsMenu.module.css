@@ -152,3 +152,78 @@
 .settingsTrigger:hover {
     color: #fff;
 }
+
+.soundControlRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    gap: 16px;
+}
+
+.soundLabel {
+    font-family: var(--font-body, inherit);
+    color: var(--color-chronicle-text, #4a3721);
+    font-size: 1rem;
+    font-weight: 600;
+    flex: 1;
+}
+
+.volumeSlider {
+    flex: 2;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    background: rgba(139, 101, 50, 0.2);
+    border-radius: 4px;
+    outline: none;
+}
+
+.volumeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--color-brand-accent, #ffa502);
+    cursor: pointer;
+    border: 2px solid var(--color-chronicle-text-dark, #2c1e11);
+    transition: transform 0.1s;
+}
+
+.volumeSlider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+.volumeSlider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--color-brand-accent, #ffa502);
+    cursor: pointer;
+    border: 2px solid var(--color-chronicle-text-dark, #2c1e11);
+    transition: transform 0.1s;
+}
+
+.volumeSlider::-moz-range-thumb:hover {
+    transform: scale(1.1);
+}
+
+.muteBtn {
+    background: rgba(255, 255, 255, 0.4);
+    border: 2px solid var(--color-chronicle-text-dark, #2c1e11);
+    border-radius: var(--radius-md, 12px);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--color-chronicle-text-dark, #2c1e11);
+    transition: all 0.2s ease;
+}
+
+.muteBtn:hover {
+    background: rgba(255, 255, 255, 0.6);
+}

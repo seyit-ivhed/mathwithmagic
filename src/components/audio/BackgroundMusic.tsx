@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useAudioStore } from '../../stores/audio.store';
+import { usePlayerStore } from '../../stores/player.store';
 import { ADVENTURES } from '../../data/adventures.data';
 import { getRandomSuccessTrack, getTargetMusicTrack } from './audio.utils';
 import { useEncounterStore } from '../../stores/encounter/store';
@@ -22,7 +22,7 @@ const getMusicUrl = (filename: string) => {
 export const BackgroundMusic = () => {
     const location = useLocation();
     const audioRef = useRef<HTMLAudioElement | null>(null);
-    const { isMuted, volume, isVoiceOverPlaying } = useAudioStore();
+    const { isMuted, masterVolume, musicVolume, isVoiceOverPlaying } = usePlayerStore();
     const { phase } = useEncounterStore();
 
     // Use useRef to track the currently playing file without causing re-renders
@@ -69,10 +69,11 @@ export const BackgroundMusic = () => {
     // Volume control effect
     useEffect(() => {
         if (audioRef.current) {
-            const currentVolume = isVoiceOverPlaying ? volume * 0.25 : volume;
+            const baseVolume = masterVolume * musicVolume;
+            const currentVolume = isVoiceOverPlaying ? baseVolume * 0.25 : baseVolume;
             audioRef.current.volume = isMuted ? 0 : currentVolume;
         }
-    }, [isMuted, volume, isVoiceOverPlaying]);
+    }, [isMuted, masterVolume, musicVolume, isVoiceOverPlaying]);
 
     // Global interaction listener to retry playback if blocked
     useEffect(() => {
