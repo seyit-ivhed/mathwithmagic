@@ -23,7 +23,7 @@ const resolveVoiceOverUrl = async (language: string, category: string, filename:
 export const useVoiceOver = (category: string, filename: string, replayKey?: number) => {
     const { i18n } = useTranslation();
     const { setVoiceOverPlaying } = usePlayerStore();
-    const { masterVolume, voiceVolume, isMuted } = usePlayerStore(useShallow(s => ({ masterVolume: s.masterVolume, voiceVolume: s.voiceVolume, isMuted: s.isMuted })));
+    const { masterVolume, voiceVolume } = usePlayerStore(useShallow(s => ({ masterVolume: s.masterVolume, voiceVolume: s.voiceVolume })));
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
     useEffect(() => {
@@ -61,7 +61,6 @@ export const useVoiceOver = (category: string, filename: string, replayKey?: num
             const audio = new Audio(audioUrl);
             const store = usePlayerStore.getState();
             audio.volume = store.masterVolume * store.voiceVolume;
-            audio.muted = store.isMuted;
 
             audio.onended = () => setVoiceOverPlaying(false);
             audio.onpause = () => setVoiceOverPlaying(false);
@@ -93,6 +92,5 @@ export const useVoiceOver = (category: string, filename: string, replayKey?: num
         }
 
         audioRef.current.volume = masterVolume * voiceVolume;
-        audioRef.current.muted = isMuted;
-    }, [masterVolume, voiceVolume, isMuted]);
+    }, [masterVolume, voiceVolume]);
 };

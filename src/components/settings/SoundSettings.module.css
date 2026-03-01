@@ -32,21 +32,3 @@
     font-weight: 600;
     flex: 1;
 }
-
-.muteBtn {
-    background: rgba(255, 255, 255, 0.4);
-    border: 2px solid var(--color-chronicle-text-dark, #2c1e11);
-    border-radius: var(--radius-md, 12px);
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--color-chronicle-text-dark, #2c1e11);
-    transition: all 0.2s ease;
-}
-
-.muteBtn:hover {
-    background: rgba(255, 255, 255, 0.6);
-}

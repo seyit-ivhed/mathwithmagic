@@ -73,8 +73,7 @@ export const getRandomSuccessTrack = (musicFileKeys: string[]): string | null =>
  * @param soundPath relative path inside src/assets/sfx/ without the .mp3 extension
  */
 export const playSfx = (soundPath: string) => {
-    const { masterVolume, sfxVolume, isMuted } = usePlayerStore.getState();
-    if (isMuted) return;
+    const { masterVolume, sfxVolume } = usePlayerStore.getState();
 
     try {
         const audio = new Audio(`/src/assets/sfx/${soundPath}.mp3`);
