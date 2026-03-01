@@ -69,15 +69,7 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                 adventureTitle={adventure.title}
             />
 
-            <div
-                className="chapter-content"
-                onClick={() => {
-                    if (isRevealing) {
-                        setIsRevealing(false);
-                    }
-                }}
-                style={{ cursor: isRevealing ? 'pointer' : 'default' }}
-            >
+            <div className="chapter-content">
                 <ChapterIllustration
                     illustration={illustration}
                     adventureTitle={adventure.title || ''}
@@ -112,8 +104,6 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                 currentPage={currentPage}
                 totalPages={totalPages}
                 hasProgress={hasProgress}
-                isRevealing={isRevealing}
-                onSkipReveal={() => setIsRevealing(false)}
             />
         </div>
     );

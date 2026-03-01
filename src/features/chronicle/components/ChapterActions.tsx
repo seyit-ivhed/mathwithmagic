@@ -20,8 +20,6 @@ interface ChapterActionsProps {
     currentPage: number;
     totalPages: number;
     hasProgress?: boolean;
-    isRevealing?: boolean;
-    onSkipReveal?: () => void;
 }
 
 export const ChapterActions: React.FC<ChapterActionsProps> = ({
@@ -39,9 +37,7 @@ export const ChapterActions: React.FC<ChapterActionsProps> = ({
     isJustCompleted,
     currentPage,
     totalPages,
-    hasProgress,
-    isRevealing,
-    onSkipReveal
+    hasProgress
 }) => {
     const { t } = useTranslation();
 
@@ -73,30 +69,22 @@ export const ChapterActions: React.FC<ChapterActionsProps> = ({
                             <motion.button
                                 className="book-btn replay-btn"
                                 onClick={() => {
-                                    if (isRevealing && onSkipReveal) {
-                                        onSkipReveal();
-                                    } else {
-                                        onReplay(adventureId);
-                                    }
+                                    onReplay(adventureId);
                                 }}
                                 data-testid="replay-chapter-btn"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                             >
-                                {isRevealing ? t('chronicle.skip', 'Skip') : t('chronicle.replay_chapter')}
+                                {t('chronicle.replay_chapter')}
                             </motion.button>
                         ) : (
                             <PrimaryButton
                                 onClick={() => {
-                                    if (isRevealing && onSkipReveal) {
-                                        onSkipReveal();
-                                    } else {
-                                        onBegin(adventureId);
-                                    }
+                                    onBegin(adventureId);
                                 }}
                                 data-testid="begin-chapter-btn"
                             >
-                                {isRevealing ? t('chronicle.skip', 'Skip') : (hasProgress ? t('chronicle.continue_chapter') : t('chronicle.begin_chapter'))}
+                                {hasProgress ? t('chronicle.continue_chapter') : t('chronicle.begin_chapter')}
                             </PrimaryButton>
                         )
                     ) : isPremiumLocked && !isProgressionLocked ? (
