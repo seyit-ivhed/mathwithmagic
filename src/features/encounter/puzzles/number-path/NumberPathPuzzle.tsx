@@ -37,6 +37,25 @@ export const NumberPathPuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
         return calculateSequenceState(grid, startValue, stepValue);
     }, [grid, startValue, stepValue]);
 
+    const validNextPositions = useMemo(() => {
+        if (isCompleted) {
+            return [];
+        }
+
+        const validPositions: Position[] = [];
+        for (let r = 0; r < gridSize; r++) {
+            for (let c = 0; c < gridSize; c++) {
+                const cell = grid[r][c];
+                if (cell.value === null && !cell.isFixed) {
+                    if (validateMove(grid, { row: r, col: c }, currentHeadValue, nextExpectedValue, stepValue)) {
+                        validPositions.push({ row: r, col: c });
+                    }
+                }
+            }
+        }
+        return validPositions;
+    }, [grid, isCompleted, gridSize, currentHeadValue, nextExpectedValue, stepValue]);
+
     const triggerShake = (position: Position) => {
         setShakeCell(position);
         setTimeout(() => setShakeCell(null), 300);
@@ -136,6 +155,7 @@ export const NumberPathPuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
                                                 ${cell.value !== null ? styles.filled : ''}
                                                 ${cell.isFixed ? styles.fixed : ''}
                                                 ${cell.value === currentHeadValue && !isCompleted ? styles.lastPlaced : ''}
+                                                ${validNextPositions.some(p => p.row === ri && p.col === ci) ? styles.nextPossible : ''}
                                                 ${shakeCell?.row === ri && shakeCell?.col === ci ? styles.invalid : ''}
                                             `}
                                         onClick={() => handleCellClick(ri, ci)}
