@@ -320,7 +320,7 @@
             "instruction": "Refill your canteen by choosing the right amount of water"
         },
         "balance": {
-            "instruction": "Make both piles of stones weigh equal!"
+            "instruction": "Remove stones to make both piles weigh equal!"
         },
         "number_path": {
             "instruction": "Create a continuous path by filling in the numbers!"

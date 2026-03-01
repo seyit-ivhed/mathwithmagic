@@ -320,7 +320,7 @@
             "instruction": "Fyll på din fältflaska genom att välja rätt mängd vatten"
         },
         "balance": {
-            "instruction": "Få båda stenhögarna att väga lika mycket!"
+            "instruction": "Ta bort stenar för att få båda stenhögarna att väga lika mycket!"
         },
         "number_path": {
             "instruction": "Fyll i siffrorna för att skapa en sammanhängande stig!"
