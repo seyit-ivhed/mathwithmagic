@@ -15,13 +15,13 @@ export const COMPANIONS: Record<string, Companion> = {
         baseStats: {
             maxHealth: 75,
             abilityDamage: 8,
-            attackSound: 'battle/bow-and-arrow',
+            attackSound: 'battle/arrow',
             evolutionIndex: 1
         },
         specialAbility: {
             id: 'precision_shot',
             variables: { damage: 30 },
-            soundEffect: 'battle/bow-and-arrow'
+            soundEffect: 'battle/arrow'
         },
         initialSpirit: 65,
         spiritGain: 35,
@@ -37,7 +37,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 newSpecialAbility: {
                     id: 'precision_shot',
                     variables: { damage: 45 },
-                    soundEffect: 'battle/bow-and-arrow'
+                    soundEffect: 'battle/arrow'
                 }
             },
             {
@@ -51,7 +51,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 newSpecialAbility: {
                     id: 'precision_shot',
                     variables: { damage: 65 },
-                    soundEffect: 'battle/bow-and-arrow'
+                    soundEffect: 'battle/arrow'
                 }
             },
             {
@@ -65,7 +65,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 newSpecialAbility: {
                     id: 'precision_shot',
                     variables: { damage: 100 },
-                    soundEffect: 'battle/bow-and-arrow'
+                    soundEffect: 'battle/arrow'
                 }
             }
         ]

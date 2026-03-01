@@ -86,7 +86,7 @@ export const MONSTERS = {
         id: 'samurai_archer',
         maxHealth: 220,
         attack: 50,
-        attackSound: 'battle/bow-and-arrow'
+        attackSound: 'battle/arrow'
     },
     WAR_HOUND: {
         id: 'war_hound',
