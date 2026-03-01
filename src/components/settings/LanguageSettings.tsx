@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '../../stores/player.store';
 import { playSfx } from '../audio/audio.utils';
+import sectionStyles from './SettingsSection.module.css';
 import styles from './LanguageSettings.module.css';
 
 export const LanguageSettings: React.FC = () => {
@@ -22,8 +23,8 @@ export const LanguageSettings: React.FC = () => {
     };
 
     return (
-        <div className={styles.settingsSection}>
-            <h4 className={styles.sectionTitle}>{t('settings.language', 'Language')}</h4>
+        <div className={sectionStyles.settingsSection}>
+            <h4 className={sectionStyles.sectionTitle}>{t('settings.language', 'Language')}</h4>
             <div className={styles.languageToggle}>
                 <button
                     className={`${styles.langBtn} ${language === 'en' ? styles.langBtnActive : ''}`}

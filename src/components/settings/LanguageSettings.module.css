@@ -1,22 +1,3 @@
-.settingsSection {
-    margin-bottom: 24px;
-    text-align: left;
-}
-
-.settingsSection:last-child {
-    margin-bottom: 0;
-}
-
-.sectionTitle {
-    margin: 0 0 12px 0;
-    font-size: 1.1rem;
-    font-family: var(--font-display, inherit);
-    color: var(--color-chronicle-accent, #8b6532);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-weight: 700;
-}
-
 .languageToggle {
     display: flex;
     gap: 12px;

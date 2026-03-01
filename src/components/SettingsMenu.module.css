@@ -1,12 +1,3 @@
-.settingsSection {
-    margin-bottom: 24px;
-    text-align: left;
-}
-
-.settingsSection:last-child {
-    margin-bottom: 0;
-}
-
 .debugButton {
     width: 100%;
     padding: 16px;

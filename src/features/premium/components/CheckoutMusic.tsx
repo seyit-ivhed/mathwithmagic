@@ -4,7 +4,7 @@ import successTrack from '../../../assets/music/success/success-2.mp3?url';
 
 export const CheckoutMusic: React.FC = () => {
     const audioRef = useRef<HTMLAudioElement | null>(null);
-    const { isMuted, masterVolume, musicVolume, isVoiceOverPlaying } = usePlayerStore();
+    const { masterVolume, musicVolume, isVoiceOverPlaying } = usePlayerStore();
 
     useEffect(() => {
         if (!audioRef.current) return;
@@ -19,10 +19,9 @@ export const CheckoutMusic: React.FC = () => {
     useEffect(() => {
         if (audioRef.current) {
             const baseVolume = masterVolume * musicVolume;
-            const currentVolume = isVoiceOverPlaying ? baseVolume * 0.25 : baseVolume;
-            audioRef.current.volume = isMuted ? 0 : currentVolume;
+            audioRef.current.volume = isVoiceOverPlaying ? baseVolume * 0.25 : baseVolume;
         }
-    }, [isMuted, masterVolume, musicVolume, isVoiceOverPlaying]);
+    }, [masterVolume, musicVolume, isVoiceOverPlaying]);
 
     // Global interaction listener to retry playback if blocked
     useEffect(() => {

@@ -1,9 +1,8 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '../../stores/player.store';
 import { playSfx } from '../audio/audio.utils';
 import { VolumeSlider } from '../ui/VolumeSlider';
-import styles from './SoundSettings.module.css';
+import sectionStyles from './SettingsSection.module.css';
 
 export const SoundSettings: React.FC = () => {
     const { t } = useTranslation();
@@ -17,8 +16,8 @@ export const SoundSettings: React.FC = () => {
     const setVoiceVolume = usePlayerStore((state) => state.setVoiceVolume);
 
     return (
-        <div className={styles.settingsSection}>
-            <h4 className={styles.sectionTitle}>{t('settings.sound', 'Sound')}</h4>
+        <div className={sectionStyles.settingsSection}>
+            <h4 className={sectionStyles.sectionTitle}>{t('settings.sound', 'Sound')}</h4>
 
             <VolumeSlider
                 label={t('settings.master_volume', 'Master Volume')}

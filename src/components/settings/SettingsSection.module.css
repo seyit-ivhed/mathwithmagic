@@ -16,19 +16,3 @@
     letter-spacing: 0.05em;
     font-weight: 700;
 }
-
-.soundControlRow {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-    gap: 16px;
-}
-
-.soundLabel {
-    font-family: var(--font-body, inherit);
-    color: var(--color-chronicle-text, #4a3721);
-    font-size: 1rem;
-    font-weight: 600;
-    flex: 1;
-}

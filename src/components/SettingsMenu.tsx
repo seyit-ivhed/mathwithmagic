@@ -6,6 +6,7 @@ import { playSfx } from './audio/audio.utils';
 import { Modal } from './ui/Modal';
 import { LanguageSettings } from './settings/LanguageSettings';
 import { SoundSettings } from './settings/SoundSettings';
+import sectionStyles from './settings/SettingsSection.module.css';
 import styles from './SettingsMenu.module.css';
 
 const SettingsMenu: React.FC = () => {
@@ -39,7 +40,7 @@ const SettingsMenu: React.FC = () => {
 
                 <SoundSettings />
 
-                <div className={styles.settingsSection}>
+                <div className={sectionStyles.settingsSection}>
                     <button
                         className={styles.debugButton}
                         onClick={() => { setIsDebugOpen(true); setIsOpen(false); }}
