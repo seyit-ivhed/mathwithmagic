@@ -1,0 +1,50 @@
+.settingsSection {
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.settingsSection:last-child {
+    margin-bottom: 0;
+}
+
+.sectionTitle {
+    margin: 0 0 12px 0;
+    font-size: 1.1rem;
+    font-family: var(--font-display, inherit);
+    color: var(--color-chronicle-accent, #8b6532);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+}
+
+.languageToggle {
+    display: flex;
+    gap: 12px;
+}
+
+.langBtn {
+    flex: 1;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.4);
+    border: 2px solid var(--color-chronicle-text-dark, #2c1e11);
+    border-radius: var(--radius-md, 12px);
+    cursor: pointer;
+    color: var(--color-chronicle-text, #4a3721);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font-display, inherit);
+    font-weight: 600;
+}
+
+.langBtn:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.langBtnActive {
+    background: var(--color-brand-accent, #ffa502);
+    color: #000;
+    border-color: var(--color-brand-accent, #ffa502);
+}
