@@ -57,12 +57,34 @@
 
 .cell:hover:not(.fixed) {
     filter: brightness(1.2);
-    transform: translateY(-2px);
 }
 
 .cell.filled {
     border-color: #4a9eff;
     box-shadow: 0 0 15px rgba(74, 158, 255, 0.6);
+}
+
+@keyframes glowBlue {
+
+    0%,
+    100% {
+        box-shadow: 0 0 8px rgba(0, 191, 255, 0.6), inset 0 0 8px rgba(0, 191, 255, 0.4);
+        border-color: rgba(0, 191, 255, 0.6);
+    }
+
+    50% {
+        box-shadow: 0 0 16px rgba(0, 191, 255, 1), inset 0 0 16px rgba(0, 191, 255, 0.8);
+        border-color: rgba(0, 191, 255, 1);
+    }
+}
+
+.cell.nextPossible {
+    animation: glowBlue 2s infinite ease-in-out;
+}
+
+.cell.nextPossible:hover {
+    border-color: rgba(0, 191, 255, 1);
+    box-shadow: 0 0 20px rgba(0, 191, 255, 1), inset 0 0 20px rgba(0, 191, 255, 0.8);
 }
 
 .cell.fixed {
