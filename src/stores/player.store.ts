@@ -36,11 +36,41 @@ export const usePlayerStore = create<PlayerState>()(
             isVoiceOverPlaying: false,
 
             setLanguage: (language) => set({ language }),
-            setMasterVolume: (volume) => set({ masterVolume: Math.max(0, Math.min(1, volume)) }),
-            setMusicVolume: (volume) => set({ musicVolume: Math.max(0, Math.min(1, volume)) }),
-            setSfxVolume: (volume) => set({ sfxVolume: Math.max(0, Math.min(1, volume)) }),
-            setVoiceVolume: (volume) => set({ voiceVolume: Math.max(0, Math.min(1, volume)) }),
-            setVoiceOverPlaying: (isPlaying) => set({ isVoiceOverPlaying: isPlaying }),
+            setMasterVolume: (volume) => {
+                if (typeof volume !== 'number') {
+                    console.error('Invalid volume provided to setMasterVolume');
+                    return;
+                }
+                set({ masterVolume: Math.max(0, Math.min(1, volume)) });
+            },
+            setMusicVolume: (volume) => {
+                if (typeof volume !== 'number') {
+                    console.error('Invalid volume provided to setMusicVolume');
+                    return;
+                }
+                set({ musicVolume: Math.max(0, Math.min(1, volume)) });
+            },
+            setSfxVolume: (volume) => {
+                if (typeof volume !== 'number') {
+                    console.error('Invalid volume provided to setSfxVolume');
+                    return;
+                }
+                set({ sfxVolume: Math.max(0, Math.min(1, volume)) });
+            },
+            setVoiceVolume: (volume) => {
+                if (typeof volume !== 'number') {
+                    console.error('Invalid volume provided to setVoiceVolume');
+                    return;
+                }
+                set({ voiceVolume: Math.max(0, Math.min(1, volume)) });
+            },
+            setVoiceOverPlaying: (isPlaying) => {
+                if (typeof isPlaying !== 'boolean') {
+                    console.error('Invalid isPlaying provided to setVoiceOverPlaying');
+                    return;
+                }
+                set({ isVoiceOverPlaying: isPlaying });
+            },
         }),
         {
             name: 'space-math-player-storage',

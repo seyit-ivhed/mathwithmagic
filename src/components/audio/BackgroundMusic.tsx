@@ -46,7 +46,9 @@ export const BackgroundMusic = () => {
     );
 
     useEffect(() => {
-        if (!audioRef.current) return;
+        if (!audioRef.current) {
+            return;
+        }
 
         // Only act if the track actually changes
         if (targetFilename !== currentTrackRef.current) {

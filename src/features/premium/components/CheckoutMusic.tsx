@@ -7,7 +7,9 @@ export const CheckoutMusic: React.FC = () => {
     const { masterVolume, musicVolume, isVoiceOverPlaying } = usePlayerStore();
 
     useEffect(() => {
-        if (!audioRef.current) return;
+        if (!audioRef.current) {
+            return;
+        }
 
         audioRef.current.src = successTrack as string;
         audioRef.current.play().catch(e => {

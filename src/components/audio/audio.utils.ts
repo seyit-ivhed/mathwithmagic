@@ -86,6 +86,11 @@ export const getRandomSuccessTrack = (musicFileKeys: string[]): string | null =>
  * @param soundPath relative path inside src/assets/sfx/ without the .mp3 extension
  */
 export const playSfx = (soundPath: string) => {
+    if (typeof soundPath !== 'string' || !soundPath) {
+        console.error('Invalid or missing soundPath provided to playSfx');
+        return;
+    }
+
     const url = getSfxUrl(soundPath);
     if (!url) {
         console.error(`SFX file not found for path: ${soundPath}`);

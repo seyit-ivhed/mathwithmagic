@@ -36,10 +36,14 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
         performAction: (unitId) => {
             const { party, monsters } = get();
             const unitIndex = party.findIndex(u => u.id === unitId);
-            if (unitIndex === -1) return;
+            if (unitIndex === -1) {
+                return;
+            }
 
             const unit = party[unitIndex];
-            if (unit.hasActed) return;
+            if (unit.hasActed) {
+                return;
+            }
 
             // Mark acted and prepare updated set for the engine
             const actingUnit = { ...unit, hasActed: true };
@@ -64,13 +68,17 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
         resolveSpecialAttack: (unitId, success) => {
             const { party, monsters } = get();
             const unitIndex = party.findIndex(u => u.id === unitId);
-            if (unitIndex === -1) return;
+            if (unitIndex === -1) {
+                return;
+            }
 
             const unit = party[unitIndex];
             const abilityId = unit.specialAbilityId;
             const variables = unit.specialAbilityVariables || {};
 
-            if (!abilityId) return;
+            if (!abilityId) {
+                return;
+            }
 
             if (success) {
                 if (unit.specialAbilitySound) {
@@ -114,7 +122,9 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
         consumeSpirit: (unitId) => {
             const { party } = get();
             const unitIndex = party.findIndex(u => u.id === unitId);
-            if (unitIndex === -1) return;
+            if (unitIndex === -1) {
+                return;
+            }
 
             const newParty = [...party];
             newParty[unitIndex] = { ...newParty[unitIndex], currentSpirit: 0 };

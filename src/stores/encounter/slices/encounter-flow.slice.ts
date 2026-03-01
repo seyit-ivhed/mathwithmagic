@@ -105,9 +105,9 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
         const { monsters } = get();
         const activeMonsters = monsters.filter(m => !m.isDead);
 
-        if (activeMonsters.length === 0) return; // Should be victory already
-
-
+        if (activeMonsters.length === 0) {
+            return; // Should be victory already
+        }
 
         // Process each monster attack sequentially with delays
         const processMonsterAttack = (monsterIndex: number) => {
