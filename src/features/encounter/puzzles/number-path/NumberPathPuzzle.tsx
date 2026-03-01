@@ -146,6 +146,7 @@ export const NumberPathPuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
                     {grid.map((row, ri) => (
                         <React.Fragment key={ri}>
                             {row.map((cell, ci) => {
+                                const isNextPossible = validNextPositions.some(p => p.row === ri && p.col === ci);
                                 return (
                                     <div
                                         key={`${ri}-${ci}`}
@@ -155,12 +156,12 @@ export const NumberPathPuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
                                                 ${cell.value !== null ? styles.filled : ''}
                                                 ${cell.isFixed ? styles.fixed : ''}
                                                 ${cell.value === currentHeadValue && !isCompleted ? styles.lastPlaced : ''}
-                                                ${validNextPositions.some(p => p.row === ri && p.col === ci) ? styles.nextPossible : ''}
+                                                ${isNextPossible ? styles.nextPossible : ''}
                                                 ${shakeCell?.row === ri && shakeCell?.col === ci ? styles.invalid : ''}
                                             `}
                                         onClick={() => handleCellClick(ri, ci)}
                                     >
-                                        {cell.value}
+                                        {cell.value !== null ? cell.value : (isNextPossible ? <span className={styles.blinkingNumber}>{nextExpectedValue}</span> : null)}
                                     </div>
                                 );
                             })}
