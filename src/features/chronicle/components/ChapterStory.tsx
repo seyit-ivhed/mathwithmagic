@@ -15,7 +15,7 @@ export const ChapterStory: React.FC<ChapterStoryProps> = ({
     adventureStoryHook,
     isLocked,
     isRevealing = false,
-    onCompleteReveal
+    onCompleteReveal = () => { }
 }) => {
     const { t } = useTranslation();
 
@@ -30,11 +30,7 @@ export const ChapterStory: React.FC<ChapterStoryProps> = ({
                     <AnimatedStoryText
                         text={textToDisplay}
                         isSkipped={!isRevealing || !!isLocked}
-                        onComplete={() => {
-                            if (onCompleteReveal) {
-                                onCompleteReveal();
-                            }
-                        }}
+                        onComplete={onCompleteReveal}
                     />
                 </p>
             </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import styles from './AnimatedStoryText.module.css';
 
 interface AnimatedStoryTextProps {
@@ -16,25 +16,31 @@ export const AnimatedStoryText: React.FC<AnimatedStoryTextProps> = ({
 }) => {
     const words = useMemo(() => text.split(' '), [text]);
 
-    const onCompleteRef = React.useRef(onComplete);
-    useEffect(() => {
-        onCompleteRef.current = onComplete;
-    }, [onComplete]);
+    const onCompleteRef = useRef(onComplete);
+    onCompleteRef.current = onComplete;
 
-    useEffect(() => {
-        if (isSkipped) {
-            onCompleteRef.current();
-            return;
+    const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    const prevKeyRef = useRef('');
+    const animationKey = `${words.length}-${wordDelayMs}-${isSkipped}`;
+
+    if (prevKeyRef.current !== animationKey) {
+        prevKeyRef.current = animationKey;
+
+        if (timerRef.current) {
+            clearTimeout(timerRef.current);
+            timerRef.current = null;
         }
 
-        // Slightly longer than the animation itself to ensure it finishes
-        const totalTime = words.length * wordDelayMs + 500;
-        const timer = setTimeout(() => {
+        if (isSkipped) {
             onCompleteRef.current();
-        }, totalTime);
-
-        return () => clearTimeout(timer);
-    }, [words.length, wordDelayMs, isSkipped]);
+        } else {
+            const totalTime = words.length * wordDelayMs + 500;
+            timerRef.current = setTimeout(() => {
+                onCompleteRef.current();
+            }, totalTime);
+        }
+    }
 
     return (
         <span className={styles.container}>

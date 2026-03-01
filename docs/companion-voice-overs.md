@@ -20,7 +20,7 @@ All phrases are between 3 and 5 words long.
 * **Success 1:** English: "I got you now!" | Swedish: "Nu fick jag dig!"
 * **Success 2:** English: "Nature guides my arrow!" | Swedish: "Naturen vägleder min pil!"
 * **Success 3:** English: "My aim is perfect!" | Swedish: "Mitt sikte är perfekt!"
-* **Success Native:** "¡Tengo puntería muy certera!" *(Accurate!)*
+* **Success Native:** "¡Puntería perfecta!" *(Perfect aim!)*
 * **Failure:** English: "Stay focused, try again!" | Swedish: "Håll fokus, försök igen!"
 * **Level-Up:** English: "I am growing wiser!" | Swedish: "Jag blir allt klokare!"
 
@@ -45,12 +45,12 @@ All phrases are between 3 and 5 words long.
 **Ability Fantasy:** Blade Barrier (Shield & Damage)  
 **Native Language:** Japanese
 
-* **Success 1:** English: "Hold fast against them!" | Swedish: "Håll ut mot dem!"
+* **Success 1:** English: "Hold fast against them!" | Swedish: "Håll stånd mot dem!"
 * **Success 2:** English: "You must stand firm!" | Swedish: "Du måste stå fast!"
-* **Success 3:** English: "Block all their attacks!" | Swedish: "Blockera alla deras attacker!"
+* **Success 3:** English: "Block all their attacks!" | Swedish: "Blockera alla attacker!"
 * **Success Native:** "Kiai wo irete ikuzo!" (気合を入れて行くぞ) *(Spirit Focus!)*
-* **Failure:** English: "Breathe, then try again!" | Swedish: "Andas, sedan försök igen!"
-* **Level-Up:** English: "My training is starting!" | Swedish: "Min träning börjar!"
+* **Failure:** English: "Breathe, then try again!" | Swedish: "Andas och försök igen!"
+* **Level-Up:** English: "My training pays off!" | Swedish: "Min träning ger resultat!"
 
 ---
 
@@ -59,9 +59,9 @@ All phrases are between 3 and 5 words long.
 **Ability Fantasy:** Ancestral Storm (AoE Damage)  
 **Native Language:** Swahili
 
-* **Translatable 1:** English: "Feel the fierce wind!" | Swedish: "Känn den grymma vinden!"
+* **Success 1:** English: "Feel the fierce wind!" | Swedish: "Känn den vilda vinden!"
 * **Success 2:** English: "Thunder obeys my call!" | Swedish: "Åskan lyder mitt rop!"
 * **Success 3:** English: "I command the skies!" | Swedish: "Jag befaller himlen!"
 * **Success Native:** "Dhoruba kubwa inakuja sasa!" *(Storm!)*
 * **Failure:** English: "Try again, feel the wind!" | Swedish: "Försök igen, känn vinden!"
-* **Level-Up:** English: "My power is growing stronger!" | Swedish: "Min kraft växer sig starkare!"
+* **Level-Up:** English: "My power is growing stronger!" | Swedish: "Min kraft blir starkare!"
