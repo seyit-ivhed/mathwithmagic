@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import type { Adventure } from '../../../types/adventure.types';
 import { AdventureStatus } from '../../../types/adventure.types';
 import { getAdventureIllustration } from '../../../data/adventure-assets';
@@ -52,15 +52,13 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
 
     useVoiceOver('chronicles', isActive && !isLocked ? `adventure-${adventure.id}` : '');
 
-    const [isRevealing, setIsRevealing] = useState(false);
+    const [lastFlags, setLastFlags] = useState({ id: adventure.id, active: isActive, locked: isLocked });
+    const [isRevealing, setIsRevealing] = useState(isActive && !isLocked);
 
-    useEffect(() => {
-        if (isActive && !isLocked) {
-            setIsRevealing(true);
-        } else {
-            setIsRevealing(false);
-        }
-    }, [adventure.id, isActive, isLocked]);
+    if (adventure.id !== lastFlags.id || isActive !== lastFlags.active || isLocked !== lastFlags.locked) {
+        setLastFlags({ id: adventure.id, active: isActive, locked: isLocked });
+        setIsRevealing(isActive && !isLocked);
+    }
 
     return (
         <div className={`chapter-page ${isLocked ? 'locked' : ''}`} data-testid="chapter-page">
