@@ -18,6 +18,9 @@ fi
 echo -e "${YELLOW}Step 1: Restarting Supabase services with a clean slate...${NC}"
 echo -e "${YELLOW}(This will stop services, delete data volumes, and start fresh)${NC}"
 
+# Stop other workspace if running (to free ports)
+npx supabase stop --project-id workspace-1 2>/dev/null
+
 # Stop and wipe data
 npx supabase stop --no-backup
 if [ $? -ne 0 ]; then
@@ -39,4 +42,4 @@ echo -e "${GREEN}Local Supabase deployment/reset completed successfully!${NC}"
 
 # 2. View Edge Function Logs
 echo -e "${YELLOW}Tailing Edge Function logs... (Press Ctrl+C to exit)${NC}"
-docker logs -f supabase_edge_runtime_workspace-1
+docker logs -f supabase_edge_runtime_workspace-2
