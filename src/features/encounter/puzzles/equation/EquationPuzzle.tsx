@@ -12,8 +12,13 @@ export const EquationPuzzle = ({ data, onSolve }: PuzzleProps) => {
     const [isSolved, setIsSolved] = useState(false);
     const [isShaking, setIsShaking] = useState(false);
 
-    if (data.puzzleType !== PuzzleType.EQUATION) {
+    if (!data || data.puzzleType !== PuzzleType.EQUATION) {
         console.error('Invalid puzzle type for EquationPuzzle');
+        return null;
+    }
+
+    if (typeof onSolve !== 'function') {
+        console.error('onSolve is not a function in EquationPuzzle');
         return null;
     }
 
