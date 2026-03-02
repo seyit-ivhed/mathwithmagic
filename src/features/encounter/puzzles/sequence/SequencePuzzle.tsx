@@ -1,11 +1,11 @@
 import { useState, useMemo, useEffect } from 'react';
-import type { PuzzleProps, SequenceData } from '../../../../types/adventure.types';
+import { PuzzleType, type PuzzleProps, type SequenceData } from '../../../../types/adventure.types';
 import { validateNextStep, isSequenceComplete, generateStarPositions } from './SequenceEngine';
 import styles from './SequencePuzzle.module.css';
 import { playSfx } from '../../../../components/audio/audio.utils';
 
 export const SequencePuzzle = ({ data, onSolve }: PuzzleProps) => {
-    const puzzleData = data as SequenceData;
+    const puzzleData = (data as SequenceData) || { options: [], targetValue: 0, rules: [] };
     const { options, targetValue, rules } = puzzleData;
 
     // Convert options to simple number array if they are complex objects (though sequence usually assumes numbers)
@@ -53,9 +53,21 @@ export const SequencePuzzle = ({ data, onSolve }: PuzzleProps) => {
         }
     }, [wrongSelection]);
 
+    if (!data || data.puzzleType !== PuzzleType.SEQUENCE) {
+        console.error(`Invalid puzzle data passed to SequencePuzzle: ${data?.puzzleType}`);
+        return null;
+    }
+
+    if (typeof onSolve !== 'function') {
+        console.error('onSolve is not a function in SequencePuzzle');
+        return null;
+    }
+
     const handleStarClick = (index: number) => {
         // Prevent clicking already selected stars (unless we want to allow backtracking? Let's keep it simple: strict forward path)
-        if (path.includes(index)) return;
+        if (path.includes(index)) {
+            return;
+        }
 
         const selectedValue = numericOptions[index];
         const currentValues = path.map(idx => numericOptions[idx]);
@@ -101,7 +113,9 @@ export const SequencePuzzle = ({ data, onSolve }: PuzzleProps) => {
 
                     {/* Draw lines between connected stars */}
                     {path.map((starIndex, i) => {
-                        if (i === 0) return null;
+                        if (i === 0) {
+                            return null;
+                        }
                         const prevStarIndex = path[i - 1];
                         const p1 = positions[prevStarIndex];
                         const p2 = positions[starIndex];

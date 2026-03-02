@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { type PuzzleOption, type PuzzleProps, type RefillCanteenData } from '../../../../types/adventure.types';
+import { PuzzleType, type PuzzleOption, type PuzzleProps, type RefillCanteenData } from '../../../../types/adventure.types';
 import { playSfx } from '../../../../components/audio/audio.utils';
 import { calculateNextSum, formatActionLabel, isPuzzleSolved } from './RefillCanteenEngine';
 import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
@@ -14,7 +14,7 @@ const getIconForOption = (option: number | PuzzleOption): string => {
 };
 
 export const RefillCanteenPuzzle = ({ data, onSolve }: PuzzleProps) => {
-    const puzzleData = data as RefillCanteenData;
+    const puzzleData = (data as RefillCanteenData) || { targetValue: 1, options: [] };
     const [currentSum, setCurrentSum] = useState(0);
     const [isSolved, setIsSolved] = useState(false);
     const [usedOptions, setUsedOptions] = useState<number[]>([]);
@@ -32,6 +32,16 @@ export const RefillCanteenPuzzle = ({ data, onSolve }: PuzzleProps) => {
             return () => clearTimeout(timer);
         }
     }, [lastAction]);
+
+    if (!data || data.puzzleType !== PuzzleType.REFILL_CANTEEN) {
+        console.error(`Invalid puzzle data passed to RefillCanteenPuzzle: ${data?.puzzleType}`);
+        return null;
+    }
+
+    if (typeof onSolve !== 'function') {
+        console.error('onSolve is not a function in RefillCanteenPuzzle');
+        return null;
+    }
 
     const handlePipeClick = (option: number | PuzzleOption, index: number) => {
         if (isSolved || usedOptions.includes(index)) {

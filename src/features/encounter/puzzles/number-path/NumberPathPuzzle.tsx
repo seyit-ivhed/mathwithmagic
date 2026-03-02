@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { type PuzzleProps, type NumberPathData } from '../../../../types/adventure.types';
+import { PuzzleType, type PuzzleProps, type NumberPathData } from '../../../../types/adventure.types';
 import styles from './NumberPathPuzzle.module.css';
 import {
     type CellData,
@@ -13,7 +13,7 @@ import { playSfx } from '../../../../components/audio/audio.utils';
 const SUCCESS_DISPLAY_DURATION_MS = 2000;
 
 export const NumberPathPuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
-    const puzzleData = data as NumberPathData;
+    const puzzleData = (data as NumberPathData) || { gridSize: 3, startValue: 1, stepValue: 1, preFilledIndices: [] };
     const { gridSize = 3, startValue = 1, stepValue = 1, preFilledIndices = [] } = puzzleData;
 
     const totalCells = gridSize * gridSize;
@@ -139,6 +139,16 @@ export const NumberPathPuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
         }
         return points.join(' ');
     }, [grid, startValue, stepValue]);
+
+    if (!data || data.puzzleType !== PuzzleType.NUMBER_PATH) {
+        console.error(`Invalid puzzle data passed to NumberPathPuzzle: ${data?.puzzleType}`);
+        return null;
+    }
+
+    if (typeof onSolve !== 'function') {
+        console.error('onSolve is not a function in NumberPathPuzzle');
+        return null;
+    }
 
     return (
         <div className={styles.container}>
