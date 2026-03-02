@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import type { PuzzleProps, SequenceData } from '../../../../types/adventure.types';
 import { validateNextStep, isSequenceComplete, generateStarPositions } from './SequenceEngine';
 import styles from './SequencePuzzle.module.css';
+import { playSfx } from '../../../../components/audio/audio.utils';
 
 export const SequencePuzzle = ({ data, onSolve }: PuzzleProps) => {
     const puzzleData = data as SequenceData;
@@ -63,15 +64,18 @@ export const SequencePuzzle = ({ data, onSolve }: PuzzleProps) => {
         if (validateNextStep(currentValues, selectedValue, rules)) {
             const newPath = [...path, index];
             setPath(newPath);
+            playSfx('puzzle/star-sparkle');
 
             // Check win condition
             const newValues = [...currentValues, selectedValue];
             if (isSequenceComplete(newValues, targetValue)) {
                 setIsSuccess(true);
+                playSfx('puzzle/magical-success');
             }
         } else {
             // Trigger wrong animation
             setWrongSelection(index);
+            playSfx('puzzle/wrong');
         }
     };
 
