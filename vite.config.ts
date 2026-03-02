@@ -11,6 +11,9 @@ logger.warn = (msg) => {
 export default defineConfig({
   plugins: [react()],
   customLogger: logger,
+  server: {
+    host: '127.0.0.1',
+  },
   build: {
     rollupOptions: {
       input: {
