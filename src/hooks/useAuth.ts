@@ -1,4 +1,8 @@
-// This file is ignored by vitest unit test coverage
+/***
+This file is ignored by vitest unit test coverage. The reason is that it takes too
+long to run unit tests for this file as it accesses supabase
+DO NOT ADD UNIT TESTS FOR THIS FILE (even though we want .ts files to have unit tests) 
+***/
 import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '../services/supabase.service';
 
