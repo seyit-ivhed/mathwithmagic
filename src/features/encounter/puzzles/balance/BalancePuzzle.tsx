@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PuzzleType, type PuzzleProps, type BalanceData, type Weight } from '../../../../types/adventure.types';
 import {
@@ -7,6 +7,7 @@ import {
 } from './BalanceEngine';
 import styles from './BalancePuzzle.module.css';
 import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
+import { playSfx } from '../../../../components/audio/audio.utils';
 
 const SUCCESS_DISPLAY_DURATION_MS = 3000;
 const ARM_OFFSET_HEAVY = '100px';
@@ -20,6 +21,20 @@ export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
     const [leftStack, setLeftStack] = useState<Weight[]>(initialData.leftStack || []);
     const [rightStack, setRightStack] = useState<Weight[]>(initialData.rightStack || []);
     const [isSolved, setIsSolved] = useState(false);
+
+    const leftTotal = calculateTotalWeight(leftStack);
+    const rightTotal = calculateTotalWeight(rightStack);
+    const prevBalance = useRef<'left' | 'right' | 'equal' | null>(null);
+
+    useEffect(() => {
+        const currentBalance = leftTotal > rightTotal ? 'left' : leftTotal < rightTotal ? 'right' : 'equal';
+
+        if (prevBalance.current !== null && prevBalance.current !== currentBalance) {
+            playSfx('puzzle/chains');
+        }
+
+        prevBalance.current = currentBalance;
+    }, [leftTotal, rightTotal]);
 
     if (!data || data.puzzleType !== PuzzleType.BALANCE) {
         console.error(`Invalid puzzle data passed to BalancePuzzle: ${data?.puzzleType}`);
@@ -36,6 +51,7 @@ export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
             return;
         }
 
+        playSfx('interface/click');
         if (side === 'left') {
             const next = leftStack.filter(w => w.id !== weightId);
             setLeftStack(next);
@@ -50,6 +66,7 @@ export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
     const checkSolution = (l: Weight[], r: Weight[]) => {
         if (validateBalance(l, r)) {
             setIsSolved(true);
+            playSfx('puzzle/magical-success');
 
             setTimeout(() => {
                 onSolve();
@@ -64,9 +81,6 @@ export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
         setLeftStack(initialData.leftStack);
         setRightStack(initialData.rightStack);
     };
-
-    const leftTotal = calculateTotalWeight(leftStack);
-    const rightTotal = calculateTotalWeight(rightStack);
 
     // Check if all removable stones are gone
     const hasRemovableStones = [...leftStack, ...rightStack].some(w => !w.isHeavy);
@@ -181,4 +195,3 @@ const WeightComponent = ({ weight, side, onRemove, disabled }: WeightComponentPr
         </div>
     );
 };
-
