@@ -571,5 +571,11 @@
         "music_volume": "Musikvolym",
         "sfx_volume": "Ljudeffekter",
         "voice_volume": "Röstvolym"
+    },
+    "change_password": {
+        "title": "Lösenord",
+        "submit_btn": "Skicka länk för lösenordsändring",
+        "success_message": "En länk för lösenordsändring har skickats till din e-post. Kolla din inkorg.",
+        "error_generic": "Något gick fel. Försök igen."
     }
 }

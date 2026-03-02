@@ -6,6 +6,8 @@ import { playSfx } from './audio/audio.utils';
 import { Modal } from './ui/Modal';
 import { LanguageSettings } from './settings/LanguageSettings';
 import { SoundSettings } from './settings/SoundSettings';
+import { ChangePasswordSettings } from './settings/ChangePasswordSettings';
+import { useAuth } from '../hooks/useAuth';
 import sectionStyles from './settings/SettingsSection.module.css';
 import styles from './SettingsMenu.module.css';
 
@@ -13,6 +15,9 @@ const SettingsMenu: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isDebugOpen, setIsDebugOpen] = useState(false);
     const { t } = useTranslation();
+    const { user } = useAuth();
+
+    const hasAccount = !!user && !user.is_anonymous;
 
     const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -39,6 +44,8 @@ const SettingsMenu: React.FC = () => {
                 <LanguageSettings />
 
                 <SoundSettings />
+
+                {hasAccount && <ChangePasswordSettings />}
 
                 <div className={sectionStyles.settingsSection}>
                     <button
