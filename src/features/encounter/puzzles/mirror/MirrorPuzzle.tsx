@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { MirrorEngine } from './MirrorEngine';
 import styles from './MirrorPuzzle.module.css';
 import { PuzzleType, type PuzzleProps, type MirrorData, type MirrorGridCell } from '../../../../types/adventure.types';
+import { playSfx } from '../../../../components/audio/audio.utils';
 
 const ANIMATION_DURATION_MS = 600;
 const ROTATION_MIDPOINT_MS = 300;
@@ -38,6 +39,7 @@ export const MirrorPuzzle = ({ data, onSolve }: PuzzleProps) => {
         }
 
         setRotatingCell({ x, y });
+        playSfx('puzzle/rotating-stone');
 
         setTimeout(() => {
             const updatedRight = MirrorEngine.rotateCell(rightPattern, x, y);
@@ -46,6 +48,7 @@ export const MirrorPuzzle = ({ data, onSolve }: PuzzleProps) => {
             if (MirrorEngine.checkSolution(leftPattern, updatedRight, gridSize)) {
                 setIsSolved(true);
                 setTimeout(() => onSolve(), VICTORY_DELAY_MS);
+                playSfx('puzzle/magical-success');
             }
         }, ROTATION_MIDPOINT_MS);
 
