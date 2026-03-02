@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { LatinSquareEngine } from './LatinSquareEngine';
 import styles from './LatinSquarePuzzle.module.css';
 import { PuzzleType, type PuzzleProps, type LatinSquareData, type LatinSquareElement } from '../../../../types/adventure.types';
+import { playSfx } from '../../../../components/audio/audio.utils';
 
 const ANIMATION_DURATION_MS = 600;
 const ROTATION_MIDPOINT_MS = 300;
@@ -44,15 +45,18 @@ export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
             if (LatinSquareEngine.checkSolution(newGrid)) {
                 setIsSolved(true);
                 setTimeout(() => onSolve(), 2000);
+                playSfx('puzzle/magical-success');
             }
         };
 
         if (current === null) {
             updateGrid(nextValue);
+            playSfx('interface/click');
             return;
         }
 
         setRotatingCell({ row, col });
+        playSfx('puzzle/rotating-stone');
 
         setTimeout(() => {
             updateGrid(nextValue);
