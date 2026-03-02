@@ -1,0 +1,36 @@
+name: Copilot Issue Resolver
+
+on:
+  issues:
+    types: [assigned]
+
+jobs:
+  trigger-copilot:
+    # Only run when the issue is assigned to the Copilot bot
+    if: github.event.assignee.login == 'copilot'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+      - name: Post Copilot trigger comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              body: [
+                `@copilot Please resolve this issue following the **issue-resolver** skill`,
+                `(\`.agent/skills/issue-resolver/SKILL.md\`).`,
+                ``,
+                `Steps to follow:`,
+                `1. Create a new branch from \`main\` named \`copilot/issue-${issue.number}-<short-description>\``,
+                `2. Implement the fix using the **frontend-developer** skill`,
+                `3. Review the code using the **code-reviewer** skill`,
+                `4. Run tests and add any missing unit tests`,
+                `5. Open a pull request targeting \`main\` that closes this issue`,
+              ].join('\n'),
+            });
