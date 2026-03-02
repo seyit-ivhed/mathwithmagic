@@ -8,6 +8,7 @@ import {
     calculateSequenceState,
     validateMove
 } from './NumberPathEngine';
+import { playSfx } from '../../../../components/audio/audio.utils';
 
 const SUCCESS_DISPLAY_DURATION_MS = 2000;
 
@@ -97,8 +98,10 @@ export const NumberPathPuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
 
         if (!isValid) {
             triggerShake({ row, col });
+            playSfx('puzzle/wrong');
             return;
         }
+        playSfx('puzzle/star-sparkle');
 
         // Count current filled cells before placing
         const currentFilledCells = grid.flat().filter(c => c.value !== null).length;
@@ -112,6 +115,7 @@ export const NumberPathPuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
         if (willBeFilledAfter === totalCells) {
             setIsCompleted(true);
             setTimeout(onSolve, SUCCESS_DISPLAY_DURATION_MS);
+            playSfx('puzzle/magical-success');
         }
     };
 
