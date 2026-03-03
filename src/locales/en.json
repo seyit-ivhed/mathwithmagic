@@ -571,5 +571,11 @@
         "music_volume": "Music Volume",
         "sfx_volume": "SFX Volume",
         "voice_volume": "Voice Volume"
+    },
+    "change_password": {
+        "title": "Password",
+        "submit_btn": "Send Password Change Link",
+        "success_message": "A password change link has been sent to your email. Check your inbox.",
+        "error_generic": "Something went wrong. Please try again."
     }
 }

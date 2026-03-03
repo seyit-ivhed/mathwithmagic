@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AdventurePage from './features/adventure/AdventurePage';
 import { ChronicleBook } from './features/chronicle/ChronicleBook';
 import { ResetPasswordPage } from './features/chronicle/components/ResetPasswordPage';
@@ -11,6 +11,7 @@ import { useAnonymousLoginTrigger } from './hooks/useAnonymousLoginTrigger';
 import { LoadingScreen } from './components/LoadingScreen';
 import { AdventureGuard } from './components/guards/AdventureGuard';
 import { BackgroundMusic } from './components/audio/BackgroundMusic';
+import { RootRedirect } from './components/RootRedirect';
 
 function AppContent() {
   const { isInitializing, error, retry } = useInitializeGame();
@@ -27,7 +28,7 @@ function AppContent() {
       <Routes>
         <Route element={<Layout />}>
           {/* Unified Entry Point */}
-          <Route path="/" element={<Navigate to="/chronicle" replace />} />
+          <Route path="/" element={<RootRedirect />} />
 
           {/* Chronicle Routes */}
           <Route path="/chronicle" element={<ChronicleBook />} />

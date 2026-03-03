@@ -176,36 +176,3 @@ fi
 # fi
 
 echo -e "${GREEN}E2E tests passed on main.${NC}\n"
-
-# Step 16: Push main to origin
-echo -e "${YELLOW}Step 16: Pushing main to origin...${NC}"
-git push origin main
-if [ $? -ne 0 ]; then
-    echo -e "${RED}Failed to push main to origin.${NC}"
-    exit 1
-fi
-
-echo -e "${GREEN}Successfully pushed main to origin.${NC}\n"
-
-# Step 17: Delete the feature branch locally
-echo -e "${YELLOW}Step 17: Deleting branch $CURRENT_BRANCH locally...${NC}"
-git branch -d "$CURRENT_BRANCH"
-if [ $? -ne 0 ]; then
-    echo -e "${RED}Failed to delete local branch. Using force delete...${NC}"
-    git branch -D "$CURRENT_BRANCH"
-fi
-
-echo -e "${GREEN}Successfully deleted local branch: $CURRENT_BRANCH${NC}\n"
-
-# Step 18: Delete the feature branch remotely
-echo -e "${YELLOW}Step 18: Deleting branch $CURRENT_BRANCH from origin...${NC}"
-git push origin --delete "$CURRENT_BRANCH"
-if [ $? -ne 0 ]; then
-    echo -e "${RED}Failed to delete remote branch.${NC}"
-    exit 1
-fi
-
-echo -e "${GREEN}Successfully deleted remote branch: $CURRENT_BRANCH${NC}\n"
-
-echo -e "${GREEN}Project completion workflow finished successfully!${NC}"
-echo -e "${YELLOW}Branch $CURRENT_BRANCH has been merged into main and deleted.${NC}"
