@@ -14,7 +14,9 @@ export const ChangePasswordSettings: React.FC = () => {
     const [submitted, setSubmitted] = useState(false);
 
     const handleChangePassword = async () => {
-        if (!user?.email) return;
+        if (!user?.email) {
+            return
+        };
         setError(null);
         setLoading(true);
 

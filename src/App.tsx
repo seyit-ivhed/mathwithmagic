@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import AdventurePage from './features/adventure/AdventurePage';
 import { ChronicleBook } from './features/chronicle/ChronicleBook';
 import { ResetPasswordPage } from './features/chronicle/components/ResetPasswordPage';
@@ -11,6 +11,20 @@ import { useAnonymousLoginTrigger } from './hooks/useAnonymousLoginTrigger';
 import { LoadingScreen } from './components/LoadingScreen';
 import { AdventureGuard } from './components/guards/AdventureGuard';
 import { BackgroundMusic } from './components/audio/BackgroundMusic';
+
+// Capture the hash before any other scripts (like Supabase Auth) might strip it
+const initialHash = typeof window !== 'undefined' ? window.location.hash : '';
+
+const RootRedirect = () => {
+  const location = useLocation();
+  const hash = location.hash || initialHash;
+
+  if (hash.includes('type=recovery')) {
+    return <Navigate to={`/reset-password${hash}`} replace />;
+  }
+
+  return <Navigate to="/chronicle" replace />;
+};
 
 function AppContent() {
   const { isInitializing, error, retry } = useInitializeGame();
@@ -27,7 +41,7 @@ function AppContent() {
       <Routes>
         <Route element={<Layout />}>
           {/* Unified Entry Point */}
-          <Route path="/" element={<Navigate to="/chronicle" replace />} />
+          <Route path="/" element={<RootRedirect />} />
 
           {/* Chronicle Routes */}
           <Route path="/chronicle" element={<ChronicleBook />} />
