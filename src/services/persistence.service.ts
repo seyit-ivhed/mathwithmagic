@@ -1,6 +1,8 @@
 import { supabase } from './supabase.service';
 import { IdentityService } from './identity.service';
 import { DebouncedQueue } from '../utils/debounced-queue';
+import { mergeGameState } from '../utils/merge-game-state';
+import type { GameState } from '../stores/game/interfaces';
 
 interface SyncInput {
     authId: string;
@@ -42,15 +44,37 @@ export const PersistenceService = {
 
     /**
      * Pushes the current game state to Supabase.
+     *
+     * Before writing, the current cloud state is fetched and merged with the
+     * provided state using {@link mergeGameState}.  This guarantees that a
+     * concurrent session (another browser tab or device logged in to the same
+     * account) can never cause progress to regress: encounters, companions,
+     * adventures and party members are merged so only the most-advanced values
+     * are persisted.
+     *
+     * **Trade-offs:**
+     * - This adds one extra read per push.  The {@link DebouncedQueue} (300 ms)
+     *   already collapses rapid writes into a single network call, keeping the
+     *   overhead acceptable for a game workload.
+     * - The read-merge-write is not atomically enforced at the database level.
+     *   A simultaneous write from another session between the read and the write
+     *   can be silently overwritten.  However, because the merge only ever moves
+     *   progress *forward*, the overwritten state itself will be re-merged on the
+     *   next push, so no progress is permanently lost.
      */
     async pushState(authId: string, state: object) {
         try {
-            // Upsert the game state
+            // Pull the current cloud state and merge so progress never regresses
+            const cloudState = await PersistenceService.pullState(authId);
+            const stateToWrite = cloudState
+                ? mergeGameState(state as GameState, cloudState as Partial<GameState>)
+                : state;
+
             const { error: upsertError } = await supabase
                 .from('game_states')
                 .upsert({
                     player_id: authId,
-                    state_blob: state,
+                    state_blob: stateToWrite,
                     updated_at: new Date().toISOString()
                 }, {
                     onConflict: 'player_id'

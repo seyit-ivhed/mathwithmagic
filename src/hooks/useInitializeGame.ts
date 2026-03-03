@@ -3,6 +3,8 @@ import { useAuth } from './useAuth';
 import { useGameStore } from '../stores/game/store';
 import { usePremiumStore } from '../stores/premium.store';
 import { PersistenceService } from '../services/persistence.service';
+import { mergeGameState } from '../utils/merge-game-state';
+import type { GameState } from '../stores/game/interfaces';
 
 export const useInitializeGame = () => {
     const { isAuthenticated, user, loading: authLoading, refreshSession } = useAuth();
@@ -42,8 +44,12 @@ export const useInitializeGame = () => {
                 ]);
 
                 if (cloudState) {
-                    console.log('Cloud state found, rehydrating store...');
-                    useGameStore.setState(cloudState);
+                    console.log('Cloud state found, merging with local state...');
+                    // Merge cloud state with the local (localStorage-persisted) state so
+                    // that progress from an offline session is never overwritten.
+                    const localState = useGameStore.getState();
+                    const mergedState = mergeGameState(localState, cloudState as Partial<GameState>);
+                    useGameStore.setState(mergedState);
                 }
             }
 
