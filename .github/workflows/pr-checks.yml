@@ -85,3 +85,19 @@ jobs:
 
       - name: Run unit tests
         run: npm test -- --run
+
+  edge-function-tests:
+    name: Edge Function Tests
+    runs-on: ubuntu-latest
+    needs: conflict-check
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Run edge function tests
+        run: deno test --allow-env --allow-net supabase/functions/
