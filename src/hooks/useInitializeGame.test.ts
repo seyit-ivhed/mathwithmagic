@@ -46,7 +46,9 @@ describe('useInitializeGame', () => {
             loading: false,
             refreshSession: mockRefreshSession,
             signIn: vi.fn(),
-            signInAnonymously: vi.fn()
+            signInAnonymously: vi.fn(),
+            resetPasswordForEmail: vi.fn(),
+            updatePassword: vi.fn(),
         } as ReturnType<typeof useAuth>);
 
         const { result, rerender } = renderHook(() => useInitializeGame());
@@ -68,7 +70,9 @@ describe('useInitializeGame', () => {
             loading: false,
             refreshSession: mockRefreshSession,
             signIn: vi.fn(),
-            signInAnonymously: vi.fn()
+            signInAnonymously: vi.fn(),
+            resetPasswordForEmail: vi.fn(),
+            updatePassword: vi.fn(),
         } as ReturnType<typeof useAuth>);
 
         rerender();

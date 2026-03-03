@@ -11,20 +11,26 @@ export const useInitializeGame = () => {
 
     const initializePremium = usePremiumStore(state => state.initialize);
     const initialized = useRef(false);
-    const lastAuthId = useRef<string | undefined>(user?.id);
+    const [lastAuthId, setLastAuthId] = useState<string | undefined>(user?.id);
+
+    if (user?.id !== lastAuthId) {
+        setLastAuthId(user?.id);
+    }
+
+    const needsReInit = !authLoading && (!initialized.current || lastAuthId !== user?.id);
 
     const performInitialization = useCallback(async () => {
-        await Promise.resolve();
-        if (authLoading) return;
+        if (authLoading) {
+            return;
+        }
 
-        // Re-initialize if auth identity changes or not initialized yet
-        if (initialized.current && lastAuthId.current === user?.id) {
+        if (initialized.current && lastAuthId === user?.id) {
             return;
         }
 
         console.log('Starting game initialization sequence...');
-        initialized.current = true; // Set immediately to prevent race conditions
-        lastAuthId.current = user?.id;
+        initialized.current = true;
+        setLastAuthId(user?.id);
         setError(null);
         setIsInitializing(true);
 
@@ -32,13 +38,11 @@ export const useInitializeGame = () => {
             if (isAuthenticated && user) {
                 console.log('User is authenticated, initializing data...');
 
-                // 1. Get or create profile (single fetch)
                 const profile = await PersistenceService.getOrCreateProfile(user.id);
 
-                // 2. Fetch state and entitlements in parallel
                 const [cloudState] = await Promise.all([
                     PersistenceService.pullState(user.id),
-                    initializePremium(true, profile) // Force re-fetch for new user
+                    initializePremium(true, profile)
                 ]);
 
                 if (cloudState) {
@@ -50,29 +54,25 @@ export const useInitializeGame = () => {
             setIsInitializing(false);
         } catch (err: unknown) {
             console.error('Initialization failed:', err);
-            initialized.current = false; // Reset on failure to allow retry
+            initialized.current = false;
             setError('offline');
             setIsInitializing(false);
         }
     }, [authLoading, isAuthenticated, user, initializePremium]);
 
     useEffect(() => {
-        const runInit = async () => {
-            await performInitialization();
-        };
-        runInit();
+        performInitialization();
     }, [performInitialization]);
 
     const retry = useCallback(() => {
         initialized.current = false;
-        // We might need to refresh session if it's an auth-related failure
         refreshSession().then(() => {
             performInitialization();
         });
     }, [performInitialization, refreshSession]);
 
     return {
-        isInitializing: isInitializing || authLoading,
+        isInitializing: isInitializing || authLoading || needsReInit,
         error,
         retry
     };
