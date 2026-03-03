@@ -4,15 +4,28 @@ import { useInitializeGame } from './useInitializeGame';
 import { useAuth } from './useAuth';
 import { usePremiumStore, type PremiumState } from '../stores/premium.store';
 import { PersistenceService } from '../services/persistence.service';
+import { mergeGameState } from '../utils/merge-game-state';
 import type { Session, User } from '@supabase/supabase-js';
+import type { GameState } from '../stores/game/interfaces';
 
-// Mocks
 vi.mock('./useAuth');
 vi.mock('../services/persistence.service');
+vi.mock('../utils/merge-game-state');
 vi.mock('../stores/premium.store');
+
+const mockSetState = vi.fn();
+const emptyGameState: GameState = {
+    activeParty: [],
+    encounterResults: {},
+    activeEncounterDifficulty: 1,
+    companionStats: {},
+    adventureStatuses: {},
+};
+
 vi.mock('../stores/game/store', () => ({
     useGameStore: {
-        setState: vi.fn(),
+        setState: (...args: unknown[]) => mockSetState(...args),
+        getState: () => emptyGameState,
     }
 }));
 
@@ -24,7 +37,6 @@ describe('useInitializeGame', () => {
         vi.clearAllMocks();
         vi.spyOn(console, 'log').mockImplementation(() => { });
 
-        // Setup default mocks
         vi.mocked(usePremiumStore).mockImplementation((selector?: unknown) => {
             if (typeof selector === 'function') {
                 return mockInitializePremium;
@@ -32,13 +44,12 @@ describe('useInitializeGame', () => {
             return { initialize: mockInitializePremium } as unknown as PremiumState;
         });
 
-        // Mock PersistenceService
         vi.mocked(PersistenceService.getOrCreateProfile).mockResolvedValue({ id: 'p1' });
         vi.mocked(PersistenceService.pullState).mockResolvedValue(null);
+        vi.mocked(mergeGameState).mockImplementation((primary) => primary);
     });
 
     it('should force re-initialize premium when user changes (Reproduction Case)', async () => {
-        // 1. Start as Anonymous
         vi.mocked(useAuth).mockReturnValue({
             session: { user: { id: 'anon-user' } } as unknown as Session,
             isAuthenticated: true,
@@ -55,12 +66,10 @@ describe('useInitializeGame', () => {
             expect(result.current.isInitializing).toBe(false);
         }, { interval: 5 });
 
-        // Verify initial call - expecting true because we now force it
         expect(mockInitializePremium).toHaveBeenCalledWith(true, expect.anything());
 
         mockInitializePremium.mockClear();
 
-        // 2. Simulate Login (User changes)
         vi.mocked(useAuth).mockReturnValue({
             session: { user: { id: 'premium-user' } } as unknown as Session,
             isAuthenticated: true,
@@ -77,9 +86,45 @@ describe('useInitializeGame', () => {
             expect(result.current.isInitializing).toBe(false);
         }, { interval: 5 });
 
-        // VERIFY FIX:
-        // We ensure it is called with `true` (force) because the user changed.
-        // This confirms that entitlements are correctly re-fetched for the new identity.
         expect(mockInitializePremium).toHaveBeenCalledWith(true, expect.anything());
     });
+
+    it('should merge cloud state with local state when cloud state exists', async () => {
+        const cloudState = {
+            activeParty: ['tariq'],
+            encounterResults: { '1_1': { stars: 3, difficulty: 3, completedAt: 100 } },
+            activeEncounterDifficulty: 2,
+            companionStats: { tariq: { level: 5, experience: 0 } },
+            adventureStatuses: {},
+        };
+
+        const mergedState: GameState = {
+            ...emptyGameState,
+            activeParty: ['tariq'],
+            companionStats: { tariq: { level: 5, experience: 0 } },
+        };
+
+        vi.mocked(PersistenceService.pullState).mockResolvedValue(cloudState);
+        vi.mocked(mergeGameState).mockReturnValue(mergedState);
+
+        vi.mocked(useAuth).mockReturnValue({
+            session: { user: { id: 'user-1' } } as unknown as Session,
+            isAuthenticated: true,
+            user: { id: 'user-1' } as unknown as User,
+            loading: false,
+            refreshSession: mockRefreshSession,
+            signIn: vi.fn(),
+            signInAnonymously: vi.fn()
+        } as ReturnType<typeof useAuth>);
+
+        const { result } = renderHook(() => useInitializeGame());
+
+        await waitFor(() => {
+            expect(result.current.isInitializing).toBe(false);
+        }, { interval: 5 });
+
+        expect(mergeGameState).toHaveBeenCalledWith(emptyGameState, cloudState);
+        expect(mockSetState).toHaveBeenCalledWith(mergedState);
+    });
 });
+

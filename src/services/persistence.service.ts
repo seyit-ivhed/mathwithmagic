@@ -6,7 +6,7 @@ import type { GameState } from '../stores/game/interfaces';
 
 interface SyncInput {
     authId: string;
-    state: object;
+    state: GameState;
 }
 
 export const PersistenceService = {
@@ -44,30 +44,14 @@ export const PersistenceService = {
 
     /**
      * Pushes the current game state to Supabase.
-     *
-     * Before writing, the current cloud state is fetched and merged with the
-     * provided state using {@link mergeGameState}.  This guarantees that a
-     * concurrent session (another browser tab or device logged in to the same
-     * account) can never cause progress to regress: encounters, companions,
-     * adventures and party members are merged so only the most-advanced values
-     * are persisted.
-     *
-     * **Trade-offs:**
-     * - This adds one extra read per push.  The {@link DebouncedQueue} (300 ms)
-     *   already collapses rapid writes into a single network call, keeping the
-     *   overhead acceptable for a game workload.
-     * - The read-merge-write is not atomically enforced at the database level.
-     *   A simultaneous write from another session between the read and the write
-     *   can be silently overwritten.  However, because the merge only ever moves
-     *   progress *forward*, the overwritten state itself will be re-merged on the
-     *   next push, so no progress is permanently lost.
+     * Fetches the current cloud state and merges before writing so that
+     * progress from concurrent sessions never regresses.
      */
-    async pushState(authId: string, state: object) {
+    async pushState(authId: string, state: GameState) {
         try {
-            // Pull the current cloud state and merge so progress never regresses
             const cloudState = await PersistenceService.pullState(authId);
             const stateToWrite = cloudState
-                ? mergeGameState(state as GameState, cloudState as Partial<GameState>)
+                ? mergeGameState(state, cloudState as Partial<GameState>)
                 : state;
 
             const { error: upsertError } = await supabase
@@ -111,7 +95,7 @@ export const PersistenceService = {
      * Uses a debounced queue to prevent race conditions when multiple
      * rapid sync calls occur. Only the latest state will be pushed.
      */
-    async sync(state: object) {
+    async sync(state: GameState) {
         try {
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {

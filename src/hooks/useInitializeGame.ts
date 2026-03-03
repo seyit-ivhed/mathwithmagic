@@ -19,13 +19,13 @@ export const useInitializeGame = () => {
         await Promise.resolve();
         if (authLoading) return;
 
-        // Re-initialize if auth identity changes or not initialized yet
+
         if (initialized.current && lastAuthId.current === user?.id) {
             return;
         }
 
         console.log('Starting game initialization sequence...');
-        initialized.current = true; // Set immediately to prevent race conditions
+        initialized.current = true;
         lastAuthId.current = user?.id;
         setError(null);
         setIsInitializing(true);
@@ -34,19 +34,15 @@ export const useInitializeGame = () => {
             if (isAuthenticated && user) {
                 console.log('User is authenticated, initializing data...');
 
-                // 1. Get or create profile (single fetch)
                 const profile = await PersistenceService.getOrCreateProfile(user.id);
 
-                // 2. Fetch state and entitlements in parallel
                 const [cloudState] = await Promise.all([
                     PersistenceService.pullState(user.id),
-                    initializePremium(true, profile) // Force re-fetch for new user
+                    initializePremium(true, profile)
                 ]);
 
                 if (cloudState) {
                     console.log('Cloud state found, merging with local state...');
-                    // Merge cloud state with the local (localStorage-persisted) state so
-                    // that progress from an offline session is never overwritten.
                     const localState = useGameStore.getState();
                     const mergedState = mergeGameState(localState, cloudState as Partial<GameState>);
                     useGameStore.setState(mergedState);
@@ -56,7 +52,7 @@ export const useInitializeGame = () => {
             setIsInitializing(false);
         } catch (err: unknown) {
             console.error('Initialization failed:', err);
-            initialized.current = false; // Reset on failure to allow retry
+            initialized.current = false;
             setError('offline');
             setIsInitializing(false);
         }
@@ -71,7 +67,6 @@ export const useInitializeGame = () => {
 
     const retry = useCallback(() => {
         initialized.current = false;
-        // We might need to refresh session if it's an auth-related failure
         refreshSession().then(() => {
             performInitialization();
         });
