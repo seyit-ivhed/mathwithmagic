@@ -33,13 +33,15 @@ export const useAuth = () => {
     useEffect(() => {
         // Initial load
         const init = async () => {
-            const timeoutResult = new Promise<{ data: { session: null } }>((resolve) =>
-                setTimeout(() => resolve({ data: { session: null } }), AUTH_TIMEOUT_MS)
-            );
+            let clearAuthTimeout = () => {};
+            const timeoutResult = new Promise<{ data: { session: null } }>((resolve) => {
+                const id = setTimeout(() => resolve({ data: { session: null } }), AUTH_TIMEOUT_MS);
+                clearAuthTimeout = () => clearTimeout(id);
+            });
             const { data: { session } } = await Promise.race([
                 supabase.auth.getSession(),
                 timeoutResult
-            ]);
+            ]).finally(clearAuthTimeout);
             setSession(session);
 
             if (session?.user?.id) {

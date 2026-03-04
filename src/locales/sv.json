@@ -577,5 +577,11 @@
         "submit_btn": "Skicka länk för lösenordsändring",
         "success_message": "En länk för lösenordsändring har skickats till din e-post. Kolla din inkorg.",
         "error_generic": "Något gick fel. Försök igen."
+    },
+    "loading": {
+        "initializing": "INITIERAR ÄVENTYR",
+        "connection_error_title": "ANSLUTNINGSFEL",
+        "connection_error_message": "Kan inte nå spelservern. Kontrollera din anslutning eller försök igen senare.",
+        "retry": "FÖRSÖK IGEN"
     }
 }

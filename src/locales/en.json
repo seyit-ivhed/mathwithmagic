@@ -577,5 +577,11 @@
         "submit_btn": "Send Password Change Link",
         "success_message": "A password change link has been sent to your email. Check your inbox.",
         "error_generic": "Something went wrong. Please try again."
+    },
+    "loading": {
+        "initializing": "INITIALIZING ADVENTURE",
+        "connection_error_title": "CONNECTION ERROR",
+        "connection_error_message": "Cannot access the game server. Please check your connectivity or try again later.",
+        "retry": "RETRY CONNECTION"
     }
 }

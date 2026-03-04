@@ -52,12 +52,14 @@ export const useInitializeGame = () => {
         };
 
         try {
+            let clearInitTimeout = () => {};
             await Promise.race([
                 doInit(),
-                new Promise<never>((_, reject) =>
-                    setTimeout(() => reject(new Error('Game initialization timed out')), INIT_TIMEOUT_MS)
-                )
-            ]);
+                new Promise<never>((_, reject) => {
+                    const id = setTimeout(() => reject(new Error('Game initialization timed out')), INIT_TIMEOUT_MS);
+                    clearInitTimeout = () => clearTimeout(id);
+                })
+            ]).finally(clearInitTimeout);
 
             setIsInitializing(false);
         } catch (err: unknown) {
