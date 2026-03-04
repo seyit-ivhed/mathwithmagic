@@ -13,15 +13,17 @@ test.describe('Adventure Map', () => {
 
     test('clicking an encounter node opens the difficulty selection modal', async ({ page }) => {
         await page.goto('/map/1');
-        await expect(page.locator('[data-testid="map-node-1_1"]')).toBeVisible();
-        await page.click('[data-testid="map-node-1_1"]', { force: true });
+        const mapNode = page.locator('[data-testid="map-node-1_1"]');
+        await expect(mapNode).toBeVisible();
+        await mapNode.dispatchEvent('click');
         await expect(page.locator('[data-testid="difficulty-modal"]')).toBeVisible();
     });
 
     test('difficulty modal contains a start button and dropdown', async ({ page }) => {
         await page.goto('/map/1');
-        await expect(page.locator('[data-testid="map-node-1_1"]')).toBeVisible();
-        await page.click('[data-testid="map-node-1_1"]', { force: true });
+        const mapNode = page.locator('[data-testid="map-node-1_1"]');
+        await expect(mapNode).toBeVisible();
+        await mapNode.dispatchEvent('click');
         await expect(page.locator('[data-testid="difficulty-modal"]')).toBeVisible();
         await expect(page.locator('[data-testid="difficulty-dropdown"]')).toBeVisible();
         await expect(page.locator('[data-testid="difficulty-start-btn"]')).toBeVisible();
@@ -29,8 +31,9 @@ test.describe('Adventure Map', () => {
 
     test('starting an encounter from the modal navigates to the encounter page', async ({ page }) => {
         await page.goto('/map/1');
-        await expect(page.locator('[data-testid="map-node-1_1"]')).toBeVisible();
-        await page.click('[data-testid="map-node-1_1"]', { force: true });
+        const mapNode = page.locator('[data-testid="map-node-1_1"]');
+        await expect(mapNode).toBeVisible();
+        await mapNode.dispatchEvent('click');
         await expect(page.locator('[data-testid="difficulty-modal"]')).toBeVisible();
         await page.click('[data-testid="difficulty-start-btn"]', { force: true });
         await expect(page).toHaveURL(/\/encounter\/1\/1/);

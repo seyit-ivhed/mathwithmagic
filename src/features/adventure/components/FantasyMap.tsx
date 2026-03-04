@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useLayoutEffect } from 'react';
 import { MapPathSVG } from './MapPathSVG';
 import { MapNode } from './MapNode';
 import type { Adventure, Encounter } from '../../../types/adventure.types';
@@ -24,17 +24,13 @@ export const FantasyMap: React.FC<FantasyMapProps> = ({ adventure, currentNode, 
 
     const { getAdventureNodes } = useGameStore();
 
-    useEffect(() => {
-        // Use a small timeout to ensure the DOM is fully ready and styles are applied
-        const timer = setTimeout(() => {
-            if (currentNodeRef.current) {
-                currentNodeRef.current.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center'
-                });
-            }
-        }, 100);
-        return () => clearTimeout(timer);
+    useLayoutEffect(() => {
+        if (currentNodeRef.current) {
+            currentNodeRef.current.scrollIntoView({
+                behavior: 'instant',
+                block: 'center'
+            });
+        }
     }, [currentNode]);
 
     const { encounters } = adventure;
