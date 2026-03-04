@@ -177,6 +177,17 @@ the tests intercept any outbound auth requests.
 | `e2e/encounter.spec.ts` | Encounter battle page loads, unit cards render, back navigation |
 | `e2e/settings.spec.ts` | Settings modal accessible from all major pages |
 
+#### Setup
+
+> **Note:** This project uses Deno's npm compatibility layer, which causes
+> `npx playwright install` to install browsers for the wrong Playwright version.
+> Always use the npm scripts below instead.
+
+- **Install Playwright browsers (first-time or after upgrading `@playwright/test`):**
+  ```bash
+  npm run playwright:install
+  ```
+
 #### Conventions
 
 - Selectors always use `data-testid` attributes — never element text.
@@ -191,17 +202,17 @@ the tests intercept any outbound auth requests.
 
 - **Run E2E tests with UI mode:**
   ```bash
-  npx playwright test --ui
+  npm run test:e2e -- --ui
   ```
 
 - **Run a single test file:**
   ```bash
-  npx playwright test e2e/onboarding.spec.ts
+  npm run test:e2e -- e2e/onboarding.spec.ts
   ```
 
 - **View the last HTML report:**
   ```bash
-  npx playwright show-report
+  node node_modules/@playwright/test/cli.js show-report
   ```
 
 ### Edge Function Tests (Deno)

@@ -12,6 +12,7 @@
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
     "test:e2e": "node node_modules/@playwright/test/cli.js test",
+    "playwright:install": "node node_modules/@playwright/test/cli.js install chromium",
     "project:start": "bash scripts/start-project.sh",
     "project:complete": "bash scripts/complete-project.sh",
     "simulate:difficulty": "tsx scripts/simulate-difficulty.ts",
