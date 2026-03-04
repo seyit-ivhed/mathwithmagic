@@ -18,28 +18,26 @@ Fully resolve the assigned GitHub issue by writing code, reviewing it, testing i
 - Never commit directly to `main`
 
 ## 3. Implement the solution (Frontend Developer skill)
-- Follow all instructions in `/.agent/skills/frontend-developer/SKILL.md`
-- Follow all rules in `/.agent/rules/` directory
+- Read and follow all rules in `/docs/developer-expectations.md`
 - Follow the project structure, standards, and architecture described in `/docs/technical-architecture.md` and other files in `/docs`
-- Do not hardcode text — use i18n
-- Break logic into small, focused functions and components (single responsibility)
-- Extract complex logic from `.tsx` files into separate `.ts` files so they can be unit-tested
 
 ## 4. Write tests
 - Write unit tests for any new or modified `.ts` logic files
-- Follow the testing rules in `/.agent/rules/unit-testing.md` and `/.agent/rules/end-to-end-testing.md`
+- Follow the testing rules in `/docs/developer-expectations.md`
 - Run existing tests to confirm nothing is broken
+- Do NOT add unit tests for `.tsx` files, but ensure that any complex logic in them is properly extracted into `.ts` files and those are unit tested
 
 ## 5. Review the code (Code Reviewer skill)
 - Follow all instructions in `/.agent/skills/code-reviewer/SKILL.md`
-- Check every file you have added or modified for violations of the rules in `/.agent/rules/`
+- Check every file you have added or modified against the rules in `/docs/developer-expectations.md`
 - Check for gaps in test coverage and address them
 - Fix all issues found during review before finishing the implementation
 
-## 6. Comment and request review
+## 6. Push and Comment
 - Push the branch to the repository
 - Go back to the issue and add a comment pinging the developer
 - In the comment, include:
   - The name of the branch you created
   - A summary of the changes made
   - Any decisions or trade-offs worth highlighting
+- DO NOT create a pull request. The developer will review the branch directly and merge it when ready.
