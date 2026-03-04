@@ -205,10 +205,3 @@ Deno will automatically download these the first time you run the tests.
   ```bash
   deno test --allow-all supabase/functions/create-payment-intent/index.test.ts
   ```
-
-## Project Structure
-
-- `/src` - Frontend React application code
-- `/server` - Backend Node.js/Express application code
-- `/docs` - Project documentation and design documents
-- `/e2e` - End-to-end tests
