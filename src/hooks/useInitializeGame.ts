@@ -6,6 +6,8 @@ import { PersistenceService } from '../services/persistence.service';
 import { mergeGameState } from '../utils/merge-game-state';
 import type { GameState } from '../stores/game/interfaces';
 
+export const INIT_TIMEOUT_MS = 10000;
+
 export const useInitializeGame = () => {
     const { isAuthenticated, user, loading: authLoading, refreshSession } = useAuth();
     const [isInitializing, setIsInitializing] = useState(true);
@@ -29,7 +31,7 @@ export const useInitializeGame = () => {
         setError(null);
         setIsInitializing(true);
 
-        try {
+        const doInit = async () => {
             if (isAuthenticated && user) {
                 console.log('User is authenticated, initializing data...');
 
@@ -47,6 +49,15 @@ export const useInitializeGame = () => {
                     useGameStore.setState(mergedState);
                 }
             }
+        };
+
+        try {
+            await Promise.race([
+                doInit(),
+                new Promise<never>((_, reject) =>
+                    setTimeout(() => reject(new Error('Game initialization timed out')), INIT_TIMEOUT_MS)
+                )
+            ]);
 
             setIsInitializing(false);
         } catch (err: unknown) {

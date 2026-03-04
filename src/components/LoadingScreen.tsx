@@ -22,9 +22,9 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ error, onRetry }) 
                     </>
                 ) : (
                     <div className="error-container">
-                        <h2 className="error-title">OFFLINE</h2>
+                        <h2 className="error-title">CONNECTION ERROR</h2>
                         <p className="error-message">
-                            You are currently offline. Please check your internet connection to continue your adventure.
+                            Cannot access the game server. Please check your connectivity or try again later.
                         </p>
                         <button className="retry-button" onClick={onRetry}>
                             RETRY CONNECTION

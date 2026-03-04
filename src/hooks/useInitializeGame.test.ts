@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook, waitFor } from '@testing-library/react';
-import { useInitializeGame } from './useInitializeGame';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { renderHook, waitFor, act } from '@testing-library/react';
+import { useInitializeGame, INIT_TIMEOUT_MS } from './useInitializeGame';
 import { useAuth } from './useAuth';
 import { usePremiumStore, type PremiumState } from '../stores/premium.store';
 import { PersistenceService } from '../services/persistence.service';
@@ -47,6 +47,10 @@ describe('useInitializeGame', () => {
         vi.mocked(PersistenceService.getOrCreateProfile).mockResolvedValue({ id: 'p1' });
         vi.mocked(PersistenceService.pullState).mockResolvedValue(null);
         vi.mocked(mergeGameState).mockImplementation((primary) => primary);
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
     });
 
     it('should force re-initialize premium when user changes (Reproduction Case)', async () => {
@@ -129,6 +133,36 @@ describe('useInitializeGame', () => {
 
         expect(mergeGameState).toHaveBeenCalledWith(emptyGameState, cloudState);
         expect(mockSetState).toHaveBeenCalledWith(mergedState);
+    });
+
+    it('should show connectivity error when initialization times out', async () => {
+        vi.useFakeTimers();
+
+        vi.mocked(useAuth).mockReturnValue({
+            session: { user: { id: 'user-timeout' } } as unknown as Session,
+            isAuthenticated: true,
+            user: { id: 'user-timeout' } as unknown as User,
+            loading: false,
+            refreshSession: mockRefreshSession,
+            signIn: vi.fn(),
+            signInAnonymously: vi.fn(),
+            resetPasswordForEmail: vi.fn(),
+            updatePassword: vi.fn(),
+        } as ReturnType<typeof useAuth>);
+
+        // Simulate a hanging network request that never resolves
+        vi.mocked(PersistenceService.getOrCreateProfile).mockReturnValue(new Promise(() => {}));
+
+        const { result } = renderHook(() => useInitializeGame());
+
+        expect(result.current.isInitializing).toBe(true);
+
+        await act(async () => {
+            await vi.advanceTimersByTimeAsync(INIT_TIMEOUT_MS + 1);
+        });
+
+        expect(result.current.isInitializing).toBe(false);
+        expect(result.current.error).toBe('offline');
     });
 });
 
