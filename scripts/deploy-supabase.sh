@@ -6,6 +6,14 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
+# Read project_id from supabase/config.toml
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ID=$(grep '^project_id' "$SCRIPT_DIR/../supabase/config.toml" | sed 's/.*= *"\(.*\)"/\1/')
+if [ -z "$PROJECT_ID" ]; then
+    echo -e "${RED}Error: could not read project_id from supabase/config.toml${NC}"
+    exit 1
+fi
+
 # Check if Docker is running
 if ! docker info > /dev/null 2>&1; then
     echo -e "${RED}Error: Docker is not running.${NC}"
@@ -17,9 +25,6 @@ fi
 # All of these are handled by stopping (wiping data) and starting fresh.
 echo -e "${YELLOW}Step 1: Restarting Supabase services with a clean slate...${NC}"
 echo -e "${YELLOW}(This will stop services, delete data volumes, and start fresh)${NC}"
-
-# Stop other workspace if running (to free ports)
-npx supabase stop --project-id workspace-1 2>/dev/null
 
 # Stop and wipe data
 npx supabase stop --no-backup
@@ -42,4 +47,4 @@ echo -e "${GREEN}Local Supabase deployment/reset completed successfully!${NC}"
 
 # 2. View Edge Function Logs
 echo -e "${YELLOW}Tailing Edge Function logs... (Press Ctrl+C to exit)${NC}"
-docker logs -f supabase_edge_runtime_workspace-2
+docker logs -f "supabase_edge_runtime_${PROJECT_ID}"

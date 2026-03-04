@@ -1,4 +1,5 @@
 # Supabase Configuration
+project_id = "playtolearn"
 
 [auth]
 site_url = "http://localhost:5173"
