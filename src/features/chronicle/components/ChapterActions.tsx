@@ -95,6 +95,7 @@ export const ChapterActions: React.FC<ChapterActionsProps> = ({
                             }}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
+                            data-testid="premium-unlock-chapter-btn"
                         >
                             {t('premium.store.buy_now', 'Unlock')}
                         </motion.button>

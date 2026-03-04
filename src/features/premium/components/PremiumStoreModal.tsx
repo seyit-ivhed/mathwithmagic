@@ -34,7 +34,7 @@ export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, on
     };
 
     return (
-        <div className="premium-modal-overlay">
+        <div className="premium-modal-overlay" data-testid="premium-store-modal">
             <FormCloseButton onClick={onClose} />
 
             <div className="premium-single-page-layout">
@@ -72,7 +72,7 @@ export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, on
 
                     <div className="cta-container">
                         <div className="price-tag-large">{t('premium.store.price')}</div>
-                        <button className="unlock-button-large" onClick={handleUnlock}>
+                        <button className="unlock-button-large" onClick={handleUnlock} data-testid="premium-unlock-btn">
                             {t('premium.store.buy_now')}
                         </button>
                     </div>

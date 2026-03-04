@@ -51,7 +51,7 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
 
     if (error) {
         return (
-            <div className="checkout-error-state">
+            <div className="checkout-error-state" data-testid="checkout-overlay-error">
                 <p>{error}</p>
                 <button onClick={onCancel}>{t('common.back', 'Back')}</button>
             </div>
@@ -60,7 +60,7 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
 
     if (!clientSecret) {
         return (
-            <div className="checkout-loading-state">
+            <div className="checkout-loading-state" data-testid="checkout-overlay-loading">
                 <div className="spinner"></div>
                 <p>{t('premium.store.loading_payment', 'Securing payment portal...')}</p>
             </div>
@@ -128,7 +128,7 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
     };
 
     return (
-        <div className="checkout-overlay-container">
+        <div className="checkout-overlay-container" data-testid="checkout-overlay-container">
             <FormCloseButton onClick={onCancel} />
             <Elements key={clientSecret} stripe={stripePromise} options={options}>
                 <CheckoutForm contentPackId={contentPackId} onSuccess={onSuccess} onCancel={onCancel} price={price} />

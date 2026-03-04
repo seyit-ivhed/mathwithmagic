@@ -30,7 +30,7 @@ export const CheckoutPage: React.FC = () => {
 
     if (authLoading) {
         return (
-            <div className="checkout-page-loading">
+            <div className="checkout-page-loading" data-testid="checkout-loading">
                 <div className="spinner"></div>
                 <p>{t('common.loading', 'Loading...')}</p>
             </div>
@@ -44,7 +44,7 @@ export const CheckoutPage: React.FC = () => {
 
             <main className="checkout-main">
                 {showSuccess ? (
-                    <div className="success-screen">
+                    <div className="success-screen" data-testid="checkout-success">
                         <div className="success-icon-container">
                             <CheckCircle2 size={80} />
                         </div>
@@ -57,18 +57,19 @@ export const CheckoutPage: React.FC = () => {
                             radiate={true}
                             onClick={handleBackToGame}
                             style={{ marginTop: '2rem' }}
+                            data-testid="checkout-success-back-btn"
                         >
                             {t('adventure.back', 'Back to Journey')}
                         </PrimaryButton>
                     </div>
                 ) : isAnonymous ? (
-                    <div className="account-creation-container">
+                    <div className="account-creation-container" data-testid="account-creation-container">
                         <AccountCreationStep
                             onSuccess={() => {/* useAuth state change will trigger re-render */ }}
                         />
                     </div>
                 ) : (
-                    <div className="premium-checkout">
+                    <div className="premium-checkout" data-testid="premium-checkout-container">
 
                         <CheckoutOverlay
                             contentPackId="premium_base"

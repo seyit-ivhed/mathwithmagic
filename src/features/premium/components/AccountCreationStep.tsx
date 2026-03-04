@@ -80,6 +80,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                         placeholder={translation('premium.store.account.email_placeholder')}
                         required
                         disabled={loading}
+                        data-testid="account-email-input"
                     />
                 </div>
 
@@ -95,6 +96,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                         placeholder={translation('premium.store.account.email_placeholder')}
                         required
                         disabled={loading}
+                        data-testid="account-confirm-email-input"
                     />
                 </div>
 
@@ -110,6 +112,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                         placeholder={translation('premium.store.account.password_placeholder')}
                         required
                         disabled={loading}
+                        data-testid="account-password-input"
                     />
                 </div>
 
@@ -120,6 +123,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
+                            data-testid="account-error-msg"
                         >
                             <AlertCircle size={16} />
                             <span>{error}</span>
@@ -133,6 +137,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                         variant="gold"
                         radiate={true}
                         disabled={loading}
+                        data-testid="account-submit-btn"
                     >
                         {loading ? <Loader2 className="spinner" /> : translation('premium.store.account.continue_btn')}
                     </PrimaryButton>
