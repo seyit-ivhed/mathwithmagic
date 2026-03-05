@@ -190,6 +190,78 @@ ALTER TABLE players DROP COLUMN old_col;
 
 ---
 
+## Staging Environment Testing Strategy
+
+Two separate test suites serve different purposes and should never be merged
+into one.
+
+### Mocked E2E tests — CI on every PR
+
+Located in `e2e/`. All external services (Supabase, Stripe) are intercepted
+and mocked. These test UI logic and component behaviour in isolation.
+
+- Fast (seconds), run automatically via `ci.yml` on every PR
+- No real credentials needed, no data cleanup required
+- Keep these tests mocked — do not try to point them at real services
+
+### Real-environment smoke tests — post-deploy to staging
+
+Located in `e2e/staging/`. Run against the live staging URL with a real
+Supabase staging database and Stripe test mode API. These test that the whole
+system works together after a deploy.
+
+- Triggered manually or automatically after `main` deploys to staging
+- Require a seed step (create test account) and a teardown step (delete it)
+- Cover critical paths only — the flows that, if broken, mean no player can
+  use the product
+
+**What to cover:**
+
+1. Player signs up with a real email (written to staging DB)
+2. Player completes checkout with a Stripe test card
+3. Entitlement is granted and player can access premium content
+4. Player progresses through a level and progress is saved
+
+### Stripe test cards
+
+Always use Stripe **test mode keys** (`sk_test_...`) in staging. Useful cards:
+
+| Card number | Behaviour |
+|---|---|
+| `4242 4242 4242 4242` | Success |
+| `4000 0025 0000 3155` | Requires authentication (3DS) |
+| `4000 0000 0000 9995` | Declined |
+
+### Data isolation
+
+Staging tests share a live database, so take steps to avoid conflicts:
+
+- Use a unique email per run: `test+{timestamp}@yourdomain.com`
+- Delete the test account in Playwright's `afterAll` teardown
+- Never run staging tests in parallel across multiple CI jobs
+
+### Playwright config for staging
+
+Add a second config file pointed at the staging URL:
+
+```ts
+// playwright.staging.config.ts
+export default {
+  use: {
+    baseURL: process.env.STAGING_URL,
+  },
+  testDir: './e2e/staging',
+};
+```
+
+Run manually with:
+
+```bash
+STAGING_URL=https://your-staging-url.vercel.app npx playwright test --config=playwright.staging.config.ts
+```
+
+---
+
 ## Daily Development Flow
 
 ```
