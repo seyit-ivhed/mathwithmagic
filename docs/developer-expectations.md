@@ -147,6 +147,39 @@ if (typeof stats.level !== 'number') {
 
 ---
 
+## Database Migrations
+
+Player data must never be corrupted by a deploy or a rollback. Every migration
+must leave the database in a state that the **currently running app code** can
+work with — both before and after the migration runs.
+
+### Rules
+
+- **Never rename a column** that the current app code reads. Add the new column
+  alongside the old one first; remove the old one in a separate deployment once
+  the app no longer references it.
+- **Never drop a column** before deploying app code that stops using it.
+- **Never change a column type** in a way that breaks existing rows or makes the
+  current app code fail to read them.
+- **Always use the two-phase pattern** for any destructive schema change: Phase 1
+  adds the new structure and backfills data; Phase 2 (a separate deployment)
+  removes the old structure only after Phase 1 has been confirmed stable.
+
+### What backwards-compatible looks like
+
+A migration is backwards-compatible when the app code deployed *before* the
+migration still works correctly after the migration runs. A migration is
+forwards-compatible when the app code deployed *after* the migration still works
+if the migration is rolled back.
+
+If a migration cannot satisfy both conditions, split it into smaller steps until
+it can.
+
+See [cicd-and-deployment.md](cicd-and-deployment.md) for the full two-phase
+migration pattern with SQL examples.
+
+---
+
 ## Code Review Checklist
 
 When reviewing code (your own or others'), verify:
@@ -167,3 +200,4 @@ When reviewing code (your own or others'), verify:
 14. Animations use CSS first; `framer-motion` only when necessary.
 15. Long conditionals replaced with polymorphic patterns.
 16. Comments only where logic is genuinely opaque.
+17. Any `supabase/migrations` changes are backwards- and forwards-compatible: no column renames, drops, or type changes that break the running app code; destructive changes use the two-phase pattern.

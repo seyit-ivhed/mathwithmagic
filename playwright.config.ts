@@ -12,6 +12,7 @@ export default defineConfig({
         trace: 'on-first-retry',
         locale: 'en-US',
         timezoneId: 'Europe/Stockholm',
+        reducedMotion: 'reduce',
     },
     projects: [
         {

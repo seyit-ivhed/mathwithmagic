@@ -128,7 +128,7 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
     };
 
     return (
-        <div className="checkout-overlay-container">
+        <div className="checkout-overlay-container" data-testid="checkout-overlay">
             <FormCloseButton onClick={onCancel} />
             <Elements key={clientSecret} stripe={stripePromise} options={options}>
                 <CheckoutForm contentPackId={contentPackId} onSuccess={onSuccess} onCancel={onCancel} price={price} />

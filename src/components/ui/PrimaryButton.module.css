@@ -97,3 +97,10 @@
     transform: none;
     box-shadow: none;
 }
+
+@media (prefers-reduced-motion: reduce) {
+    .radiate,
+    .radiateSecondary {
+        animation: none;
+    }
+}

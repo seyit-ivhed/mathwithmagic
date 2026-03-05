@@ -44,7 +44,7 @@ export const CheckoutPage: React.FC = () => {
 
             <main className="checkout-main">
                 {showSuccess ? (
-                    <div className="success-screen">
+                    <div className="success-screen" data-testid="success-screen">
                         <div className="success-icon-container">
                             <CheckCircle2 size={80} />
                         </div>

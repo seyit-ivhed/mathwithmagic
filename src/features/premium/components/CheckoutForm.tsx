@@ -107,7 +107,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
     };
 
     return (
-        <form onSubmit={handleSubmit} className="checkout-form">
+        <form onSubmit={handleSubmit} className="checkout-form" data-testid="checkout-form">
             {isProcessing && (
                 <div className="processing-overlay">
                     <div className="spinner"></div>
@@ -135,7 +135,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
                 }
             }} />
 
-            {errorMessage && <div className="payment-error">{errorMessage}</div>}
+            {errorMessage && <div className="payment-error" data-testid="payment-error">{errorMessage}</div>}
 
             <div className="checkout-actions">
                 <div className="price-display-simple">
@@ -147,6 +147,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
                     radiate={true}
                     disabled={isProcessing || !stripe || !elements || paymentSucceeded}
                     style={{ width: '100%' }}
+                    data-testid="checkout-submit"
                 >
                     {isProcessing ? t('common.processing', 'Processing...') : t('premium.store.buy_now')}
                 </PrimaryButton>
