@@ -67,6 +67,28 @@ export const DEBUG_COMMANDS: Record<string, DebugCommand> = {
             }
         }
     },
+    allstars: {
+        name: 'allstars',
+        description: 'Set all encounter stars for an adventure (allstars <advId> <stars>)',
+        execute: (parts, { log, stores }) => {
+            const advId = parts[1];
+            const stars = parseInt(parts[2]);
+
+            if (!advId || isNaN(stars)) {
+                log('Error: Invalid arguments. Usage: allstars <advId> <stars>');
+                return;
+            }
+
+            const adventure = ADVENTURES.find(a => a.id === advId);
+            if (!adventure) {
+                log(`Error: Adventure "${advId}" not found.`);
+                return;
+            }
+
+            stores.game.debugSetAdventureStars(advId, stars);
+            log(`All encounters in adventure ${advId} set to ${stars} stars.`);
+        }
+    },
     stars: {
         name: 'stars',
         description: 'Set stars (stars <adv> <idx> <v>)',

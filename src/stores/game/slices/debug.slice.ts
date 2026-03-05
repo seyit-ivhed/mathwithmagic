@@ -1,6 +1,8 @@
 import type { StateCreator } from 'zustand';
 import type { GameStore, DebugSlice } from '../interfaces';
 import { COMPANIONS } from '../../../data/companions.data';
+import { ADVENTURES } from '../../../data/adventures.data';
+import { EncounterType } from '../../../types/adventure.types';
 
 export const createDebugSlice: StateCreator<GameStore, [], [], DebugSlice> = (set, get) => ({
 
@@ -42,5 +44,27 @@ export const createDebugSlice: StateCreator<GameStore, [], [], DebugSlice> = (se
                 }
             }
         });
+    },
+
+    debugSetAdventureStars: (adventureId, stars) => {
+        const adventure = ADVENTURES.find(a => a.id === adventureId);
+        if (!adventure) return;
+
+        const { encounterResults } = get();
+        const now = Date.now();
+        const updates: typeof encounterResults = {};
+
+        adventure.encounters.forEach((encounter, index) => {
+            if (encounter.type === EncounterType.ENDING) return;
+            const key = `${adventureId}_${index + 1}`;
+            const existing = encounterResults[key];
+            updates[key] = {
+                stars,
+                difficulty: existing?.difficulty ?? 1,
+                completedAt: existing?.completedAt ?? now,
+            };
+        });
+
+        set({ encounterResults: { ...encounterResults, ...updates } });
     }
 });
