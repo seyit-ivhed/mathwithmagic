@@ -70,4 +70,25 @@ describe('adventure-status.slice', () => {
         expect(slice.isAdventureUnlocked('2')).toBe(true);
         expect(slice.isAdventureUnlocked('3')).toBe(false);
     });
+
+    it('should reset game progress and set next difficulty', () => {
+        vi.mocked(mockSet).mockClear();
+        const slice = createAdventureStatusSlice(
+            mockSet,
+            mockGet({
+                adventureStatuses: { '1': AdventureStatus.COMPLETED, '2': AdventureStatus.COMPLETED },
+                encounterResults: { '1_1': { stars: 2, difficulty: 2, completedAt: 1 } },
+                activeEncounterDifficulty: 2,
+            }),
+            {} as StoreApi<GameStore>
+        );
+
+        slice.resetGameProgress(3);
+
+        expect(mockSet).toHaveBeenCalledWith(expect.objectContaining({
+            encounterResults: {},
+            adventureStatuses: { '1': AdventureStatus.AVAILABLE },
+            activeEncounterDifficulty: 3,
+        }));
+    });
 });

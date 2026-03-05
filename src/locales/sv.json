@@ -583,5 +583,15 @@
         "connection_error_title": "ANSLUTNINGSFEL",
         "connection_error_message": "Kan inte nå spelservern. Kontrollera din anslutning eller försök igen senare.",
         "retry": "FÖRSÖK IGEN"
+    },
+    "game_complete": {
+        "title": "Uppdrag slutfört!",
+        "subtitle": "Du har erövrat alla sex äventyr!",
+        "adventure_label": "Äventyr {{number}}",
+        "adventure_stats_heading": "Din resa",
+        "play_again_higher": "Spela igen på {{difficulty}}",
+        "play_again_max": "Spela igen",
+        "play_again_hint": "Återställ dina framsteg och ge dig ut på en ny resa på en högre svårighetsnivå.",
+        "play_again_max_hint": "Du har redan bemästrat den högsta svårighetsnivån. Spela igen för att utmana dig själv!"
     }
 }

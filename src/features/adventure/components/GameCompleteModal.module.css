@@ -1,0 +1,145 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--color-bg-overlay, rgba(0, 0, 0, 0.85));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal {
+    background: var(--color-chronicle-bg, #e9dcc9);
+    border: 3px solid var(--color-chronicle-accent, #8b6532);
+    border-radius: var(--radius-lg, 16px);
+    padding: 40px;
+    width: 95%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: var(--shadow-lg, 0 12px 24px rgba(0, 0, 0, 0.6)),
+        inset 0 0 60px rgba(139, 101, 50, 0.2);
+    color: var(--color-chronicle-text-dark, #2c1e11);
+    text-align: center;
+    animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.trophyIcon {
+    color: #ffa502;
+    filter: drop-shadow(0 0 12px rgba(255, 165, 2, 0.7));
+    animation: trophyPulse 2s ease-in-out infinite;
+}
+
+@keyframes trophyPulse {
+    0%, 100% { filter: drop-shadow(0 0 12px rgba(255, 165, 2, 0.7)); }
+    50% { filter: drop-shadow(0 0 24px rgba(255, 165, 2, 1)); }
+}
+
+.title {
+    margin: 0;
+    font-family: var(--font-display, inherit);
+    color: var(--color-chronicle-text-dark, #2c1e11);
+    font-size: 2rem;
+    text-shadow: 0 1px 2px rgba(139, 101, 50, 0.3);
+    letter-spacing: 0.05em;
+}
+
+.subtitle {
+    margin: 0;
+    font-family: var(--font-body, inherit);
+    color: var(--color-chronicle-text, #4a3721);
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+.statsSection {
+    background: rgba(44, 30, 17, 0.05);
+    border-radius: var(--radius-md, 12px);
+    padding: 20px;
+    border: 1px solid rgba(44, 30, 17, 0.1);
+}
+
+.statsHeading {
+    margin: 0 0 14px;
+    font-family: var(--font-display, inherit);
+    font-size: 1.2rem;
+    color: var(--color-chronicle-text-dark, #2c1e11);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.adventureList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.adventureRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.35);
+    border-radius: var(--radius-sm, 8px);
+    border: 1px solid rgba(44, 30, 17, 0.08);
+}
+
+.adventureName {
+    font-family: var(--font-display, inherit);
+    font-size: 1rem;
+    color: var(--color-chronicle-text, #4a3721);
+    font-weight: 600;
+}
+
+.starsRow {
+    display: flex;
+    gap: 4px;
+}
+
+.ctaSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.ctaHint {
+    margin: 0;
+    font-family: var(--font-body, inherit);
+    font-size: 0.95rem;
+    color: var(--color-chronicle-text, #4a3721);
+    line-height: 1.5;
+    max-width: 380px;
+}

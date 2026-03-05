@@ -583,5 +583,15 @@
         "connection_error_title": "CONNECTION ERROR",
         "connection_error_message": "Cannot access the game server. Please check your connectivity or try again later.",
         "retry": "RETRY CONNECTION"
+    },
+    "game_complete": {
+        "title": "Quest Complete!",
+        "subtitle": "You have conquered all six adventures!",
+        "adventure_label": "Adventure {{number}}",
+        "adventure_stats_heading": "Your Journey",
+        "play_again_higher": "Play Again on {{difficulty}}",
+        "play_again_max": "Play Again",
+        "play_again_hint": "Reset your progress and embark on a new journey at a higher difficulty.",
+        "play_again_max_hint": "You have already mastered the highest difficulty. Play again to challenge yourself!"
     }
 }

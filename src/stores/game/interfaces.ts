@@ -33,6 +33,7 @@ export interface AdventureStatusSlice {
     completeAdventure: (id: AdventureId) => void;
     unlockAdventure: (id: AdventureId) => void;
     isAdventureUnlocked: (id: AdventureId) => boolean;
+    resetGameProgress: (nextDifficulty: number) => void;
 }
 
 // XP & Leveling

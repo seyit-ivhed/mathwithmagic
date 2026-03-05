@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game/store';
 import { getFocalNodeIndex } from './utils/navigation.utils';
 import { DifficultySelectionModal } from './components/DifficultySelectionModal';
+import { GameCompleteModal } from './components/GameCompleteModal';
 import './AdventurePage.css';
 import { ADVENTURES } from '../../data/adventures.data';
 import { EncounterType, type Encounter } from '../../types/adventure.types';
@@ -24,11 +25,13 @@ const AdventurePage = () => {
         completeEncounter,
         completeAdventure,
         unlockAdventure,
-        notifyEncounterStarted
+        notifyEncounterStarted,
+        resetGameProgress,
     } = useGameStore();
 
     const [isDifficultyModalOpen, setIsDifficultyModalOpen] = useState(false);
     const [selectedEncounter, setSelectedEncounter] = useState<Encounter | null>(null);
+    const [isGameCompleteModalOpen, setIsGameCompleteModalOpen] = useState(false);
 
     // Get active adventure
     const adventure = ADVENTURES.find(a => a.id === adventureId);
@@ -42,6 +45,8 @@ const AdventurePage = () => {
     const currentNode = focalNodeFromState ?? getFocalNodeIndex(adventureId, encounterResults);
 
     const { encounters } = adventure;
+
+    const isLastAdventure = ADVENTURES.length > 0 && ADVENTURES[ADVENTURES.length - 1].id === adventureId;
 
     const handleNodeClick = (encounter: typeof encounters[0]) => {
         if (encounter.type === EncounterType.BATTLE || encounter.type === EncounterType.BOSS || encounter.type === EncounterType.PUZZLE) {
@@ -63,7 +68,11 @@ const AdventurePage = () => {
                 unlockAdventure(nextAdventure.id);
             }
 
-            navigate('/chronicle', { state: { justCompletedAdventureId: adventureId } });
+            if (isLastAdventure) {
+                setIsGameCompleteModalOpen(true);
+            } else {
+                navigate('/chronicle', { state: { justCompletedAdventureId: adventureId } });
+            }
         }
     };
 
@@ -82,6 +91,12 @@ const AdventurePage = () => {
         navigate(`/${routePrefix}/${adventureId}/${nodeStep}`);
 
         setIsDifficultyModalOpen(false);
+    };
+
+    const handlePlayAgain = (nextDifficulty: number) => {
+        resetGameProgress(nextDifficulty);
+        setIsGameCompleteModalOpen(false);
+        navigate('/chronicle');
     };
 
     return (
@@ -108,6 +123,17 @@ const AdventurePage = () => {
                 onStart={handleStartEncounter}
                 title={(selectedEncounter ? t(`adventures.${adventureId}.nodes.${selectedEncounter.id}.label`, selectedEncounter.label || '') : '') as string}
                 initialDifficulty={activeEncounterDifficulty}
+            />
+
+            <GameCompleteModal
+                isOpen={isGameCompleteModalOpen}
+                onClose={() => {
+                    setIsGameCompleteModalOpen(false);
+                    navigate('/chronicle', { state: { justCompletedAdventureId: adventureId } });
+                }}
+                onPlayAgain={handlePlayAgain}
+                encounterResults={encounterResults}
+                currentDifficulty={activeEncounterDifficulty}
             />
         </div>
     );

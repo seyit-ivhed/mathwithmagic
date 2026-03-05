@@ -49,4 +49,13 @@ export const createAdventureStatusSlice: StateCreator<GameStore, [], [], Adventu
         const status = get().adventureStatuses[id];
         return status === AdventureStatus.AVAILABLE || status === AdventureStatus.COMPLETED;
     },
+
+    resetGameProgress: (nextDifficulty: number) => {
+        set({
+            encounterResults: {},
+            adventureStatuses: INITIAL_ADVENTURE_STATUSES,
+            activeEncounterDifficulty: nextDifficulty,
+        });
+        PersistenceService.sync(get());
+    },
 });
