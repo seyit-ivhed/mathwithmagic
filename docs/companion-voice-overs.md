@@ -48,7 +48,7 @@ All phrases are between 3 and 5 words long.
 * **Success 1:** English: "Hold fast against them!" | Swedish: "Håll stånd mot dem!"
 * **Success 2:** English: "You must stand firm!" | Swedish: "Du måste stå fast!"
 * **Success 3:** English: "Block all their attacks!" | Swedish: "Blockera alla attacker!"
-* **Success Native:** "Kiai wo irete ikuzo!" (気合を入れて行くぞ) *(Spirit Focus!)*
+* **Success Native:** 彼らに対してしっかり耐えてください！ | "Hold fast against them!"
 * **Failure:** English: "Breathe, then try again!" | Swedish: "Andas och försök igen!"
 * **Level-Up:** English: "My training pays off!" | Swedish: "Min träning ger resultat!"
 
