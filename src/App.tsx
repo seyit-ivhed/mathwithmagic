@@ -21,8 +21,11 @@ function AppContent() {
   useAnonymousLoginTrigger();
 
   useEffect(() => {
+    let ended = false;
     const handleSessionEnd = () => {
-      analyticsService.trackEvent('session_ended', {
+      if (ended) return;
+      ended = true;
+      analyticsService.trackEventBeacon('session_ended', {
         duration_ms: analyticsService.getSessionDurationMs(),
       });
     };

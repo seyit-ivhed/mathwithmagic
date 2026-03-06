@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game/store';
@@ -44,16 +44,6 @@ const AdventurePage = () => {
 
     const isLastAdventure = ADVENTURES.length > 0 && ADVENTURES[ADVENTURES.length - 1].id === adventureId;
 
-    useEffect(() => {
-        if (adventureId) {
-            analyticsService.trackEvent('map_viewed', {
-                adventure_id: adventureId,
-                current_node: currentNode,
-            });
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [adventureId]);
-
     if (!adventure || !adventureId) {
         return <div>{t('adventure.not_found', 'Adventure not found')}</div>;
     }
@@ -73,8 +63,6 @@ const AdventurePage = () => {
         }
 
         if (encounter.type === EncounterType.ENDING) {
-            analyticsService.trackEvent('adventure_completed', { adventure_id: adventureId });
-
             // Complete current adventure in game progress
             completeEncounter(adventureId, encounters.findIndex(e => e.id === encounter.id) + 1);
 
@@ -89,7 +77,6 @@ const AdventurePage = () => {
             }
 
             if (isLastAdventure) {
-                analyticsService.trackEvent('game_completed');
                 setIsGameCompleteModalOpen(true);
             } else {
                 navigate('/chronicle', { state: { justCompletedAdventureId: adventureId } });

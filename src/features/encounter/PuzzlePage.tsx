@@ -90,8 +90,7 @@ const PuzzlePage = () => {
                 difficulty: activeEncounterDifficulty,
             });
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [puzzleData]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const instruction = useMemo(() => {
         if (!puzzleDef) {

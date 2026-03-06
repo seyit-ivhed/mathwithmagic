@@ -33,7 +33,7 @@ If the URL contains `utm_source` on load, `{ source, campaign, medium }` is capt
 | Event | Payload | Where fired | Description |
 |---|---|---|---|
 | `session_started` | `{ has_progress: boolean }` | `useInitializeGame` | Fired once on app init. `has_progress` indicates whether saved game state exists. |
-| `session_ended` | `{ duration_ms: number }` | `App.tsx` (`beforeunload`) | Fired when the page unloads. |
+| `session_ended` | `{ duration_ms: number }` | `App.tsx` (`visibilitychange` / `beforeunload`) | Fired once when the page is hidden or unloads. Uses `fetch` with `keepalive: true` for reliable delivery. |
 
 ---
 
@@ -74,12 +74,9 @@ If the URL contains `utm_source` on load, `{ source, campaign, medium }` is capt
 | Event | Payload | Where fired | Description |
 |---|---|---|---|
 | `adventure_begun` | `{ adventure_id: string, has_progress: boolean }` | `ChronicleBook` | Player enters an adventure (new or resumed). |
-| `map_viewed` | `{ adventure_id: string, current_node: number }` | `AdventurePage` | Adventure map rendered. Fired when `adventureId` is set. |
 | `node_clicked` | `{ adventure_id: string, node_index: number, encounter_type: string }` | `AdventurePage` | Player taps a node on the map. |
 | `encounter_difficulty_selected` | `{ adventure_id: string, node_index: number, encounter_type: string, difficulty: string }` | `AdventurePage` | Player confirms a difficulty before starting a node. |
 | `chapter_viewed` | `{ adventure_id: string, status: string }` | `ChapterPage` | A chapter page (story interstitial) becomes active. |
-| `adventure_completed` | `{ adventure_id: string }` | `AdventurePage` | All nodes in an adventure are cleared. |
-| `game_completed` | — | `AdventurePage` | Final adventure completed — all content finished. |
 
 ---
 
