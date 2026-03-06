@@ -10,6 +10,7 @@ interface HeaderProps {
     leftTestId?: string;
     title?: string | ReactNode;
     titleTestId?: string;
+    onTitleClick?: () => void;
     rightContent?: ReactNode;
     className?: string;
 }
@@ -21,6 +22,7 @@ export const Header: React.FC<HeaderProps> = ({
     leftTestId,
     title,
     titleTestId,
+    onTitleClick,
     rightContent,
     className = ''
 }) => {
@@ -46,7 +48,11 @@ export const Header: React.FC<HeaderProps> = ({
             {title && (
                 <div className={styles.centerSection}>
                     {typeof title === 'string' ? (
-                        <h1 className={styles.title} data-testid={titleTestId}>{title}</h1>
+                        <h1
+                            className={styles.title}
+                            data-testid={titleTestId}
+                            onClick={onTitleClick}
+                        >{title}</h1>
                     ) : (
                         title
                     )}

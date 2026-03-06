@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game/store';
@@ -10,7 +10,11 @@ import { ADVENTURES } from '../../data/adventures.data';
 import { EncounterType, type Encounter } from '../../types/adventure.types';
 import { FantasyMap } from './components/FantasyMap';
 import { Header } from '../../components/Header';
+import { DebugConsole } from '../../components/DebugConsole';
 import { BookOpen } from 'lucide-react';
+
+const DEBUG_TAP_THRESHOLD = 7;
+const DEBUG_TAP_WINDOW_MS = 1500;
 
 const AdventurePage = () => {
     const { t } = useTranslation();
@@ -31,6 +35,36 @@ const AdventurePage = () => {
     const [isDifficultyModalOpen, setIsDifficultyModalOpen] = useState(false);
     const [selectedEncounter, setSelectedEncounter] = useState<Encounter | null>(null);
     const [isGameCompleteModalOpen, setIsGameCompleteModalOpen] = useState(false);
+    const [isDebugOpen, setIsDebugOpen] = useState(false);
+
+    const tapCountRef = useRef(0);
+    const tapTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    useEffect(() => {
+        return () => {
+            if (tapTimerRef.current) {
+                clearTimeout(tapTimerRef.current);
+            }
+        };
+    }, []);
+
+    const handleTitleClick = useCallback(() => {
+        tapCountRef.current += 1;
+
+        if (tapTimerRef.current) {
+            clearTimeout(tapTimerRef.current);
+        }
+
+        if (tapCountRef.current >= DEBUG_TAP_THRESHOLD) {
+            tapCountRef.current = 0;
+            setIsDebugOpen(true);
+            return;
+        }
+
+        tapTimerRef.current = setTimeout(() => {
+            tapCountRef.current = 0;
+        }, DEBUG_TAP_WINDOW_MS);
+    }, []);
 
     // Get active adventure
     const adventure = ADVENTURES.find(a => a.id === adventureId);
@@ -107,6 +141,7 @@ const AdventurePage = () => {
                     leftAriaLabel={t('common.back')}
                     leftTestId="back-to-chronicle-btn"
                     title={t(`adventures.${adventureId}.title`, adventure.title || t('common.adventure', 'Adventure')) as string}
+                    onTitleClick={handleTitleClick}
                 />
 
                 <FantasyMap
@@ -134,6 +169,10 @@ const AdventurePage = () => {
                 encounterResults={encounterResults}
                 currentDifficulty={activeEncounterDifficulty}
             />
+
+            {isDebugOpen && (
+                <DebugConsole onClose={() => setIsDebugOpen(false)} />
+            )}
         </div>
     );
 };
