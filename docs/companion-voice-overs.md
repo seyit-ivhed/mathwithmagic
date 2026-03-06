@@ -32,7 +32,7 @@ All phrases are between 3 and 5 words long.
 **Native Language:** Arabic
 
 * **Success 1:** English: "The desert grants life!" | Swedish: "Öknen skänker liv!"
-* **Success 2:** English: "Heal up your wounds!" | Swedish: "Hela dina sår!"
+* **Success 2:** English: "Heal up your wounds!" | Swedish: "Läka dina sår!"
 * **Success 3:** English: "Rise up once again!" | Swedish: "Res dig upp igen!"
 * **Success Native:** "Hatha shifa'un min al-sahra'!" (هذا شفاء من الصحراء) *(Complete Cure!)*
 * **Failure:** English: "Don't give up now!" | Swedish: "Ge inte upp nu!"
@@ -48,7 +48,7 @@ All phrases are between 3 and 5 words long.
 * **Success 1:** English: "Hold fast against them!" | Swedish: "Håll stånd mot dem!"
 * **Success 2:** English: "You must stand firm!" | Swedish: "Du måste stå fast!"
 * **Success 3:** English: "Block all their attacks!" | Swedish: "Blockera alla attacker!"
-* **Success Native:** "Kiai wo irete ikuzo!" (気合を入れて行くぞ) *(Spirit Focus!)*
+* **Success Native:** 彼らに対してしっかり耐えてください！ | "Hold fast against them!"
 * **Failure:** English: "Breathe, then try again!" | Swedish: "Andas och försök igen!"
 * **Level-Up:** English: "My training pays off!" | Swedish: "Min träning ger resultat!"
 
@@ -62,6 +62,6 @@ All phrases are between 3 and 5 words long.
 * **Success 1:** English: "Feel the fierce wind!" | Swedish: "Känn den vilda vinden!"
 * **Success 2:** English: "Thunder obeys my call!" | Swedish: "Åskan lyder mitt rop!"
 * **Success 3:** English: "I command the skies!" | Swedish: "Jag befaller himlen!"
-* **Success Native:** "Dhoruba kubwa inakuja sasa!" *(Storm!)*
+* **Success Native:** "Ninaamuru anga!" | "I command the skies!"
 * **Failure:** English: "Try again, feel the wind!" | Swedish: "Försök igen, känn vinden!"
 * **Level-Up:** English: "My power is growing stronger!" | Swedish: "Min kraft blir starkare!"
