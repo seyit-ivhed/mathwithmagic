@@ -32,7 +32,7 @@ All phrases are between 3 and 5 words long.
 **Native Language:** Arabic
 
 * **Success 1:** English: "The desert grants life!" | Swedish: "Öknen skänker liv!"
-* **Success 2:** English: "Heal up your wounds!" | Swedish: "Hela dina sår!"
+* **Success 2:** English: "Heal up your wounds!" | Swedish: "Läka dina sår!"
 * **Success 3:** English: "Rise up once again!" | Swedish: "Res dig upp igen!"
 * **Success Native:** "Hatha shifa'un min al-sahra'!" (هذا شفاء من الصحراء) *(Complete Cure!)*
 * **Failure:** English: "Don't give up now!" | Swedish: "Ge inte upp nu!"
