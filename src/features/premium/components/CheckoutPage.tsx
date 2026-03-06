@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../../hooks/useAuth';
 import { AccountCreationStep } from './AccountCreationStep';
@@ -20,9 +20,11 @@ export const CheckoutPage: React.FC = () => {
     const [showSuccess, setShowSuccess] = useState(false);
 
     const isAnonymous = user?.is_anonymous ?? true;
+    const checkoutViewedFired = useRef(false);
 
     useEffect(() => {
-        if (!authLoading && !isAnonymous) {
+        if (!authLoading && !isAnonymous && !checkoutViewedFired.current) {
+            checkoutViewedFired.current = true;
             analyticsService.trackEvent('checkout_viewed', {
                 ref_session_id: analyticsService.getRefSessionId(),
             });

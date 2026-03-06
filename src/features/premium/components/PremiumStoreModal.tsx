@@ -33,7 +33,10 @@ export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, on
         if (isOpen) {
             analyticsService.trackEvent('premium_store_viewed', { source_adventure_id: sourceAdventureId ?? null });
         }
-    }, [isOpen, sourceAdventureId]);
+    // sourceAdventureId intentionally omitted — the event should fire only when the
+    // modal opens (isOpen transition), not whenever the source prop changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isOpen]);
 
     if (!isOpen) return null;
 

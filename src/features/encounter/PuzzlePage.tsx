@@ -83,7 +83,9 @@ const PuzzlePage = () => {
     const puzzleDef = puzzleData ? PUZZLE_DEFINITIONS[puzzleData.puzzleType] : null;
 
     useEffect(() => {
+        let started = false;
         if (puzzleData) {
+            started = true;
             analyticsService.trackEvent('puzzle_started', {
                 adventure_id: adventureId,
                 node_index: nodeIndex,
@@ -92,7 +94,10 @@ const PuzzlePage = () => {
             });
         }
         return () => {
-            if (!isCompletedRef.current) {
+            // Only fire puzzle_abandoned if puzzle_started was actually fired for this
+            // effect run. Without this guard, unmounting in the error state (null puzzleData)
+            // would fire puzzle_abandoned with no matching puzzle_started.
+            if (started && !isCompletedRef.current) {
                 analyticsService.trackEvent('puzzle_abandoned', {
                     adventure_id: adventureId,
                     node_index: nodeIndex,

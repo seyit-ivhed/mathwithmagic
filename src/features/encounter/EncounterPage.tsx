@@ -50,20 +50,24 @@ const EncounterPage = () => {
 
     // Track encounter_started once on mount; track encounter_abandoned on any unmount
     // where the encounter did not reach a terminal phase (covers back button, browser nav, etc.)
+    // Difficulty is read from the store at effect-fire time (after useLayoutEffect in
+    // useEncounterInitializer has already set the correct value) rather than from the
+    // render-time closure, which captures the reset store's undefined → fallback 1.
     useEffect(() => {
+        const { difficulty: startDifficulty } = useEncounterStore.getState();
         analyticsService.trackEvent('encounter_started', {
             adventure_id: adventureId,
             node_index: nodeIndex,
-            difficulty,
+            difficulty: startDifficulty ?? 1,
             encounter_type: encounterType,
         });
         return () => {
-            const { phase: currentPhase } = useEncounterStore.getState();
+            const { phase: currentPhase, difficulty: abandonDifficulty } = useEncounterStore.getState();
             if (currentPhase !== EncounterPhase.VICTORY && currentPhase !== EncounterPhase.DEFEAT) {
                 analyticsService.trackEvent('encounter_abandoned', {
                     adventure_id: adventureId,
                     node_index: nodeIndex,
-                    difficulty,
+                    difficulty: abandonDifficulty ?? 1,
                 });
             }
         };
