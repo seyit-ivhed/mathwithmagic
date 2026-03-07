@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useMemo, useState, useCallback, useEffect, useRef } from 'react';
+import { useMemo, useState, useCallback, useEffect } from 'react';
 import { Volume2, Map } from 'lucide-react';
 import { useGameStore } from '../../stores/game/store';
 import { ADVENTURES } from '../../data/adventures.data';
@@ -65,7 +65,6 @@ const PuzzlePage = () => {
     const { completeEncounter, activeEncounterDifficulty } = useGameStore();
 
     const [isCompleted, setIsCompleted] = useState(false);
-    const isCompletedRef = useRef(false);
     const [replayKey, setReplayKey] = useState(0);
     const adventure = ADVENTURES.find(a => a.id === adventureId);
     const encounter = adventure?.encounters[nodeIndex - 1];
@@ -83,9 +82,7 @@ const PuzzlePage = () => {
     const puzzleDef = puzzleData ? PUZZLE_DEFINITIONS[puzzleData.puzzleType] : null;
 
     useEffect(() => {
-        let started = false;
         if (puzzleData) {
-            started = true;
             analyticsService.trackEvent('puzzle_started', {
                 adventure_id: adventureId,
                 node_index: nodeIndex,
@@ -93,17 +90,6 @@ const PuzzlePage = () => {
                 difficulty: activeEncounterDifficulty,
             });
         }
-        return () => {
-            // Only fire puzzle_abandoned if puzzle_started was actually fired for this
-            // effect run. Without this guard, unmounting in the error state (null puzzleData)
-            // would fire puzzle_abandoned with no matching puzzle_started.
-            if (started && !isCompletedRef.current) {
-                analyticsService.trackEvent('puzzle_abandoned', {
-                    adventure_id: adventureId,
-                    node_index: nodeIndex,
-                });
-            }
-        };
     }, [puzzleData]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const instruction = useMemo(() => {
@@ -133,7 +119,6 @@ const PuzzlePage = () => {
             puzzle_type: puzzleData?.puzzleType,
             difficulty: activeEncounterDifficulty,
         });
-        isCompletedRef.current = true;
         setIsCompleted(true);
     };
 

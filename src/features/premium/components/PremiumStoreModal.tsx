@@ -46,7 +46,6 @@ export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, on
     };
 
     const handleClose = () => {
-        analyticsService.trackEvent('premium_store_dismissed');
         onClose();
     };
 

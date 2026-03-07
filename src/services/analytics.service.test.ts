@@ -40,7 +40,6 @@ describe('analyticsService', () => {
             writable: true,
             value: { ...window.location, search: '' },
         });
-        vi.unstubAllEnvs();
     });
 
     describe('getSessionId', () => {
@@ -130,44 +129,4 @@ describe('analyticsService', () => {
         });
     });
 
-    describe('trackEventBeacon', () => {
-        it('does not call fetch when env vars are not configured', async () => {
-            vi.stubEnv('VITE_SUPABASE_URL', '');
-            vi.stubEnv('VITE_SUPABASE_ANON_KEY', '');
-            const fetchSpy = vi.fn();
-            vi.stubGlobal('fetch', fetchSpy);
-
-            const fresh = await reloadWithSearch('');
-            fresh.trackEventBeacon('session_ended', { duration_ms: 100 });
-            expect(fetchSpy).not.toHaveBeenCalled();
-        });
-
-        it('calls fetch with keepalive: true and the correct payload when env vars are present', async () => {
-            vi.stubEnv('VITE_SUPABASE_URL', 'https://test.supabase.co');
-            vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'test-anon-key');
-            const fetchSpy = vi.fn().mockReturnValue(Promise.resolve(new Response()));
-            vi.stubGlobal('fetch', fetchSpy);
-
-            const fresh = await reloadWithSearch('');
-            fresh.trackEventBeacon('session_ended', { duration_ms: 500 });
-
-            expect(fetchSpy).toHaveBeenCalledWith(
-                'https://test.supabase.co/rest/v1/play_events',
-                expect.objectContaining({
-                    method: 'POST',
-                    keepalive: true,
-                    body: expect.stringContaining('"event_type":"session_ended"'),
-                })
-            );
-        });
-
-        it('silently swallows fetch rejection without throwing', async () => {
-            vi.stubEnv('VITE_SUPABASE_URL', 'https://test.supabase.co');
-            vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'test-anon-key');
-            vi.stubGlobal('fetch', vi.fn().mockReturnValue(Promise.reject(new Error('Network error'))));
-
-            const fresh = await reloadWithSearch('');
-            expect(() => fresh.trackEventBeacon('session_ended')).not.toThrow();
-        });
-    });
 });

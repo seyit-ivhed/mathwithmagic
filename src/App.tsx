@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AdventurePage from './features/adventure/AdventurePage';
 import { ChronicleBook } from './features/chronicle/ChronicleBook';
@@ -13,37 +12,11 @@ import { LoadingScreen } from './components/LoadingScreen';
 import { AdventureGuard } from './components/guards/AdventureGuard';
 import { BackgroundMusic } from './components/audio/BackgroundMusic';
 import { RootRedirect } from './components/RootRedirect';
-import { analyticsService } from './services/analytics.service';
 
 function AppContent() {
   const { isInitializing, error, retry } = useInitializeGame();
 
   useAnonymousLoginTrigger();
-
-  useEffect(() => {
-    let ended = false;
-    const handleSessionEnd = () => {
-      if (ended) return;
-      ended = true;
-      analyticsService.trackEventBeacon('session_ended', {
-        duration_ms: analyticsService.getSessionDurationMs(),
-      });
-    };
-
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') {
-        handleSessionEnd();
-      }
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('beforeunload', handleSessionEnd);
-
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('beforeunload', handleSessionEnd);
-    };
-  }, []);
 
   if (isInitializing || error) {
     return <LoadingScreen error={error} onRetry={retry} />;

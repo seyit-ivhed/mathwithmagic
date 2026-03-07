@@ -48,8 +48,7 @@ const EncounterPage = () => {
     // Look up encounter type for analytics
     const encounterType = ADVENTURES.find(a => a.id === adventureId)?.encounters[nodeIndex - 1]?.type;
 
-    // Track encounter_started once on mount; track encounter_abandoned on any unmount
-    // where the encounter did not reach a terminal phase (covers back button, browser nav, etc.)
+    // Track encounter_started once on mount.
     // Difficulty is read from the store at effect-fire time (after useLayoutEffect in
     // useEncounterInitializer has already set the correct value) rather than from the
     // render-time closure, which captures the reset store's undefined → fallback 1.
@@ -61,16 +60,6 @@ const EncounterPage = () => {
             difficulty: startDifficulty ?? 1,
             encounter_type: encounterType,
         });
-        return () => {
-            const { phase: currentPhase, difficulty: abandonDifficulty } = useEncounterStore.getState();
-            if (currentPhase !== EncounterPhase.VICTORY && currentPhase !== EncounterPhase.DEFEAT) {
-                analyticsService.trackEvent('encounter_abandoned', {
-                    adventure_id: adventureId,
-                    node_index: nodeIndex,
-                    difficulty: abandonDifficulty ?? 1,
-                });
-            }
-        };
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

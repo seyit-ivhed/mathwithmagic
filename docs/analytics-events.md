@@ -33,7 +33,6 @@ If the URL contains `utm_source` on load, `{ source, campaign, medium }` is capt
 | Event | Payload | Where fired | Description |
 |---|---|---|---|
 | `session_started` | `{ has_progress: boolean }` | `useInitializeGame` | Fired once on app init. `has_progress` indicates whether saved game state exists. |
-| `session_ended` | `{ duration_ms: number }` | `App.tsx` (`visibilitychange` / `beforeunload`) | Fired once when the page is hidden or unloads. Uses `fetch` with `keepalive: true` for reliable delivery. |
 
 ---
 
@@ -81,7 +80,6 @@ If the URL contains `utm_source` on load, `{ source, campaign, medium }` is capt
 | `encounter_started` | `{ adventure_id: string, node_index: number, difficulty: number, encounter_type: string }` | `EncounterPage` | Encounter screen mounts. |
 | `encounter_completed` | `{ adventure_id: string, node_index: number, difficulty: number, turn_count: number }` | `EncounterPage` | Player reaches VICTORY phase. |
 | `encounter_failed` | `{ adventure_id: string, node_index: number, difficulty: number, turn_count: number }` | `EncounterPage` | Player reaches DEFEAT phase. |
-| `encounter_abandoned` | `{ adventure_id: string, node_index: number, difficulty: number }` | `EncounterPage` | Player navigates away mid-encounter (not victory/defeat). Fired on unmount, covering all navigation paths. |
 | `special_attack_attempted` | `{ adventure_id: string, node_index: number, success: boolean }` | `EncounterPage` | Player uses a special attack. |
 
 ---
@@ -92,7 +90,6 @@ If the URL contains `utm_source` on load, `{ source, campaign, medium }` is capt
 |---|---|---|---|
 | `puzzle_started` | `{ adventure_id: string, node_index: number, puzzle_type: string, difficulty: number }` | `PuzzlePage` | Puzzle data loaded and displayed. |
 | `puzzle_completed` | `{ adventure_id: string, node_index: number, puzzle_type: string, difficulty: number }` | `PuzzlePage` | Player solves the puzzle. |
-| `puzzle_abandoned` | `{ adventure_id: string, node_index: number }` | `PuzzlePage` | Player leaves the puzzle before completing it. Fired on unmount, covering all navigation paths. |
 
 ---
 
@@ -102,7 +99,6 @@ If the URL contains `utm_source` on load, `{ source, campaign, medium }` is capt
 |---|---|---|---|
 | `premium_store_viewed` | `{ source_adventure_id: string \| null }` | `PremiumStoreModal` | Premium store modal opens. `source_adventure_id` identifies which adventure triggered it (null if opened directly). |
 | `premium_unlock_clicked` | — | `PremiumStoreModal` | Player taps the unlock/buy button in the store. Redirects to checkout with `ref_session` in URL. |
-| `premium_store_dismissed` | — | `PremiumStoreModal` | Player closes the store modal without purchasing. |
 | `checkout_viewed` | `{ ref_session_id: string \| null }` | `CheckoutPage` | Checkout page loads for an authenticated non-anonymous user. `ref_session_id` links back to the originating game session. |
 | `account_creation_viewed` | `{ ref_session_id: string \| null }` | `AccountCreationStep` | Account creation form shown during checkout flow. |
 | `account_created` | `{ ref_session_id: string \| null }` | `AccountCreationStep` | New account successfully created. |
