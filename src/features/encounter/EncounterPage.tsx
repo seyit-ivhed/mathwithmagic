@@ -52,7 +52,12 @@ const EncounterPage = () => {
     // Difficulty is read from the store at effect-fire time (after useLayoutEffect in
     // useEncounterInitializer has already set the correct value) rather than from the
     // render-time closure, which captures the reset store's undefined → fallback 1.
+    // The ref guard prevents a duplicate event in React 18 StrictMode (dev), which
+    // intentionally runs effects twice.
+    const hasTrackedStartRef = useRef(false);
     useEffect(() => {
+        if (hasTrackedStartRef.current) return;
+        hasTrackedStartRef.current = true;
         const { difficulty: startDifficulty } = useEncounterStore.getState();
         analyticsService.trackEvent('encounter_started', {
             adventure_id: adventureId,
