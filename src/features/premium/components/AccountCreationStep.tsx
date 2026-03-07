@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, ShieldCheck, AlertCircle, Loader2 } from 'lucide-react';
@@ -25,7 +25,10 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
 
     const refSessionId = analyticsService.getRefSessionId();
 
+    const hasTrackedViewRef = useRef(false);
     useEffect(() => {
+        if (hasTrackedViewRef.current) return;
+        hasTrackedViewRef.current = true;
         analyticsService.trackEvent('account_creation_viewed', { ref_session_id: refSessionId });
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
