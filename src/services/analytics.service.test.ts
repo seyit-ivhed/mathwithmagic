@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
 // Mock the supabase service before importing analyticsService
 vi.mock('./supabase.service', () => ({
@@ -16,10 +16,31 @@ vi.stubGlobal('crypto', { randomUUID: () => MOCK_UUID });
 // Re-import after mocks are set up
 const { analyticsService } = await import('./analytics.service');
 
+// Reloads the analytics module with a given URL search string so that
+// top-level constants (REF_SESSION_ID, initAttribution) are re-evaluated
+// against the new location. vi.mock registrations survive resetModules.
+async function reloadWithSearch(search: string) {
+    Object.defineProperty(window, 'location', {
+        writable: true,
+        value: { ...window.location, search },
+    });
+    vi.resetModules();
+    const { analyticsService: fresh } = await import('./analytics.service');
+    return fresh;
+}
+
 describe('analyticsService', () => {
     beforeEach(() => {
         sessionStorage.clear();
         vi.clearAllMocks();
+    });
+
+    afterEach(() => {
+        Object.defineProperty(window, 'location', {
+            writable: true,
+            value: { ...window.location, search: '' },
+        });
+        vi.unstubAllEnvs();
     });
 
     describe('getSessionId', () => {
@@ -42,6 +63,11 @@ describe('analyticsService', () => {
         it('returns null when ref_session is absent from URL', () => {
             expect(analyticsService.getRefSessionId()).toBeNull();
         });
+
+        it('returns the ref_session value when present in URL at load time', async () => {
+            const fresh = await reloadWithSearch('?ref_session=orig-session-abc');
+            expect(fresh.getRefSessionId()).toBe('orig-session-abc');
+        });
     });
 
     describe('getSessionDurationMs', () => {
@@ -51,41 +77,17 @@ describe('analyticsService', () => {
     });
 
     describe('attribution', () => {
-        it('stores utm params in sessionStorage on init when present', () => {
-            const originalSearch = window.location.search;
-
-            Object.defineProperty(window, 'location', {
-                writable: true,
-                value: { ...window.location, search: '?utm_source=facebook&utm_campaign=kids-summer&utm_medium=cpc' },
-            });
-
-            // Re-invoke internal initAttribution by testing the stored value manually
-            const params = new URLSearchParams('?utm_source=facebook&utm_campaign=kids-summer&utm_medium=cpc');
-            const attribution = {
-                source: params.get('utm_source'),
-                campaign: params.get('utm_campaign'),
-                medium: params.get('utm_medium'),
-            };
-            sessionStorage.setItem('attribution', JSON.stringify(attribution));
-
+        it('captures utm params in sessionStorage when present in URL at load time', async () => {
+            await reloadWithSearch('?utm_source=facebook&utm_campaign=kids-summer&utm_medium=cpc');
             const stored = JSON.parse(sessionStorage.getItem('attribution')!);
             expect(stored.source).toBe('facebook');
             expect(stored.campaign).toBe('kids-summer');
             expect(stored.medium).toBe('cpc');
-
-            // Restore
-            Object.defineProperty(window, 'location', {
-                writable: true,
-                value: { ...window.location, search: originalSearch },
-            });
         });
 
-        it('does not store fbclid or gclid', () => {
-            const params = new URLSearchParams('?fbclid=abc123&gclid=xyz789');
-            expect(params.get('fbclid')).toBe('abc123'); // just confirming parsing
-            // The analytics service only reads utm_source, utm_campaign, utm_medium
-            const source = params.get('utm_source');
-            expect(source).toBeNull(); // so nothing is stored
+        it('does not write to sessionStorage when utm_source is absent', async () => {
+            await reloadWithSearch('?fbclid=abc123&gclid=xyz789');
+            expect(sessionStorage.getItem('attribution')).toBeNull();
         });
     });
 
@@ -125,6 +127,47 @@ describe('analyticsService', () => {
             vi.mocked(supabase.from).mockReturnValue({ insert: insertMock } as ReturnType<typeof supabase.from>);
 
             await expect(analyticsService.trackEvent('test_event')).resolves.toBeUndefined();
+        });
+    });
+
+    describe('trackEventBeacon', () => {
+        it('does not call fetch when env vars are not configured', async () => {
+            vi.stubEnv('VITE_SUPABASE_URL', '');
+            vi.stubEnv('VITE_SUPABASE_ANON_KEY', '');
+            const fetchSpy = vi.fn();
+            vi.stubGlobal('fetch', fetchSpy);
+
+            const fresh = await reloadWithSearch('');
+            fresh.trackEventBeacon('session_ended', { duration_ms: 100 });
+            expect(fetchSpy).not.toHaveBeenCalled();
+        });
+
+        it('calls fetch with keepalive: true and the correct payload when env vars are present', async () => {
+            vi.stubEnv('VITE_SUPABASE_URL', 'https://test.supabase.co');
+            vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'test-anon-key');
+            const fetchSpy = vi.fn().mockReturnValue(Promise.resolve(new Response()));
+            vi.stubGlobal('fetch', fetchSpy);
+
+            const fresh = await reloadWithSearch('');
+            fresh.trackEventBeacon('session_ended', { duration_ms: 500 });
+
+            expect(fetchSpy).toHaveBeenCalledWith(
+                'https://test.supabase.co/rest/v1/play_events',
+                expect.objectContaining({
+                    method: 'POST',
+                    keepalive: true,
+                    body: expect.stringContaining('"event_type":"session_ended"'),
+                })
+            );
+        });
+
+        it('silently swallows fetch rejection without throwing', async () => {
+            vi.stubEnv('VITE_SUPABASE_URL', 'https://test.supabase.co');
+            vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'test-anon-key');
+            vi.stubGlobal('fetch', vi.fn().mockReturnValue(Promise.reject(new Error('Network error'))));
+
+            const fresh = await reloadWithSearch('');
+            expect(() => fresh.trackEventBeacon('session_ended')).not.toThrow();
         });
     });
 });
