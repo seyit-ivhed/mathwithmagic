@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useMemo, useState, useCallback, useEffect } from 'react';
+import { useMemo, useState, useCallback, useEffect, useRef } from 'react';
 import { Volume2, Map } from 'lucide-react';
 import { useGameStore } from '../../stores/game/store';
 import { ADVENTURES } from '../../data/adventures.data';
@@ -81,8 +81,10 @@ const PuzzlePage = () => {
 
     const puzzleDef = puzzleData ? PUZZLE_DEFINITIONS[puzzleData.puzzleType] : null;
 
+    const hasTrackedPuzzleStartRef = useRef(false);
     useEffect(() => {
-        if (puzzleData) {
+        if (puzzleData && !hasTrackedPuzzleStartRef.current) {
+            hasTrackedPuzzleStartRef.current = true;
             analyticsService.trackEvent('puzzle_started', {
                 adventure_id: adventureId,
                 node_index: nodeIndex,
