@@ -89,7 +89,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                 onSuccess();
             } else if (result.error) {
                 analyticsService.trackEvent('account_creation_failed');
-                setShowSignInLink(result.emailAlreadyExists === true);
+                setShowSignInLink(!!result.emailAlreadyExists);
                 setError(result.error);
             }
         } finally {
