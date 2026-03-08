@@ -1,0 +1,190 @@
+.legalModalOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0.88);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.legalModalContent {
+    background: #1a0b2e;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    max-width: 800px;
+    width: 100%;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+}
+
+.closeButton {
+    position: sticky;
+    top: 0;
+    align-self: flex-end;
+    margin: 1.2rem 1.2rem 0 0;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    z-index: 2;
+}
+
+.closeButton:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+}
+
+.legalScrollArea {
+    overflow-y: auto;
+    padding: 0 2.5rem 2.5rem 2.5rem;
+    flex: 1;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+    line-height: 1.75;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 165, 2, 0.3) transparent;
+}
+
+.legalScrollArea::-webkit-scrollbar {
+    width: 6px;
+}
+
+.legalScrollArea::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.legalScrollArea::-webkit-scrollbar-thumb {
+    background: rgba(255, 165, 2, 0.3);
+    border-radius: 3px;
+}
+
+/* Document typography */
+.legalDocument {
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+.docTitle {
+    font-family: var(--font-display, inherit);
+    font-size: 2rem;
+    color: var(--color-brand-accent, #ffa502);
+    margin: 1.5rem 0 0.5rem 0;
+    line-height: 1.2;
+}
+
+.lastUpdated {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.45);
+    margin-bottom: 2rem;
+    font-style: italic;
+}
+
+.legalDocument h2 {
+    font-family: var(--font-display, inherit);
+    font-size: 1.15rem;
+    color: rgba(255, 255, 255, 0.95);
+    margin: 2rem 0 0.75rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.legalDocument p {
+    margin: 0 0 1rem 0;
+}
+
+.legalDocument ul,
+.legalDocument ol {
+    margin: 0 0 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.legalDocument li {
+    margin-bottom: 0.4rem;
+}
+
+.legalDocument a {
+    color: var(--color-brand-accent, #ffa502);
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 165, 2, 0.4);
+}
+
+.legalDocument a:hover {
+    text-decoration-color: var(--color-brand-accent, #ffa502);
+}
+
+.legalDocument code {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    padding: 0.1em 0.4em;
+    font-size: 0.9em;
+}
+
+.legalDocument strong {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.dataTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    font-size: 0.88rem;
+}
+
+.dataTable th,
+.dataTable td {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: left;
+    vertical-align: top;
+}
+
+.dataTable th {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 0.78rem;
+}
+
+.sectionDivider {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 3rem 0;
+}
+
+@media (max-width: 600px) {
+    .legalModalOverlay {
+        padding: 0.75rem;
+        align-items: flex-end;
+    }
+
+    .legalModalContent {
+        max-height: 92vh;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .legalScrollArea {
+        padding: 0 1.2rem 2rem 1.2rem;
+    }
+
+    .dataTable {
+        display: block;
+        overflow-x: auto;
+    }
+}

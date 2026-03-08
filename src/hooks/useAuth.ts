@@ -93,6 +93,27 @@ export const useAuth = () => {
         if (error) throw error;
     };
 
+    const deleteAccount = async (): Promise<void> => {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session?.access_token) throw new Error('Not authenticated');
+
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
+        const response = await fetch(`${supabaseUrl}/functions/v1/delete-account`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${session.access_token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            const data = await response.json() as { error?: string };
+            throw new Error(data.error || 'Failed to delete account');
+        }
+
+        await supabase.auth.signOut();
+    };
+
     return {
         session,
         user,
@@ -101,6 +122,7 @@ export const useAuth = () => {
         signIn,
         refreshSession,
         resetPasswordForEmail,
-        updatePassword
+        updatePassword,
+        deleteAccount
     };
 };

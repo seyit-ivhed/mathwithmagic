@@ -21,6 +21,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
     const [isVerifying, setIsVerifying] = useState(false);
     const [paymentSucceeded, setPaymentSucceeded] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [withdrawalConsent, setWithdrawalConsent] = useState(false);
 
     const verifyEntitlement = async (): Promise<boolean> => {
         const { data: { user } } = await supabase.auth.getUser();
@@ -149,6 +150,23 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
             {errorMessage && <div className="payment-error" data-testid="payment-error">{errorMessage}</div>}
 
             <div className="checkout-actions">
+                <p className="stripe-disclosure">
+                    {t('checkout.stripe_disclosure', 'Payment is processed securely by Stripe. Outlean AB does not store your payment details.')}
+                </p>
+
+                <label className="withdrawal-waiver" data-testid="withdrawal-waiver-label">
+                    <input
+                        type="checkbox"
+                        checked={withdrawalConsent}
+                        onChange={(e) => setWithdrawalConsent(e.target.checked)}
+                        disabled={isProcessing}
+                        data-testid="withdrawal-consent-checkbox"
+                    />
+                    <span>
+                        {t('checkout.withdrawal_waiver', 'I understand that by accessing the purchased content immediately, I waive my 14-day right of withdrawal under EU consumer law.')}
+                    </span>
+                </label>
+
                 <div className="price-display-simple">
                     {t('premium.store.total_amount', 'Total Amount')}: <span className="price-value">{price}</span>
                 </div>
@@ -156,7 +174,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
                     type="submit"
                     variant="gold"
                     radiate={true}
-                    disabled={isProcessing || !stripe || !elements || paymentSucceeded}
+                    disabled={isProcessing || !stripe || !elements || paymentSucceeded || !withdrawalConsent}
                     style={{ width: '100%' }}
                     data-testid="checkout-submit"
                 >

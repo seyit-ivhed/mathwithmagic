@@ -600,5 +600,30 @@
     "play_again_max": "Spela igen",
     "play_again_hint": "Slutför äventyren igen på en högre svårighetsnivå för att samla alla stjärnor!",
     "play_again_max_hint": "Du är på den högsta svårighetsnivån. Spela om äventyren för att tjäna alla stjärnor!"
+  },
+  "legal": {
+    "privacy_policy": "Integritetspolicy",
+    "terms_of_service": "Användarvillkor",
+    "close": "Stäng",
+    "section_title": "Juridik"
+  },
+  "account_creation": {
+    "age_consent": "Jag är 18 år eller äldre och skapar detta konto som förälder eller vårdnadshavare för mitt barn.",
+    "terms_consent_prefix": "Jag godkänner",
+    "terms_consent_and": "och",
+    "product_updates": "Meddela mig om nya äventyr och speluppdateringar. Du kan avregistrera dig när som helst."
+  },
+  "checkout": {
+    "stripe_disclosure": "Betalningen behandlas säkert av Stripe. Outlean AB lagrar inte dina betalningsuppgifter.",
+    "withdrawal_waiver": "Jag förstår att jag genom att omedelbart få tillgång till det köpta innehållet avsäger mig min 14-dagarsångerrätt enligt EU:s konsumentlag."
+  },
+  "delete_account": {
+    "section_title": "Konto",
+    "button": "Radera mitt konto",
+    "warning": "Detta raderar permanent ditt konto och all tillhörande speldata. Åtgärden kan inte ångras.",
+    "confirm_button": "Ja, radera mitt konto permanent",
+    "cancel_button": "Avbryt",
+    "success": "Ditt konto har raderats.",
+    "error_generic": "Något gick fel. Försök igen eller kontakta support."
   }
 }

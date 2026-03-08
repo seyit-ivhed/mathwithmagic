@@ -1,0 +1,79 @@
+.deleteButton {
+    background: none;
+    border: 1px solid rgba(192, 57, 43, 0.4);
+    border-radius: 8px;
+    color: rgba(192, 57, 43, 0.8);
+    font-family: var(--font-body, inherit);
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+    width: 100%;
+    justify-content: center;
+}
+
+.deleteButton:hover {
+    background: rgba(192, 57, 43, 0.08);
+    border-color: rgba(192, 57, 43, 0.7);
+    color: #c0392b;
+}
+
+.confirmationBox {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.warningMessage {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.88rem;
+    color: #c0392b;
+    line-height: 1.5;
+    padding: 0.75rem;
+    background: rgba(192, 57, 43, 0.08);
+    border: 1px solid rgba(192, 57, 43, 0.2);
+    border-radius: 8px;
+}
+
+.warningIcon {
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+
+.errorMessage {
+    font-size: 0.85rem;
+    color: #c0392b;
+    padding: 0.5rem 0;
+}
+
+.cancelButton {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.45);
+    font-family: var(--font-body, inherit);
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0.25rem 0;
+    align-self: center;
+    transition: color 0.2s;
+}
+
+.cancelButton:hover {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}

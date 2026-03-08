@@ -37,3 +37,25 @@
 .settingsTrigger:hover {
     color: #fff;
 }
+
+.legalLink {
+    background: none;
+    border: none;
+    border-bottom: 1px solid rgba(139, 101, 50, 0.25);
+    color: var(--color-chronicle-accent, #8b6532);
+    font-family: var(--font-body, inherit);
+    font-size: 0.9rem;
+    padding: 0.4rem 0;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    transition: color 0.2s, border-color 0.2s;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-color: transparent;
+}
+
+.legalLink:hover {
+    color: #6b4c2a;
+    text-decoration-color: rgba(139, 101, 50, 0.5);
+}

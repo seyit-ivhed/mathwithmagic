@@ -9,6 +9,7 @@ interface AccountConversionResult {
 interface AccountConversionParams {
     email: string;
     password: string;
+    productUpdateConsent?: boolean;
     refreshSession: () => Promise<void>;
     translation: (key: string, options?: Record<string, unknown>) => string;
     supabaseClient: SupabaseClient;
@@ -46,6 +47,7 @@ export const validateAccountCreationForm = (
 export const performAccountConversion = async ({
     email,
     password,
+    productUpdateConsent = false,
     refreshSession,
     translation,
     supabaseClient
@@ -88,7 +90,7 @@ export const performAccountConversion = async ({
             console.log('Synchronizing player profile for:', userId);
             const { error: upsertError } = await supabaseClient
                 .from('player_profiles')
-                .upsert({ id: userId }, { onConflict: 'id' });
+                .upsert({ id: userId, product_update_consent: productUpdateConsent }, { onConflict: 'id' });
 
             if (upsertError) {
                 console.error('Error synchronizing profile:', upsertError);

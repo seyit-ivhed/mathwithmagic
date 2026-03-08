@@ -600,5 +600,30 @@
     "play_again_max": "Play Again",
     "play_again_hint": "Complete the adventures again at a higher difficulty to collect all the stars!",
     "play_again_max_hint": "You're at the highest difficulty. Replay the adventures to earn every star!"
+  },
+  "legal": {
+    "privacy_policy": "Privacy Policy",
+    "terms_of_service": "Terms of Service",
+    "close": "Close",
+    "section_title": "Legal"
+  },
+  "account_creation": {
+    "age_consent": "I am 18 years or older and I am creating this account as a parent or guardian for my child.",
+    "terms_consent_prefix": "I agree to the",
+    "terms_consent_and": "and",
+    "product_updates": "Notify me about new adventures and game updates. You can unsubscribe at any time."
+  },
+  "checkout": {
+    "stripe_disclosure": "Payment is processed securely by Stripe. Outlean AB does not store your payment details.",
+    "withdrawal_waiver": "I understand that by accessing the purchased content immediately, I waive my 14-day right of withdrawal under EU consumer law."
+  },
+  "delete_account": {
+    "section_title": "Account",
+    "button": "Delete my account",
+    "warning": "This will permanently delete your account and all associated game data. This action cannot be undone.",
+    "confirm_button": "Yes, permanently delete my account",
+    "cancel_button": "Cancel",
+    "success": "Your account has been deleted.",
+    "error_generic": "Something went wrong. Please try again or contact support."
   }
 }
