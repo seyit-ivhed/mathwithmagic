@@ -57,11 +57,8 @@ export const performAccountConversion = async ({
         const { data: { session: currentSession } } = await supabaseClient.auth.getSession();
 
         if (currentSession?.user && !currentSession.user.is_anonymous) {
-            console.warn('User is already authenticated. Skipping account creation.');
             return { success: true };
         }
-
-        console.log('Creating account for email:', email);
 
         // 2. Create a fresh account (replaces anonymous-session upgrade)
         const { data, error: signUpError } = await supabaseClient.auth.signUp({
@@ -82,39 +79,30 @@ export const performAccountConversion = async ({
             throw signUpError;
         }
 
-        console.log('Account created successfully. Finalizing profile...');
-
         // 3. Ensure a player profile exists
         const userId = data.user?.id;
         if (userId) {
-            console.log('Synchronizing player profile for:', userId);
             const { error: upsertError } = await supabaseClient
                 .from('player_profiles')
                 .upsert({ id: userId, product_update_consent: productUpdateConsent }, { onConflict: 'id' });
 
             if (upsertError) {
                 console.error('Error synchronizing profile:', upsertError);
-            } else {
-                console.log('Profile synchronized.');
             }
         }
-
-        console.log('Refreshing session...');
 
         // 4. Force a session refresh to get the updated JWT
         await refreshSession();
 
         // 5. Double check we have a valid session now
-        const { data: { session: updatedSession } } = await supabaseClient.auth.getSession();
-        console.log('Post-signup session check:', updatedSession ? 'Valid' : 'Missing (email confirmation may be required)');
+        await supabaseClient.auth.getSession();
 
         // 6. Slightly longer delay to ensure the session is propagated before proceeding to checkout
         await new Promise(resolve => setTimeout(resolve, 1500));
         return { success: true };
 
     } catch (err: unknown) {
-        const errObj = err as Error;
-        console.error('Account creation error:', errObj);
-        return { success: false, error: errObj.message || 'Failed to create account' };
+        console.error('Account creation error:', err);
+        return { success: false, error: translation('premium.store.account.errors.generic') };
     }
 };

@@ -152,7 +152,7 @@ export const TermsOfServiceContent: React.FC<TermsOfServiceContentProps> = ({ on
         {/* Refund Policy Section */}
         <hr className={styles.sectionDivider} />
 
-        <h1 className={styles.docTitle} style={{ fontSize: '1.8rem', marginTop: '2rem' }}>Refund Policy</h1>
+        <h1 className={`${styles.docTitle} ${styles.refundTitle}`}>Refund Policy</h1>
         <p className={styles.lastUpdated}>Last updated: {LAST_UPDATED}</p>
 
         <h2>Digital Goods — General Policy</h2>
