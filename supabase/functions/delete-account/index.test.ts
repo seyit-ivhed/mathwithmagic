@@ -23,12 +23,10 @@ Deno.test({
         globalThis.fetch = async (input: string | URL | Request) => {
             const url = typeof input === 'string' ? input : input instanceof URL ? input.href : (input as Request).url;
 
-            // Mock admin delete user (must be checked before the getUser route)
+            // Mock admin delete user — 204 No Content bypasses _userResponse xform
+            // and is the correct HTTP status for a successful DELETE in GoTrue.
             if (url.includes('/auth/v1/admin/users/')) {
-                return new Response(JSON.stringify({ id: 'user-123', email: 'test@example.com' }), {
-                    status: 200,
-                    headers: { 'Content-Type': 'application/json' },
-                });
+                return new Response(null, { status: 204 });
             }
 
             // Mock JWT verification
