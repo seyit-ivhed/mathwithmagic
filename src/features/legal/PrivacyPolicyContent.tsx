@@ -52,7 +52,7 @@ export const PrivacyPolicyContent: React.FC = () => (
                     <td>Session token</td>
                     <td>Authentication after login</td>
                     <td>Art. 6(1)(b) — Contract</td>
-                    <td>Browser sessionStorage (cleared on tab close)</td>
+                    <td>Browser localStorage (persists across sessions to keep you signed in)</td>
                 </tr>
                 <tr>
                     <td>Game progress data</td>
@@ -64,13 +64,13 @@ export const PrivacyPolicyContent: React.FC = () => (
                     <td>Anonymous session ID</td>
                     <td>Aggregated gameplay analytics</td>
                     <td>Art. 6(1)(f) — Legitimate interest</td>
-                    <td>Supabase (play_events)</td>
+                    <td>Supabase</td>
                 </tr>
                 <tr>
-                    <td>Payment data</td>
-                    <td>Purchase processing</td>
+                    <td>Purchase records (purchase intent, entitlement status)</td>
+                    <td>Verifying and granting premium access</td>
                     <td>Art. 6(1)(b) — Contract</td>
-                    <td>Stripe (we never store card data)</td>
+                    <td>Supabase (no card or payment details — those stay with Stripe)</td>
                 </tr>
                 <tr>
                     <td>Product update consent flag</td>
@@ -132,8 +132,8 @@ export const PrivacyPolicyContent: React.FC = () => (
         <p>We do not use tracking cookies. Specifically:</p>
         <ul>
             <li>
-                Supabase stores a session token in your browser's <code>sessionStorage</code>. This
-                token is cleared automatically when you close the browser tab.
+                Supabase stores a session token in your browser's <code>localStorage</code>. This
+                token persists across sessions so you remain signed in and can continue your saved game.
             </li>
             <li>Stripe cookies are blocked in our implementation.</li>
             <li>No third-party analytics or advertising cookies are used.</li>
@@ -151,8 +151,10 @@ export const PrivacyPolicyContent: React.FC = () => (
                 person and are not considered personal data under GDPR.
             </li>
             <li>
-                <strong>Stripe payment records:</strong> Stripe retains these for their own legal and
-                financial obligations. We do not store payment data.
+                <strong>Purchase records:</strong> We store purchase intent and entitlement status
+                in our database to verify and grant premium access. We do not store card details or
+                any other sensitive payment information — those are handled exclusively by Stripe.
+                Stripe retains its own payment records for legal and financial obligations.
             </li>
         </ul>
 
@@ -209,9 +211,9 @@ export const PrivacyPolicyContent: React.FC = () => (
             <li>Your product update consent preference</li>
         </ul>
         <p>
-            Anonymous gameplay analytics in the <code>play_events</code> table are <strong>not
-            deleted</strong> because they use tab-scoped session IDs that cannot be linked back to your
-            account. These records do not constitute personal data under GDPR.
+            Anonymous gameplay analytics are <strong>not deleted</strong> because they use
+            tab-scoped session IDs that cannot be linked back to your account. These records do not
+            constitute personal data under GDPR.
         </p>
 
         <h2>11. Changes to This Policy</h2>

@@ -71,8 +71,8 @@ export const handler = async (req: Request) => {
         const error = err as Error
         console.error('Error deleting account:', error.message)
         return new Response(
-            JSON.stringify({ error: error.message }),
-            { status: 400, headers: { ...headers, 'Content-Type': 'application/json' } }
+            JSON.stringify({ error: 'An internal error occurred. Please try again.' }),
+            { status: 500, headers: { ...headers, 'Content-Type': 'application/json' } }
         )
     }
 }

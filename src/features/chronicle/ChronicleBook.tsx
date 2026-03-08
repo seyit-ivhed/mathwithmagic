@@ -247,7 +247,7 @@ export const ChronicleBook: React.FC = () => {
             <ChroniclesLegalFooter onOpen={setLegalModal} />
 
             {legalModal && (
-                <LegalModal type={legalModal} onClose={() => setLegalModal(null)} />
+                <LegalModal type={legalModal} onClose={() => setLegalModal(null)} onOpenPrivacy={() => setLegalModal('privacy')} />
             )}
         </>
     );

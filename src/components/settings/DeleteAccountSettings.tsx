@@ -29,8 +29,8 @@ export const DeleteAccountSettings: React.FC = () => {
         setError(null);
         setLoading(true);
         try {
-            analyticsService.trackEvent('account_delete_requested');
             await deleteAccount();
+            analyticsService.trackEvent('account_deleted');
             // After deletion the auth state change will redirect the user
         } catch (err: unknown) {
             const errObj = err as Error;

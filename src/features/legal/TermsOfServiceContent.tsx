@@ -3,7 +3,11 @@ import styles from './LegalModal.module.css';
 
 const LAST_UPDATED = '2026-03-08';
 
-export const TermsOfServiceContent: React.FC = () => (
+interface TermsOfServiceContentProps {
+    onOpenPrivacy?: () => void;
+}
+
+export const TermsOfServiceContent: React.FC<TermsOfServiceContentProps> = ({ onOpenPrivacy }) => (
     <div className={styles.legalDocument}>
         <h1 className={styles.docTitle}>Terms of Service</h1>
         <p className={styles.lastUpdated}>Last updated: {LAST_UPDATED}</p>
@@ -42,11 +46,11 @@ export const TermsOfServiceContent: React.FC = () => (
         </p>
         <ul>
             <li>
-                <strong>Free tier:</strong> Access to the first adventure and one companion character.
+                <strong>Free tier:</strong> Access to the first adventure and two companion characters.
                 No account required — children can play immediately.
             </li>
             <li>
-                <strong>Premium tier:</strong> Unlocks all additional adventures, companion characters,
+                <strong>Premium tier:</strong> Unlocks additional adventures, companion characters,
                 evolutions, and puzzles. Requires a one-time purchase by a parent or guardian with an
                 account.
             </li>
@@ -90,9 +94,13 @@ export const TermsOfServiceContent: React.FC = () => (
         <p>
             We reserve the right to suspend or terminate accounts that violate these Terms. You may
             delete your account at any time through the account settings in the game. See our{' '}
-            <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer">
-                Privacy Policy
-            </a>{' '}for information on how account deletion affects your data.
+            {onOpenPrivacy ? (
+                <button type="button" className={styles.inlineLink} onClick={onOpenPrivacy}>
+                    Privacy Policy
+                </button>
+            ) : (
+                'Privacy Policy'
+            )}{' '}for information on how account deletion affects your data.
         </p>
 
         <h2>8. Service Availability</h2>

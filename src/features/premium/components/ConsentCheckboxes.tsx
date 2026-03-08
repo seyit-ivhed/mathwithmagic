@@ -86,7 +86,7 @@ export const ConsentCheckboxes: React.FC<ConsentCheckboxesProps> = ({
             </div>
 
             {legalModal && (
-                <LegalModal type={legalModal} onClose={onCloseLegalModal} />
+                <LegalModal type={legalModal} onClose={onCloseLegalModal} onOpenPrivacy={() => onOpenLegalModal('privacy')} />
             )}
         </>
     );

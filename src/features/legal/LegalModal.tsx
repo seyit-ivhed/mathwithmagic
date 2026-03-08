@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { FormCloseButton } from '../../components/ui/FormCloseButton';
 import { PrivacyPolicyContent } from './PrivacyPolicyContent';
 import { TermsOfServiceContent } from './TermsOfServiceContent';
 import styles from './LegalModal.module.css';
@@ -11,9 +11,10 @@ export type LegalDocumentType = 'privacy' | 'terms';
 interface LegalModalProps {
     type: LegalDocumentType;
     onClose: () => void;
+    onOpenPrivacy?: () => void;
 }
 
-export const LegalModal: React.FC<LegalModalProps> = ({ type, onClose }) => {
+export const LegalModal: React.FC<LegalModalProps> = ({ type, onClose, onOpenPrivacy }) => {
     const { t } = useTranslation();
 
     useEffect(() => {
@@ -48,16 +49,13 @@ export const LegalModal: React.FC<LegalModalProps> = ({ type, onClose }) => {
             data-testid="legal-modal"
         >
             <div className={styles.legalModalContent}>
-                <button
-                    className={styles.closeButton}
+                <FormCloseButton
                     onClick={onClose}
-                    aria-label={t('legal.close', 'Close')}
-                    data-testid="legal-modal-close"
-                >
-                    <X size={20} />
-                </button>
+                    ariaLabel={t('legal.close', 'Close')}
+                    color="rgba(255, 255, 255, 0.7)"
+                />
                 <div className={styles.legalScrollArea}>
-                    {type === 'privacy' ? <PrivacyPolicyContent /> : <TermsOfServiceContent />}
+                    {type === 'privacy' ? <PrivacyPolicyContent /> : <TermsOfServiceContent onOpenPrivacy={onOpenPrivacy} />}
                 </div>
             </div>
         </div>,

@@ -76,7 +76,7 @@ const SettingsMenu: React.FC = () => {
             </div>
 
             {legalModal && (
-                <LegalModal type={legalModal} onClose={() => setLegalModal(null)} />
+                <LegalModal type={legalModal} onClose={() => setLegalModal(null)} onOpenPrivacy={() => setLegalModal('privacy')} />
             )}
         </>
     );
