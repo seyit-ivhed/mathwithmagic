@@ -21,16 +21,22 @@ Deno.test({
         }[key] || originalGet(key));
 
         globalThis.fetch = async (input: string | URL | Request) => {
-            const url = typeof input === 'string' ? input : input.toString();
+            const url = typeof input === 'string' ? input : input instanceof URL ? input.href : (input as Request).url;
+
+            // Mock admin delete user (must be checked before the getUser route)
+            if (url.includes('/auth/v1/admin/users/')) {
+                return new Response(JSON.stringify({ id: 'user-123', email: 'test@example.com' }), {
+                    status: 200,
+                    headers: { 'Content-Type': 'application/json' },
+                });
+            }
 
             // Mock JWT verification
             if (url.includes('/auth/v1/user')) {
-                return new Response(JSON.stringify({ id: 'user-123', email: 'test@example.com' }), { status: 200 });
-            }
-
-            // Mock admin delete user
-            if (url.includes('/auth/v1/admin/users/user-123')) {
-                return new Response(JSON.stringify({}), { status: 200 });
+                return new Response(JSON.stringify({ id: 'user-123', email: 'test@example.com' }), {
+                    status: 200,
+                    headers: { 'Content-Type': 'application/json' },
+                });
             }
 
             return new Response(JSON.stringify({ error: `Not mocked: ${url}` }), { status: 404 });
