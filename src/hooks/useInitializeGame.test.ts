@@ -62,7 +62,6 @@ describe('useInitializeGame', () => {
             loading: false,
             refreshSession: mockRefreshSession,
             signIn: vi.fn(),
-            signInAnonymously: vi.fn(),
             resetPasswordForEmail: vi.fn(),
             updatePassword: vi.fn(),
         } as ReturnType<typeof useAuth>);
@@ -84,7 +83,6 @@ describe('useInitializeGame', () => {
             loading: false,
             refreshSession: mockRefreshSession,
             signIn: vi.fn(),
-            signInAnonymously: vi.fn(),
             resetPasswordForEmail: vi.fn(),
             updatePassword: vi.fn(),
         } as ReturnType<typeof useAuth>);
@@ -123,7 +121,6 @@ describe('useInitializeGame', () => {
             loading: false,
             refreshSession: mockRefreshSession,
             signIn: vi.fn(),
-            signInAnonymously: vi.fn(),
             resetPasswordForEmail: vi.fn(),
             updatePassword: vi.fn(),
         } as ReturnType<typeof useAuth>);
@@ -138,6 +135,31 @@ describe('useInitializeGame', () => {
         expect(mockSetState).toHaveBeenCalledWith(mergedState);
     });
 
+    it('should push local state to cloud when no cloud state exists (new account)', async () => {
+        vi.mocked(PersistenceService.pullState).mockResolvedValue(null);
+        vi.mocked(PersistenceService.pushState).mockResolvedValue({ success: true });
+
+        vi.mocked(useAuth).mockReturnValue({
+            session: { user: { id: 'new-user' } } as unknown as Session,
+            isAuthenticated: true,
+            user: { id: 'new-user' } as unknown as User,
+            loading: false,
+            refreshSession: mockRefreshSession,
+            signIn: vi.fn(),
+            resetPasswordForEmail: vi.fn(),
+            updatePassword: vi.fn(),
+        } as ReturnType<typeof useAuth>);
+
+        const { result } = renderHook(() => useInitializeGame());
+
+        await waitFor(() => {
+            expect(result.current.isInitializing).toBe(false);
+        }, { interval: 5 });
+
+        expect(PersistenceService.pushState).toHaveBeenCalledWith('new-user', emptyGameState);
+        expect(mockSetState).not.toHaveBeenCalled();
+    });
+
     it('should show connectivity error when initialization times out', async () => {
         vi.useFakeTimers();
 
@@ -148,7 +170,6 @@ describe('useInitializeGame', () => {
             loading: false,
             refreshSession: mockRefreshSession,
             signIn: vi.fn(),
-            signInAnonymously: vi.fn(),
             resetPasswordForEmail: vi.fn(),
             updatePassword: vi.fn(),
         } as ReturnType<typeof useAuth>);

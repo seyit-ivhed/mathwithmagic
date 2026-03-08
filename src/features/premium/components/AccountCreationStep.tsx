@@ -16,12 +16,13 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
     onSuccess
 }) => {
     const { t: translation } = useTranslation();
-    const { refreshSession } = useAuth();
+    const { refreshSession, signIn } = useAuth();
     const [email, setEmail] = useState('');
     const [confirmEmail, setConfirmEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [mode, setMode] = useState<'create' | 'signin'>('create');
 
     const hasTrackedViewRef = useRef(false);
     useEffect(() => {
@@ -30,9 +31,39 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
         analyticsService.trackEvent('account_creation_viewed');
     }, []);
 
+    const switchToSignIn = () => {
+        setMode('signin');
+        setError(null);
+        setConfirmEmail('');
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
+
+        if (mode === 'signin') {
+            if (!email || !email.includes('@')) {
+                setError(translation('premium.store.account.errors.invalid_email'));
+                return;
+            }
+            if (!password) {
+                setError(translation('premium.store.account.errors.weak_password'));
+                return;
+            }
+
+            setLoading(true);
+            try {
+                await signIn(email, password);
+                analyticsService.trackEvent('account_signed_in');
+                onSuccess();
+            } catch {
+                analyticsService.trackEvent('account_creation_failed');
+                setError(translation('premium.store.account.errors.sign_in_failed', { defaultValue: 'Incorrect email or password. Please try again.' }));
+            } finally {
+                setLoading(false);
+            }
+            return;
+        }
 
         const validationError = validateAccountCreationForm(email, confirmEmail, password, translation);
         if (validationError) {
@@ -74,8 +105,16 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                 <ShieldCheck size={48} />
             </div>
 
-            <h3 className="account-title">{translation('premium.store.account.title')}</h3>
-            <p className="account-subtitle">{translation('premium.store.account.subtitle')}</p>
+            <h3 className="account-title">
+                {mode === 'signin'
+                    ? translation('premium.store.account.sign_in_title', { defaultValue: 'Sign In' })
+                    : translation('premium.store.account.title')}
+            </h3>
+            <p className="account-subtitle">
+                {mode === 'signin'
+                    ? translation('premium.store.account.sign_in_subtitle', { defaultValue: 'Sign in to continue with your existing account.' })
+                    : translation('premium.store.account.subtitle')}
+            </p>
 
             <form onSubmit={handleSubmit} className="account-form" data-testid="account-creation-form" noValidate>
                 <div className="input-group">
@@ -94,21 +133,23 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                     />
                 </div>
 
-                <div className="input-group">
-                    <label>
-                        <Mail size={16} />
-                        {translation('premium.store.account.confirm_email_label')}
-                    </label>
-                    <input
-                        type="email"
-                        value={confirmEmail}
-                        onChange={(e) => setConfirmEmail(e.target.value)}
-                        placeholder={translation('premium.store.account.email_placeholder')}
-                        required
-                        disabled={loading}
-                        data-testid="confirm-email-input"
-                    />
-                </div>
+                {mode === 'create' && (
+                    <div className="input-group">
+                        <label>
+                            <Mail size={16} />
+                            {translation('premium.store.account.confirm_email_label')}
+                        </label>
+                        <input
+                            type="email"
+                            value={confirmEmail}
+                            onChange={(e) => setConfirmEmail(e.target.value)}
+                            placeholder={translation('premium.store.account.email_placeholder')}
+                            required
+                            disabled={loading}
+                            data-testid="confirm-email-input"
+                        />
+                    </div>
+                )}
 
                 <div className="input-group">
                     <label>
@@ -137,6 +178,17 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                         >
                             <AlertCircle size={16} />
                             <span>{error}</span>
+                            {mode === 'create' && (
+                                <button
+                                    type="button"
+                                    className="sign-in-link"
+                                    onClick={switchToSignIn}
+                                    data-testid="switch-to-signin"
+                                    aria-label={translation('premium.store.account.sign_in_instead_aria', { defaultValue: 'Switch to sign in with existing account' })}
+                                >
+                                    {translation('premium.store.account.sign_in_instead', { defaultValue: 'Sign in instead' })}
+                                </button>
+                            )}
                         </motion.div>
                     )}
                 </AnimatePresence>
@@ -149,7 +201,11 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                         disabled={loading}
                         data-testid="account-creation-submit"
                     >
-                        {loading ? <Loader2 className="spinner" /> : translation('premium.store.account.continue_btn')}
+                        {loading
+                            ? <Loader2 className="spinner" />
+                            : mode === 'signin'
+                                ? translation('premium.store.account.sign_in_btn', { defaultValue: 'Sign In' })
+                                : translation('premium.store.account.continue_btn')}
                     </PrimaryButton>
                 </div>
             </form>

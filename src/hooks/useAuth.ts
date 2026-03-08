@@ -75,24 +75,6 @@ export const useAuth = () => {
         return () => subscription.unsubscribe();
     }, []);
 
-    const signInAnonymously = async () => {
-        try {
-            setLoading(true);
-            const { error, data } = await supabase.auth.signInAnonymously({
-                options: {
-                    data: { device_id: IdentityService.getDeviceId() }
-                }
-            });
-            if (error) throw error;
-            return data;
-        } catch (error) {
-            console.error('Error signing in anonymously:', error);
-            throw error;
-        } finally {
-            setLoading(false);
-        }
-    };
-
     const signIn = async (email: string, password: string) => {
         try {
             setLoading(true);
@@ -126,7 +108,6 @@ export const useAuth = () => {
         isAuthenticated: !!session,
         loading,
         signIn,
-        signInAnonymously,
         refreshSession,
         resetPasswordForEmail,
         updatePassword

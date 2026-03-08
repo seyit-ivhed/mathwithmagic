@@ -7,7 +7,6 @@ import PuzzlePage from './features/encounter/PuzzlePage';
 import MathTestPage from './features/math/MathTestPage';
 import Layout from './components/Layout';
 import { useInitializeGame } from './hooks/useInitializeGame';
-import { useAnonymousLoginTrigger } from './hooks/useAnonymousLoginTrigger';
 import { LoadingScreen } from './components/LoadingScreen';
 import { AdventureGuard } from './components/guards/AdventureGuard';
 import { BackgroundMusic } from './components/audio/BackgroundMusic';
@@ -15,8 +14,6 @@ import { RootRedirect } from './components/RootRedirect';
 
 function AppContent() {
   const { isInitializing, error, retry } = useInitializeGame();
-
-  useAnonymousLoginTrigger();
 
   if (isInitializing || error) {
     return <LoadingScreen error={error} onRetry={retry} />;

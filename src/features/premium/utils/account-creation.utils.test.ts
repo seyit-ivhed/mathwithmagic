@@ -32,8 +32,7 @@ describe('account-creation.utils', () => {
         let mockSupabaseClient: {
             auth: {
                 getSession: ReturnType<typeof vi.fn>;
-                signInAnonymously: ReturnType<typeof vi.fn>;
-                updateUser: ReturnType<typeof vi.fn>;
+                signUp: ReturnType<typeof vi.fn>;
             };
             from: ReturnType<typeof vi.fn>;
         };
@@ -50,8 +49,7 @@ describe('account-creation.utils', () => {
             mockSupabaseClient = {
                 auth: {
                     getSession: vi.fn(),
-                    signInAnonymously: vi.fn(),
-                    updateUser: vi.fn(),
+                    signUp: vi.fn(),
                 },
                 from: vi.fn(() => ({
                     upsert: vi.fn().mockResolvedValue({ error: null }),
@@ -64,19 +62,22 @@ describe('account-creation.utils', () => {
             vi.restoreAllMocks();
         });
 
-        it('should handle successful conversion', async () => {
+        it('should handle successful account creation', async () => {
             mockSupabaseClient.auth.getSession
-                .mockResolvedValueOnce({ data: { session: { user: { id: '123', is_anonymous: true } } as unknown as Session }, error: null })
+                .mockResolvedValueOnce({ data: { session: null }, error: null })
                 .mockResolvedValueOnce({ data: { session: { user: { id: '123', is_anonymous: false } } as unknown as Session }, error: null });
-            
-            mockSupabaseClient.auth.updateUser.mockResolvedValueOnce({ data: { user: { id: '123' } as unknown as User }, error: null });
 
-            const conversionPromise = performAccountConversion({ 
-                email, 
-                password, 
-                refreshSession, 
-                translation, 
-                supabaseClient: mockSupabaseClient as unknown as SupabaseClient 
+            mockSupabaseClient.auth.signUp.mockResolvedValueOnce({
+                data: { user: { id: '123' } as unknown as User, session: { user: { id: '123' } } as unknown as Session },
+                error: null
+            });
+
+            const conversionPromise = performAccountConversion({
+                email,
+                password,
+                refreshSession,
+                translation,
+                supabaseClient: mockSupabaseClient as unknown as SupabaseClient
             });
 
             // Fast-forward through the 1.5s delay
@@ -85,79 +86,60 @@ describe('account-creation.utils', () => {
             const result = await conversionPromise;
 
             expect(result.success).toBe(true);
-            expect(mockSupabaseClient.auth.updateUser).toHaveBeenCalledWith({ email, password });
+            expect(mockSupabaseClient.auth.signUp).toHaveBeenCalledWith({ email, password });
             expect(refreshSession).toHaveBeenCalled();
         });
 
-        it('should sign in anonymously if no session exists', async () => {
-            mockSupabaseClient.auth.getSession
-                .mockResolvedValueOnce({ data: { session: null }, error: null })
-                .mockResolvedValueOnce({ data: { session: { user: { id: 'new-id', is_anonymous: false } } as unknown as Session }, error: null });
-            
-            mockSupabaseClient.auth.signInAnonymously.mockResolvedValueOnce({ data: { session: { user: { id: 'new-id', is_anonymous: true } } as unknown as Session }, error: null });
-            mockSupabaseClient.auth.updateUser.mockResolvedValueOnce({ data: { user: { id: 'new-id' } as unknown as User }, error: null });
-
-            const conversionPromise = performAccountConversion({ 
-                email, 
-                password, 
-                refreshSession, 
-                translation, 
-                supabaseClient: mockSupabaseClient as unknown as SupabaseClient 
+        it('should skip creation if user is already permanently authenticated', async () => {
+            mockSupabaseClient.auth.getSession.mockResolvedValueOnce({
+                data: { session: { user: { id: '123', is_anonymous: false } } as unknown as Session },
+                error: null
             });
 
-            await vi.runAllTimersAsync();
-            const result = await conversionPromise;
-
-            expect(result.success).toBe(true);
-            expect(mockSupabaseClient.auth.signInAnonymously).toHaveBeenCalled();
-        });
-
-        it('should skip conversion if user is already permanent', async () => {
-            mockSupabaseClient.auth.getSession.mockResolvedValueOnce({ data: { session: { user: { id: '123', is_anonymous: false } } as unknown as Session }, error: null });
-
-            const result = await performAccountConversion({ 
-                email, 
-                password, 
-                refreshSession, 
-                translation, 
-                supabaseClient: mockSupabaseClient as unknown as SupabaseClient 
+            const result = await performAccountConversion({
+                email,
+                password,
+                refreshSession,
+                translation,
+                supabaseClient: mockSupabaseClient as unknown as SupabaseClient
             });
 
             expect(result.success).toBe(true);
-            expect(mockSupabaseClient.auth.updateUser).not.toHaveBeenCalled();
+            expect(mockSupabaseClient.auth.signUp).not.toHaveBeenCalled();
         });
 
-        it('should return error if email already exists', async () => {
-            mockSupabaseClient.auth.getSession.mockResolvedValueOnce({ data: { session: { user: { id: '123', is_anonymous: true } } as unknown as Session }, error: null });
-            
-            mockSupabaseClient.auth.updateUser.mockResolvedValueOnce({ 
-                data: null, 
-                error: { message: 'User already registered', status: 422 } as unknown as AuthError 
+        it('should return emailAlreadyExists error if email already registered', async () => {
+            mockSupabaseClient.auth.getSession.mockResolvedValueOnce({ data: { session: null }, error: null });
+
+            mockSupabaseClient.auth.signUp.mockResolvedValueOnce({
+                data: null,
+                error: { message: 'User already registered', status: 422 } as unknown as AuthError
             });
 
-            const result = await performAccountConversion({ 
-                email, 
-                password, 
-                refreshSession, 
-                translation, 
-                supabaseClient: mockSupabaseClient as unknown as SupabaseClient 
+            const result = await performAccountConversion({
+                email,
+                password,
+                refreshSession,
+                translation,
+                supabaseClient: mockSupabaseClient as unknown as SupabaseClient
             });
 
             expect(result.success).toBe(false);
+            expect(result.emailAlreadyExists).toBe(true);
             expect(result.error).toBe('premium.store.account.errors.already_exists');
         });
 
-        it('should return generic error if conversion fails', async () => {
-            mockSupabaseClient.auth.getSession.mockResolvedValueOnce({ data: { session: { user: { id: '123', is_anonymous: true } } as unknown as Session }, error: null });
-            
-            mockSupabaseClient.auth.updateUser.mockRejectedValueOnce(new Error('Network error'));
+        it('should return generic error if sign up fails', async () => {
+            mockSupabaseClient.auth.getSession.mockResolvedValueOnce({ data: { session: null }, error: null });
 
-            const result = await performAccountConversion({ 
-                email, 
-                password, 
-                refreshSession, 
-                translation, 
-                supabaseClient: mockSupabaseClient as unknown as SupabaseClient 
+            mockSupabaseClient.auth.signUp.mockRejectedValueOnce(new Error('Network error'));
+
+            const result = await performAccountConversion({
+                email,
+                password,
+                refreshSession,
+                translation,
+                supabaseClient: mockSupabaseClient as unknown as SupabaseClient
             });
 
             expect(result.success).toBe(false);

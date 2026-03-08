@@ -3,6 +3,7 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 interface AccountConversionResult {
     success: boolean;
     error?: string;
+    emailAlreadyExists?: boolean;
 }
 
 interface AccountConversionParams {
@@ -39,7 +40,8 @@ export const validateAccountCreationForm = (
 };
 
 /**
- * Performs the process of converting an anonymous session to a permanent account.
+ * Creates a fresh Supabase account for the player and uploads any local game state.
+ * Progress is only synced to Supabase once the player has a real account.
  */
 export const performAccountConversion = async ({
     email,
@@ -49,48 +51,39 @@ export const performAccountConversion = async ({
     supabaseClient
 }: AccountConversionParams): Promise<AccountConversionResult> => {
     try {
-        // 1. Ensure we have a session and the user is ANONYMOUS
+        // 1. Check if the user is already permanently authenticated
         const { data: { session: currentSession } } = await supabaseClient.auth.getSession();
-        let session = currentSession;
 
-        if (!session) {
-            console.log('No session found, creating anonymous session first...');
-            const { data: signInData, error: signInError } = await supabaseClient.auth.signInAnonymously();
-            if (signInError) throw signInError;
-            session = signInData.session;
-        }
-
-        if (session?.user && !session.user.is_anonymous) {
-            console.warn('User is already authenticated. Skipping conversion.');
+        if (currentSession?.user && !currentSession.user.is_anonymous) {
+            console.warn('User is already authenticated. Skipping account creation.');
             return { success: true };
         }
 
-        console.log('Converting session for email:', email);
+        console.log('Creating account for email:', email);
 
-        // 2. Convert to permanent user
-        const { error: updateError } = await supabaseClient.auth.updateUser({
+        // 2. Create a fresh account (replaces anonymous-session upgrade)
+        const { data, error: signUpError } = await supabaseClient.auth.signUp({
             email,
             password
         });
 
-        if (updateError) {
-            // If the email is already taken, Supabase returns 422 or specific message
-            if (updateError.message.toLowerCase().includes('already registered') ||
-                updateError.message.toLowerCase().includes('already in use') ||
-                updateError.status === 422) {
+        if (signUpError) {
+            if (signUpError.message.toLowerCase().includes('already registered') ||
+                signUpError.message.toLowerCase().includes('already in use') ||
+                signUpError.status === 422) {
                 return {
                     success: false,
+                    emailAlreadyExists: true,
                     error: translation('premium.store.account.errors.already_exists', { defaultValue: 'This email is already registered. Please sign in with your existing account.' })
                 };
-            } else {
-                throw updateError;
             }
+            throw signUpError;
         }
 
-        console.log('Account conversion triggered successfully. Finalizing profile...');
+        console.log('Account created successfully. Finalizing profile...');
 
-        // 3. Ensure a player profile exists and is updated
-        const userId = session?.user.id;
+        // 3. Ensure a player profile exists
+        const userId = data.user?.id;
         if (userId) {
             console.log('Synchronizing player profile for:', userId);
             const { error: upsertError } = await supabaseClient
@@ -111,11 +104,7 @@ export const performAccountConversion = async ({
 
         // 5. Double check we have a valid session now
         const { data: { session: updatedSession } } = await supabaseClient.auth.getSession();
-        console.log('Post-conversion session check:', updatedSession ? 'Valid' : 'Missing');
-
-        if (!updatedSession) {
-            console.error('Session not found after conversion. This might happen if Email Confirmation is enabled.');
-        }
+        console.log('Post-signup session check:', updatedSession ? 'Valid' : 'Missing (email confirmation may be required)');
 
         // 6. Slightly longer delay to ensure the session is propagated before proceeding to checkout
         await new Promise(resolve => setTimeout(resolve, 1500));

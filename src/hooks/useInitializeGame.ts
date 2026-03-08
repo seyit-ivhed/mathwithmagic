@@ -49,6 +49,9 @@ export const useInitializeGame = () => {
                     const localState = useGameStore.getState();
                     const mergedState = mergeGameState(localState, cloudState as Partial<GameState>);
                     useGameStore.setState(mergedState);
+                } else {
+                    console.log('No cloud state found, pushing local state to new account...');
+                    await PersistenceService.pushState(user.id, useGameStore.getState());
                 }
             }
         };
