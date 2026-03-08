@@ -88,5 +88,26 @@ describe('RefillCanteenEngine', () => {
                 expect(data.targetValue).toBeGreaterThan(0);
             }
         });
+
+        it('should generate difficulty 2 puzzles with 2 or 3 steps', () => {
+            for (let i = 0; i < 30; i++) {
+                const data = generateRefillCanteenData(2);
+                // difficulty 2 has 2-3 solution pipes + decoy
+                expect(data.options.length).toBeGreaterThanOrEqual(3);
+            }
+        });
     });
+
+    describe('formatActionLabel - edge cases', () => {
+        it('should format ADD option without label', () => {
+            const option: PuzzleOption = { value: 5, type: 'ADD' };
+            expect(formatActionLabel(option)).toBe('+5');
+        });
+
+        it('should format ADD option with negative value', () => {
+            const option: PuzzleOption = { value: -3, type: 'ADD' };
+            expect(formatActionLabel(option)).toBe('-3');
+        });
+    });
+
 });

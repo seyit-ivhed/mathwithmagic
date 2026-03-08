@@ -160,6 +160,37 @@ describe('useInitializeGame', () => {
         expect(mockSetState).not.toHaveBeenCalled();
     });
 
+    it('should not reinitialize when the same user re-renders', async () => {
+        vi.mocked(useAuth).mockReturnValue({
+            session: { user: { id: 'stable-user' } } as unknown as Session,
+            isAuthenticated: true,
+            user: { id: 'stable-user' } as unknown as User,
+            loading: false,
+            refreshSession: mockRefreshSession,
+            signIn: vi.fn(),
+            resetPasswordForEmail: vi.fn(),
+            updatePassword: vi.fn(),
+        } as ReturnType<typeof useAuth>);
+
+        const { result, rerender } = renderHook(() => useInitializeGame());
+
+        await waitFor(() => {
+            expect(result.current.isInitializing).toBe(false);
+        }, { interval: 5 });
+
+        const callCountAfterFirst = vi.mocked(PersistenceService.getOrCreateProfile).mock.calls.length;
+
+        // Re-render with the SAME user
+        rerender();
+
+        await waitFor(() => {
+            expect(result.current.isInitializing).toBe(false);
+        }, { interval: 5 });
+
+        // Should NOT call getOrCreateProfile again for the same user
+        expect(vi.mocked(PersistenceService.getOrCreateProfile).mock.calls.length).toBe(callCountAfterFirst);
+    });
+
     it('should show connectivity error when initialization times out', async () => {
         vi.useFakeTimers();
 

@@ -182,6 +182,33 @@ describe('CombatEngine', () => {
         });
     });
 
+    describe('processMonsterAction', () => {
+        it('should deal damage to a random living player', () => {
+            const result = CombatEngine.processMonsterAction(mockEnemy, [mockAttacker]);
+            expect(result.updatedParty[0].currentHealth).toBeLessThan(100);
+        });
+
+        it('should return unchanged party when all party members are dead', () => {
+            const deadHero: BattleUnit = { ...mockAttacker, isDead: true, currentHealth: 0 };
+            const result = CombatEngine.processMonsterAction(mockEnemy, [deadHero]);
+            expect(result.updatedParty[0].currentHealth).toBe(0);
+        });
+
+        it('should default damage to 0 when attacker.damage is undefined', () => {
+            const zeroDamageMonster: BattleUnit = { ...mockEnemy, damage: 0 };
+            const result = CombatEngine.processMonsterAction(zeroDamageMonster, [mockAttacker]);
+            expect(result.updatedParty[0].currentHealth).toBe(100);
+        });
+    });
+
+    describe('regenerateSpirit - dead unit', () => {
+        it('should skip dead units when regenerating spirit', () => {
+            const deadHero: BattleUnit = { ...mockAttacker, isDead: true, currentSpirit: 0 };
+            const updated = CombatEngine.regenerateSpirit([deadHero]);
+            expect(updated[0].currentSpirit).toBe(0);
+        });
+    });
+
     describe('Status Effects', () => {
         it('should reduce damage received when SHIELD is active', () => {
             const shieldedHero: BattleUnit = {

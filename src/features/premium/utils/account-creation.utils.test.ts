@@ -129,6 +129,81 @@ describe('account-creation.utils', () => {
             expect(result.error).toBe('premium.store.account.errors.already_exists');
         });
 
+        it('should return emailAlreadyExists error if email already in use', async () => {
+            mockSupabaseClient.auth.getSession.mockResolvedValueOnce({ data: { session: null }, error: null });
+
+            mockSupabaseClient.auth.signUp.mockResolvedValueOnce({
+                data: null,
+                error: { message: 'email already in use', status: 400 } as unknown as AuthError
+            });
+
+            const result = await performAccountConversion({
+                email,
+                password,
+                refreshSession,
+                translation,
+                supabaseClient: mockSupabaseClient as unknown as SupabaseClient
+            });
+
+            expect(result.success).toBe(false);
+            expect(result.emailAlreadyExists).toBe(true);
+        });
+
+        it('should handle upsert error for player profile gracefully', async () => {
+            mockSupabaseClient.auth.getSession
+                .mockResolvedValueOnce({ data: { session: null }, error: null })
+                .mockResolvedValueOnce({ data: { session: { user: { id: '123', is_anonymous: false } } as unknown as Session }, error: null });
+
+            mockSupabaseClient.auth.signUp.mockResolvedValueOnce({
+                data: { user: { id: '123' } as unknown as User, session: null },
+                error: null
+            });
+
+            // Upsert error
+            mockSupabaseClient.from.mockReturnValue({
+                upsert: vi.fn().mockResolvedValue({ error: { message: 'DB error' } }),
+            });
+
+            const conversionPromise = performAccountConversion({
+                email,
+                password,
+                refreshSession,
+                translation,
+                supabaseClient: mockSupabaseClient as unknown as SupabaseClient
+            });
+
+            await vi.runAllTimersAsync();
+            const result = await conversionPromise;
+
+            // Should still succeed even if upsert fails
+            expect(result.success).toBe(true);
+        });
+
+        it('should succeed when signup returns no user id (no userId branch)', async () => {
+            mockSupabaseClient.auth.getSession
+                .mockResolvedValueOnce({ data: { session: null }, error: null })
+                .mockResolvedValueOnce({ data: { session: null }, error: null });
+
+            mockSupabaseClient.auth.signUp.mockResolvedValueOnce({
+                data: { user: null, session: null },
+                error: null
+            });
+
+            const conversionPromise = performAccountConversion({
+                email,
+                password,
+                refreshSession,
+                translation,
+                supabaseClient: mockSupabaseClient as unknown as SupabaseClient
+            });
+
+            await vi.runAllTimersAsync();
+            const result = await conversionPromise;
+
+            expect(result.success).toBe(true);
+            expect(mockSupabaseClient.from).not.toHaveBeenCalled();
+        });
+
         it('should return generic error if sign up fails', async () => {
             mockSupabaseClient.auth.getSession.mockResolvedValueOnce({ data: { session: null }, error: null });
 

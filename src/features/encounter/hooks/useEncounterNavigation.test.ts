@@ -119,6 +119,23 @@ describe('useEncounterNavigation', () => {
         });
     });
 
+    describe('handleCompletionContinue - missing adventureId', () => {
+        it('should navigate to chronicle when no adventureId is provided', () => {
+
+            const { result } = renderHook(() => useEncounterNavigation({
+                adventureId: undefined,
+                nodeIndex: 1,
+                phase: EncounterPhase.VICTORY
+            }));
+
+            act(() => {
+                result.current.handleCompletionContinue();
+            });
+
+            expect(mockNavigate).toHaveBeenCalledWith('/chronicle');
+        });
+    });
+
     describe('handleCompletionContinue - Defeat', () => {
         it('should navigate back to the same node on map', () => {
 

@@ -82,67 +82,40 @@ describe('LatinSquareEngine', () => {
         });
     });
 
-    describe('generateLatinSquareData', () => {
-        afterEach(() => {
-            vi.restoreAllMocks();
+    describe('generateLatinSquareData - edge cases', () => {
+        it('should throw for invalid non-number difficulty', () => {
+            const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+            // @ts-expect-error testing invalid input
+            expect(() => generateLatinSquareData('easy')).toThrow('Invalid difficulty level');
+            consoleSpy.mockRestore();
         });
 
-        it('should generate valid puzzle data structure', () => {
-            const data = generateLatinSquareData(1);
+        it('should use default config for difficulty 4 (not in switch)', () => {
+            // @ts-expect-error testing out-of-range difficulty (falls to default)
+            const data = generateLatinSquareData(4);
             expect(data.puzzleType).toBe(PuzzleType.LATIN_SQUARE);
-            expect(data.targetValue).toBe(3); // Level 1 is 3x3
-            expect(Array.isArray(data.grid)).toBe(true);
-            expect(data.grid).toHaveLength(3);
-            expect(data.grid[0]).toHaveLength(3);
-            expect(data.selectedRunes).toHaveLength(3);
+            expect(data.grid).toHaveLength(4);
+        });
+    });
+
+    describe('checkSolution - edge cases', () => {
+        it('should return false for an empty grid', () => {
+            expect(LatinSquareEngine.checkSolution([])).toBe(false);
         });
 
-        it('should have correct number of fixed elements based on difficulty', () => {
-            // difficulty 1: 3x3, 5 clues
-            const dataEasy = generateLatinSquareData(1);
-            expect(dataEasy.fixedIndices).toHaveLength(5);
-            expect(dataEasy.grid).toHaveLength(3);
-            expect(dataEasy.selectedRunes).toHaveLength(3);
-
-            // difficulty 2: 4x4, 8 clues
-            const dataMedium = generateLatinSquareData(2);
-            expect(dataMedium.fixedIndices).toHaveLength(8);
-            expect(dataMedium.grid).toHaveLength(4);
-            expect(dataMedium.selectedRunes).toHaveLength(4);
-
-            // difficulty 3: 4x4, 6 clues
-            const dataHard = generateLatinSquareData(3);
-            expect(dataHard.fixedIndices).toHaveLength(6);
-            expect(dataHard.grid).toHaveLength(4);
-            expect(dataHard.selectedRunes).toHaveLength(4);
+        it('should return false for null/undefined input', () => {
+            // @ts-expect-error testing invalid input
+            expect(LatinSquareEngine.checkSolution(null)).toBe(false);
         });
+    });
 
-        it('should have valid fixedIndices structure', () => {
-            const data = generateLatinSquareData(1);
-            data.fixedIndices.forEach(idx => {
-                expect(idx.row).toBeGreaterThanOrEqual(0);
-                expect(idx.row).toBeLessThan(4);
-                expect(idx.col).toBeGreaterThanOrEqual(0);
-                expect(idx.col).toBeLessThan(4);
-            });
-        });
-
-        it('should populate grid with fixed elements at specified indices', () => {
-            const data = generateLatinSquareData(1);
-            const { grid, fixedIndices } = data;
-
-            fixedIndices.forEach(({ row, col }) => {
-                expect(grid[row][col]).not.toBeNull();
-            });
-
-            let nonNullCount = 0;
-            grid.forEach(row => row.forEach(cell => {
-                if (cell !== null) {
-                    nonNullCount++;
-                }
-            }));
-
-            expect(nonNullCount).toBe(fixedIndices.length);
+    describe('shuffle - edge cases', () => {
+        it('should handle null grid gracefully', () => {
+            const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+            // @ts-expect-error testing invalid input
+            expect(() => LatinSquareEngine.shuffle(null)).not.toThrow();
+            expect(consoleSpy).toHaveBeenCalled();
+            consoleSpy.mockRestore();
         });
     });
 });

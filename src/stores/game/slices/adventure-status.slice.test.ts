@@ -46,6 +46,41 @@ describe('adventure-status.slice', () => {
         }));
     });
 
+    it('should not overwrite next adventure status if it is already set', () => {
+        vi.mocked(mockSet).mockClear();
+        const currentId = '1';
+        const currentIndex = ADVENTURES.findIndex(a => a.id === currentId);
+        const nextAdventure = ADVENTURES[currentIndex + 1];
+
+        const slice = setupSlice({
+            '1': AdventureStatus.AVAILABLE,
+            [nextAdventure.id]: AdventureStatus.COMPLETED, // already has a status
+        });
+
+        slice.completeAdventure(currentId);
+
+        const callArg = vi.mocked(mockSet).mock.calls[0][0] as { adventureStatuses: Record<string, AdventureStatus> };
+        // Should NOT overwrite the already-completed status
+        expect(callArg.adventureStatuses[nextAdventure.id]).toBe(AdventureStatus.COMPLETED);
+    });
+
+    it('should complete the last adventure without unlocking any next adventure', () => {
+        vi.mocked(mockSet).mockClear();
+        const lastAdventure = ADVENTURES[ADVENTURES.length - 1];
+        const slice = setupSlice({ [lastAdventure.id]: AdventureStatus.AVAILABLE });
+
+        slice.completeAdventure(lastAdventure.id);
+
+        expect(mockSet).toHaveBeenCalledWith(expect.objectContaining({
+            adventureStatuses: expect.objectContaining({
+                [lastAdventure.id]: AdventureStatus.COMPLETED
+            })
+        }));
+        // No extra adventure should be unlocked
+        const callArg = vi.mocked(mockSet).mock.calls[0][0] as { adventureStatuses: Record<string, AdventureStatus> };
+        expect(Object.keys(callArg.adventureStatuses)).toHaveLength(1);
+    });
+
     it('should unlock a specific adventure', () => {
         vi.mocked(mockSet).mockClear();
         const slice = setupSlice({});

@@ -54,4 +54,25 @@ describe('IdentityService', () => {
         expect(stored.playerId).toBeUndefined();
         expect(stored.deviceId).toBeDefined(); // Should preserve deviceId
     });
+
+    it('should regenerate identity when stored JSON is corrupted', () => {
+        localStorage.setItem(STORAGE_KEY, 'not-valid-json{{{');
+
+        // Should not throw and should return a valid deviceId
+        const deviceId = IdentityService.getDeviceId();
+        expect(typeof deviceId).toBe('string');
+        expect(deviceId.length).toBeGreaterThan(0);
+    });
+
+    it('should fall back to Math.random when crypto.randomUUID is unavailable', () => {
+        // Use vi.stubGlobal to mock crypto without randomUUID
+        vi.stubGlobal('crypto', { subtle: (globalThis.crypto as Crypto).subtle });
+
+        localStorage.clear();
+        const deviceId = IdentityService.getDeviceId();
+        expect(typeof deviceId).toBe('string');
+        expect(deviceId.length).toBeGreaterThan(0);
+
+        vi.unstubAllGlobals();
+    });
 });

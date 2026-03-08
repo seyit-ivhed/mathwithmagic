@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { generateEquationData, validateAnswer } from './EquationEngine';
 
 describe('EquationEngine', () => {
@@ -69,6 +69,13 @@ describe('EquationEngine', () => {
                 }
             }
             expect(hasThreeVars).toBe(true);
+        });
+
+        it('should throw for invalid difficulty (null/undefined/string)', () => {
+            const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+            // @ts-expect-error testing invalid input
+            expect(() => generateEquationData(null)).toThrow('Valid difficulty level is required');
+            consoleSpy.mockRestore();
         });
     });
 

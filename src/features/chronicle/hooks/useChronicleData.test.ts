@@ -3,6 +3,7 @@ import { renderHook } from '@testing-library/react';
 import { useChronicleData } from './useChronicleData';
 import { useGameStore } from '../../../stores/game/store';
 import { AdventureStatus } from '../../../types/adventure.types';
+import * as navigationUtils from '../../adventure/utils/navigation.utils';
 
 // Mock the stores
 vi.mock('../../../stores/game/store');
@@ -68,6 +69,39 @@ describe('useChronicleData', () => {
             const { result } = renderHook(() => useChronicleData('1'));
 
             expect(result.current.activeAdventureId).toBe('1');
+        });
+
+        it('should log error and return empty string when highestUnlocked is undefined for a player with progress', () => {
+            const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+            // Mock getHighestUnlockedAdventure to return undefined
+            vi.spyOn(navigationUtils, 'getHighestUnlockedAdventure').mockReturnValueOnce(undefined);
+
+            vi.mocked(useGameStore).mockReturnValue({
+                encounterResults: {
+                    '1_1': { stars: 3, difficulty: 1, completedAt: Date.now() },
+                },
+                adventureStatuses: {},
+            } as ReturnType<typeof useGameStore>);
+
+            const { result } = renderHook(() => useChronicleData());
+
+            expect(result.current.activeAdventureId).toBe('');
+            consoleSpy.mockRestore();
+        });
+
+        it('should expose setActiveAdventureId and adventures', () => {
+            vi.mocked(useGameStore).mockReturnValue({
+                encounterResults: {},
+                adventureStatuses: { '1': AdventureStatus.AVAILABLE },
+            } as ReturnType<typeof useGameStore>);
+
+            const { result } = renderHook(() => useChronicleData());
+
+            expect(typeof result.current.setActiveAdventureId).toBe('function');
+            expect(Array.isArray(result.current.adventures)).toBe(true);
+            expect(result.current.currentAdventure).toBeDefined();
+            expect(result.current.encounterResults).toBeDefined();
         });
     });
 });

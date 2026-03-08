@@ -144,6 +144,15 @@ describe('progression.slice', () => {
 
             expect(mockSet).not.toHaveBeenCalled();
         });
+
+        it('should log error and do nothing if companion stats not found', () => {
+            const slice = setupSlice({ companionStats: {} });
+
+            slice.levelUpCompanion('missing_companion');
+
+            expect(consoleErrorSpy).toHaveBeenCalled();
+            expect(mockSet).not.toHaveBeenCalled();
+        });
     });
 
     describe('addCompanionToParty', () => {

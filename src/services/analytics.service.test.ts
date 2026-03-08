@@ -72,6 +72,13 @@ describe('analyticsService', () => {
             await reloadWithSearch('?fbclid=abc123&gclid=xyz789');
             expect(sessionStorage.getItem('attribution')).toBeNull();
         });
+
+        it('handles malformed JSON in sessionStorage attribution gracefully', async () => {
+            sessionStorage.setItem('attribution', 'not-valid-json{{{');
+            // Should not throw when calling getAttribution
+            const fresh = await reloadWithSearch('');
+            expect(fresh).toBeDefined();
+        });
     });
 
     describe('trackEvent', () => {

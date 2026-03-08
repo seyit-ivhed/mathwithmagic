@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { useGameStore } from './store';
+import { useGameStore, selectCompletedEncountersCount } from './store';
 import { AdventureStatus } from '../../types/adventure.types';
 
 // Mock dependencies
@@ -75,5 +75,23 @@ describe('useGameStore', () => {
         });
 
 
+    });
+
+    describe('selectCompletedEncountersCount', () => {
+        it('should return 0 when there are no encounter results', () => {
+            const count = selectCompletedEncountersCount(useGameStore.getState());
+            expect(count).toBe(0);
+        });
+
+        it('should return the correct count after completing encounters', () => {
+            useGameStore.setState({
+                encounterResults: {
+                    '1_1': { stars: 3, difficulty: 1, completedAt: 100 },
+                    '1_2': { stars: 2, difficulty: 1, completedAt: 200 },
+                }
+            });
+            const count = selectCompletedEncountersCount(useGameStore.getState());
+            expect(count).toBe(2);
+        });
     });
 });

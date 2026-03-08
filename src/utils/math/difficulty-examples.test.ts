@@ -58,4 +58,10 @@ describe('Difficulty Examples Boundary Check', () => {
             });
         });
     });
+
+    it('should return empty array for unknown level', () => {
+        // getDifficultyExamples falls through to the default case
+        expect(getDifficultyExamples(99)).toEqual([]);
+        expect(getDifficultyExamples(0)).toEqual([]);
+    });
 });

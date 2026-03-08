@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { generateBalanceData, validateBalance, calculateTotalWeight } from './BalanceEngine';
 
 describe('Balance Engine', () => {
@@ -45,6 +45,26 @@ describe('Balance Engine', () => {
 
             expect(leftTotal).toBeGreaterThanOrEqual(data.targetBalance);
             expect(rightTotal).toBeGreaterThanOrEqual(data.targetBalance);
+        });
+
+        it('should generate difficulty 3 puzzles', () => {
+            const data = generateBalanceData(3);
+            expect(data).toHaveProperty('leftStack');
+            expect(data.leftStack.length).toBeGreaterThan(0);
+        });
+
+        it('should handle max retry fallback when puzzle happens to be balanced', () => {
+            // Force the "noise accidentally cancels out" scenario by mocking Math.random
+            // so that noise weights always sum to the same value on both sides.
+            // We force retryCount > MAX_GENERATION_RETRIES by calling directly.
+            const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+            // Call with retryCount >= 10 (MAX_GENERATION_RETRIES) directly
+            const data = generateBalanceData(1, 11);
+            // Should still return a valid object (fallback adjusts weight)
+            expect(data).toHaveProperty('leftStack');
+
+            consoleSpy.mockRestore();
         });
     });
 

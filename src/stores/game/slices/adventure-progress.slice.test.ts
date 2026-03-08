@@ -45,6 +45,29 @@ describe('adventure-progress.slice - completeEncounter', () => {
         }));
     });
 
+    it('should not update stars if new performance is worse', () => {
+        vi.mocked(mockSet).mockClear();
+        const encounterKey = `${adventureId}_1`;
+        const initialResult = { stars: 3, difficulty: 3, completedAt: 100 };
+        const slice = setupSlice({
+            encounterResults: { [encounterKey]: initialResult },
+            activeEncounterDifficulty: 1
+        });
+
+        slice.completeEncounter(adventureId, 1);
+
+        expect(mockSet).not.toHaveBeenCalled();
+    });
+
+    it('should do nothing for unknown adventure ID', () => {
+        vi.mocked(mockSet).mockClear();
+        const slice = setupSlice({ encounterResults: {}, activeEncounterDifficulty: 1 });
+
+        slice.completeEncounter('nonexistent-adventure', 1);
+
+        expect(mockSet).not.toHaveBeenCalled();
+    });
+
 });
 
 describe('adventure-progress.slice - notifyEncounterStarted', () => {
@@ -88,6 +111,18 @@ describe('adventure-progress.slice - notifyEncounterStarted', () => {
 
         expect(addCompanionToParty).not.toHaveBeenCalled();
     });
+
+    it('should log error and do nothing for unknown adventure ID', () => {
+        const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+        const addCompanionToParty = vi.fn();
+        const slice = setupSlice({ addCompanionToParty });
+
+        slice.notifyEncounterStarted('nonexistent-adventure', 1);
+
+        expect(addCompanionToParty).not.toHaveBeenCalled();
+        expect(consoleSpy).toHaveBeenCalled();
+        consoleSpy.mockRestore();
+    });
 });
 
 describe('adventure-progress.slice - setEncounterDifficulty', () => {
@@ -102,6 +137,23 @@ describe('adventure-progress.slice - setEncounterDifficulty', () => {
         slice.setEncounterDifficulty(3);
 
         expect(mockSet).toHaveBeenCalledWith({ activeEncounterDifficulty: 3 });
+    });
+
+    it('should log error and not update for non-number difficulty', () => {
+        vi.mocked(mockSet).mockClear();
+        const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+        const slice = createAdventureProgressSlice(
+            mockSet,
+            mockGet({}),
+            {} as StoreApi<GameStore>
+        );
+
+        // @ts-expect-error testing invalid input
+        slice.setEncounterDifficulty('hard');
+
+        expect(mockSet).not.toHaveBeenCalled();
+        expect(consoleSpy).toHaveBeenCalled();
+        consoleSpy.mockRestore();
     });
 });
 
@@ -165,5 +217,11 @@ describe('adventure-progress.slice - getAdventureNodes', () => {
         const nodes = slice.getAdventureNodes(adventureId);
 
         expect(nodes[2].isLocked).toBe(false);
+    });
+
+    it('should return empty array for unknown adventure ID', () => {
+        const slice = setupSlice({});
+        const nodes = slice.getAdventureNodes('nonexistent-adventure');
+        expect(nodes).toEqual([]);
     });
 });

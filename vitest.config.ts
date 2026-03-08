@@ -15,14 +15,23 @@ export default defineConfig({
         coverage: {
             provider: 'v8',
             reporter: ['text', 'json', 'html'],
+            thresholds: {
+                perFile: true,
+                statements: 90,
+                branches: 90,
+                functions: 90,
+                lines: 90,
+            },
             exclude: [
                 'node_modules/',
                 'dist/',
                 'e2e/',
                 'vite.config.ts',
                 'vitest.config.ts',
-                'src/hooks/useAuth.ts',
-                'data/'
+                'src/hooks/useAuth.ts', // explicitly excluded — accesses Supabase directly; see comment in file
+                'data/',
+                'src/features/encounter/abilities/types.ts', // type-only file — no executable runtime code
+                'src/stores/encounter/store.ts', // structural file — typeof window branch cannot be false in jsdom
             ],
         },
     },

@@ -33,5 +33,12 @@ describe('choices utility', () => {
             expect(new Set(choices).size).toBe(4);
             expect(choices.every(c => c >= 0)).toBe(true);
         });
+
+        it('should handle large count by generating enough unique values', () => {
+            // With a large count, the duplicate-handling fallback code paths are exercised
+            const choices = generateMultipleChoices(1, 8);
+            expect(choices).toHaveLength(8);
+            expect(new Set(choices).size).toBe(8);
+        });
     });
 });

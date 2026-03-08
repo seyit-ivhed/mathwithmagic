@@ -56,12 +56,23 @@ describe('mergeGameState', () => {
             expect(result.encounterResults['1_1'].stars).toBe(3);
         });
 
-        it('keeps most recent when stars are equal', () => {
+        it('keeps most recent when stars are equal (primary newer)', () => {
             const primary = base({
                 encounterResults: { '1_1': { stars: 2, difficulty: 2, completedAt: 300 } },
             });
             const secondary = base({
                 encounterResults: { '1_1': { stars: 2, difficulty: 2, completedAt: 100 } },
+            });
+            const result = mergeGameState(primary, secondary);
+            expect(result.encounterResults['1_1'].completedAt).toBe(300);
+        });
+
+        it('keeps secondary when stars are equal but secondary is more recent', () => {
+            const primary = base({
+                encounterResults: { '1_1': { stars: 2, difficulty: 2, completedAt: 100 } },
+            });
+            const secondary = base({
+                encounterResults: { '1_1': { stars: 2, difficulty: 2, completedAt: 300 } },
             });
             const result = mergeGameState(primary, secondary);
             expect(result.encounterResults['1_1'].completedAt).toBe(300);
@@ -194,6 +205,18 @@ describe('mergeGameState', () => {
         it('keeps AVAILABLE over LOCKED', () => {
             const primary = base({ adventureStatuses: { '3': AdventureStatus.AVAILABLE } });
             const secondary = base({ adventureStatuses: { '3': AdventureStatus.LOCKED } });
+            expect(mergeGameState(primary, secondary).adventureStatuses['3']).toBe(AdventureStatus.AVAILABLE);
+        });
+
+        it('keeps LOCKED when both are LOCKED', () => {
+            const primary = base({ adventureStatuses: { '4': AdventureStatus.LOCKED } });
+            const secondary = base({ adventureStatuses: { '4': AdventureStatus.LOCKED } });
+            expect(mergeGameState(primary, secondary).adventureStatuses['4']).toBe(AdventureStatus.LOCKED);
+        });
+
+        it('keeps secondary when primary has lower rank (secondary has higher rank)', () => {
+            const primary = base({ adventureStatuses: { '3': AdventureStatus.LOCKED } });
+            const secondary = base({ adventureStatuses: { '3': AdventureStatus.AVAILABLE } });
             expect(mergeGameState(primary, secondary).adventureStatuses['3']).toBe(AdventureStatus.AVAILABLE);
         });
 
