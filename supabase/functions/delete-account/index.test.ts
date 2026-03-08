@@ -1,35 +1,50 @@
 import { assertEquals } from "https://deno.land/std@0.208.0/assert/mod.ts";
-import { handler } from "./index.ts";
+import { createHandler } from "./index.ts";
 
 /**
- * Tests the delete-account edge function handler in isolation by mocking
- * Deno.env and global fetch so that no real Supabase calls are made.
+ * Tests the delete-account edge function handler in isolation.
+ * A custom fetch is injected via createHandler() so the Supabase client never
+ * makes real network calls regardless of how the npm package resolves fetch.
  */
+
+const mockEnv: Record<string, string> = {
+    SUPABASE_URL: 'https://mock.supabase.co',
+    SUPABASE_SERVICE_ROLE_KEY: 'service-role-key',
+    CLIENT_URL: 'http://localhost:5173',
+};
+
+function withMockEnv(fn: () => Promise<void>): () => Promise<void> {
+    return async () => {
+        const originalGet = Deno.env.get;
+        Deno.env.get = (key: string) => mockEnv[key] ?? originalGet(key);
+        try {
+            await fn();
+        } finally {
+            Deno.env.get = originalGet;
+        }
+    };
+}
+
+function makeUrl(input: string | URL | Request): string {
+    if (typeof input === 'string') return input;
+    if (input instanceof URL) return input.href;
+    return (input as Request).url;
+}
 
 Deno.test({
     name: "delete-account handler - successfully deletes authenticated user",
     sanitizeResources: false,
     sanitizeOps: false,
-    async fn() {
-        const originalGet = Deno.env.get;
-        const originalFetch = globalThis.fetch;
+    fn: withMockEnv(async () => {
+        const mockFetch = async (input: string | URL | Request): Promise<Response> => {
+            const url = makeUrl(input);
 
-        Deno.env.get = (key: string) => ({
-            'SUPABASE_URL': 'https://mock.supabase.co',
-            'SUPABASE_SERVICE_ROLE_KEY': 'service-role-key',
-            'CLIENT_URL': 'http://localhost:5173',
-        }[key] || originalGet(key));
-
-        globalThis.fetch = async (input: string | URL | Request) => {
-            const url = typeof input === 'string' ? input : input instanceof URL ? input.href : (input as Request).url;
-
-            // Mock admin delete user — 204 No Content bypasses _userResponse xform
-            // and is the correct HTTP status for a successful DELETE in GoTrue.
+            // Admin delete: return 204 No Content — processed before json() is called
             if (url.includes('/auth/v1/admin/users/')) {
                 return new Response(null, { status: 204 });
             }
 
-            // Mock JWT verification
+            // JWT verification: return user object
             if (url.includes('/auth/v1/user')) {
                 return new Response(JSON.stringify({ id: 'user-123', email: 'test@example.com' }), {
                     status: 200,
@@ -40,128 +55,103 @@ Deno.test({
             return new Response(JSON.stringify({ error: `Not mocked: ${url}` }), { status: 404 });
         };
 
-        try {
-            const req = new Request("http://localhost/delete-account", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer mock-jwt",
-                    "Origin": "http://localhost:5173",
-                },
-            });
+        const handler = createHandler(mockFetch);
 
-            const res = await handler(req);
-            const data = await res.json();
+        const req = new Request("http://localhost/delete-account", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer mock-jwt",
+                "Origin": "http://localhost:5173",
+            },
+        });
 
-            assertEquals(res.status, 200);
-            assertEquals(data.success, true);
-            assertEquals(res.headers.get('Access-Control-Allow-Origin'), "http://localhost:5173");
-        } finally {
-            globalThis.fetch = originalFetch;
-            Deno.env.get = originalGet;
-        }
-    }
+        const res = await handler(req);
+        const data = await res.json();
+
+        assertEquals(res.status, 200);
+        assertEquals(data.success, true);
+        assertEquals(res.headers.get('Access-Control-Allow-Origin'), "http://localhost:5173");
+    }),
 });
 
 Deno.test({
     name: "delete-account handler - returns 401 when Authorization header is missing",
     sanitizeResources: false,
     sanitizeOps: false,
-    async fn() {
-        const originalGet = Deno.env.get;
+    fn: withMockEnv(async () => {
+        const handler = createHandler();
 
-        Deno.env.get = (key: string) => ({
-            'SUPABASE_URL': 'https://mock.supabase.co',
-            'SUPABASE_SERVICE_ROLE_KEY': 'service-role-key',
-        }[key] || originalGet(key));
+        const req = new Request("http://localhost/delete-account", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+        });
 
-        try {
-            const req = new Request("http://localhost/delete-account", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-            });
+        const res = await handler(req);
+        const data = await res.json();
 
-            const res = await handler(req);
-            const data = await res.json();
-
-            assertEquals(res.status, 401);
-            assertEquals(data.error, "Missing Authorization header");
-        } finally {
-            Deno.env.get = originalGet;
-        }
-    }
+        assertEquals(res.status, 401);
+        assertEquals(data.error, "Missing Authorization header");
+    }),
 });
 
 Deno.test({
     name: "delete-account handler - returns 401 when JWT verification fails",
     sanitizeResources: false,
     sanitizeOps: false,
-    async fn() {
-        const originalGet = Deno.env.get;
-        const originalFetch = globalThis.fetch;
-
-        Deno.env.get = (key: string) => ({
-            'SUPABASE_URL': 'https://mock.supabase.co',
-            'SUPABASE_SERVICE_ROLE_KEY': 'service-role-key',
-        }[key] || originalGet(key));
-
-        globalThis.fetch = async (input: string | URL | Request) => {
-            const url = typeof input === 'string' ? input : input.toString();
+    fn: withMockEnv(async () => {
+        const mockFetch = async (input: string | URL | Request): Promise<Response> => {
+            const url = makeUrl(input);
 
             if (url.includes('/auth/v1/user')) {
-                // Simulate a failed auth verification (e.g. expired JWT)
-                return new Response(JSON.stringify({ error: { message: 'Invalid JWT' } }), { status: 401 });
+                return new Response(JSON.stringify({ error: { message: 'Invalid JWT' } }), {
+                    status: 401,
+                    headers: { 'Content-Type': 'application/json' },
+                });
             }
 
             return new Response(JSON.stringify({ error: `Not mocked: ${url}` }), { status: 404 });
         };
 
-        try {
-            const req = new Request("http://localhost/delete-account", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer invalid-jwt",
-                },
-            });
+        const handler = createHandler(mockFetch);
 
-            const res = await handler(req);
-            const data = await res.json();
+        const req = new Request("http://localhost/delete-account", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer invalid-jwt",
+            },
+        });
 
-            assertEquals(res.status, 401);
-            assertEquals(data.error, "Unauthorized");
-        } finally {
-            globalThis.fetch = originalFetch;
-            Deno.env.get = originalGet;
-        }
-    }
+        const res = await handler(req);
+        const data = await res.json();
+
+        assertEquals(res.status, 401);
+        assertEquals(data.error, "Unauthorized");
+    }),
 });
 
 Deno.test({
     name: "delete-account handler - responds to CORS preflight",
     sanitizeResources: false,
     sanitizeOps: false,
-    async fn() {
+    fn: withMockEnv(async () => {
+        const handler = createHandler();
+
+        const req = new Request("http://localhost/delete-account", {
+            method: "OPTIONS",
+            headers: { "Origin": "https://example.com" },
+        });
+
+        // Override CLIENT_URL for this test
         const originalGet = Deno.env.get;
-
-        Deno.env.get = (key: string) => ({
-            'SUPABASE_URL': 'https://mock.supabase.co',
-            'SUPABASE_SERVICE_ROLE_KEY': 'service-role-key',
-            'CLIENT_URL': 'https://example.com',
-        }[key] || originalGet(key));
-
+        Deno.env.get = (key: string) => key === 'CLIENT_URL' ? 'https://example.com' : (mockEnv[key] ?? originalGet(key));
         try {
-            const req = new Request("http://localhost/delete-account", {
-                method: "OPTIONS",
-                headers: { "Origin": "https://example.com" },
-            });
-
             const res = await handler(req);
-
             assertEquals(res.status, 200);
             assertEquals(res.headers.get('Access-Control-Allow-Methods'), "POST, OPTIONS");
         } finally {
             Deno.env.get = originalGet;
         }
-    }
+    }),
 });

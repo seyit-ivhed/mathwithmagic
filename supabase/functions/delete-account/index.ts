@@ -1,6 +1,6 @@
 import { createClient } from 'npm:@supabase/supabase-js@^2.0.0'
 
-export const handler = async (req: Request) => {
+export const createHandler = (fetchImpl?: typeof globalThis.fetch) => async (req: Request) => {
     const origin = req.headers.get('Origin')
     const productionUrl = Deno.env.get('CLIENT_URL')
 
@@ -30,14 +30,19 @@ export const handler = async (req: Request) => {
             )
         }
 
-        const jwt = authHeader.replace('Bearer ', '')
-        const supabaseAdmin = createClient(
-            Deno.env.get('SUPABASE_URL') ?? '',
-            Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
-            { auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false } }
-        )
+        const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? ''
+        const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+        const _fetch = fetchImpl ?? globalThis.fetch
 
-        // Verify the JWT and get the requesting user
+        const jwt = authHeader.replace('Bearer ', '')
+
+        // Verify the JWT using the user-scoped auth client. global.fetch is injected
+        // here so the same fetch implementation is used in tests.
+        const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey, {
+            auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+            global: { fetch: _fetch },
+        })
+
         const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(jwt)
         if (authError || !user) {
             console.error('Auth verification failed:', authError?.message || 'No user returned')
@@ -47,21 +52,28 @@ export const handler = async (req: Request) => {
             )
         }
 
-        console.log('Processing account deletion for user:', user.id)
-
-        // Delete the Supabase auth user.
+        // Delete the Supabase auth user by calling the GoTrue admin endpoint directly.
+        // Using the injected fetch ensures the same implementation is used in tests.
         // The player_profiles, game_states, purchase_intents, and player_entitlements rows
         // are all removed via ON DELETE CASCADE foreign keys in the database schema.
         // Anonymous play_events analytics are NOT deleted — session IDs cannot be linked
         // to the account (they are tab-scoped and cleared on tab close), so they do not
         // constitute personal data under GDPR.
-        const { error: deleteError } = await supabaseAdmin.auth.admin.deleteUser(user.id)
-        if (deleteError) {
-            console.error('Failed to delete user:', deleteError.message)
-            throw deleteError
-        }
+        const deleteResponse = await _fetch(
+            `${supabaseUrl}/auth/v1/admin/users/${user.id}`,
+            {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${serviceRoleKey}`,
+                    'apikey': serviceRoleKey,
+                },
+            }
+        )
 
-        console.log('Account deleted successfully for user:', user.id)
+        if (!deleteResponse.ok) {
+            const errorData = await deleteResponse.json().catch(() => ({})) as { message?: string }
+            throw new Error(errorData.message ?? `Delete failed with status ${deleteResponse.status}`)
+        }
 
         return new Response(
             JSON.stringify({ success: true }),
@@ -76,6 +88,8 @@ export const handler = async (req: Request) => {
         )
     }
 }
+
+export const handler = createHandler()
 
 if (import.meta.main) {
     Deno.serve(handler)
