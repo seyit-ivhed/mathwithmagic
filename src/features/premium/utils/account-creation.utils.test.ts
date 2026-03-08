@@ -220,5 +220,24 @@ describe('account-creation.utils', () => {
             expect(result.success).toBe(false);
             expect(result.error).toBe('Network error');
         });
+
+        it('should throw and catch sign-up error that is not an email duplicate', async () => {
+            mockSupabaseClient.auth.getSession.mockResolvedValueOnce({ data: { session: null }, error: null });
+
+            // signUp resolves but returns an error (not rejected) that is not email-already-exists
+            const serverError = { message: 'Server error occurred', status: 500 };
+            mockSupabaseClient.auth.signUp.mockResolvedValueOnce({ data: { user: null }, error: serverError });
+
+            const result = await performAccountConversion({
+                email,
+                password,
+                refreshSession,
+                translation,
+                supabaseClient: mockSupabaseClient as unknown as SupabaseClient
+            });
+
+            expect(result.success).toBe(false);
+            expect(result.error).toBe('Server error occurred');
+        });
     });
 });

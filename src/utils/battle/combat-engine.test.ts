@@ -199,6 +199,31 @@ describe('CombatEngine', () => {
             const result = CombatEngine.processMonsterAction(zeroDamageMonster, [mockAttacker]);
             expect(result.updatedParty[0].currentHealth).toBe(100);
         });
+
+        it('should only update the targeted unit and keep others unchanged (covers ternary false branch)', () => {
+            const hero1: BattleUnit = { ...mockAttacker, id: 'hero1', currentHealth: 100 };
+            const hero2: BattleUnit = { ...mockAttacker, id: 'hero2', currentHealth: 80, isPlayer: true };
+            // Mock random to always target hero1 (index 0)
+            vi.spyOn(Math, 'random').mockReturnValue(0);
+
+            const result = CombatEngine.processMonsterAction(mockEnemy, [hero1, hero2]);
+
+            const updatedHero1 = result.updatedParty.find(p => p.id === 'hero1');
+            const updatedHero2 = result.updatedParty.find(p => p.id === 'hero2');
+            // hero1 took damage, hero2 is unchanged (tests ternary false branch in map)
+            expect(updatedHero1!.currentHealth).toBeLessThan(100);
+            expect(updatedHero2!.currentHealth).toBe(80);
+
+            vi.restoreAllMocks();
+        });
+    });
+
+    describe('executeStandardAttack - zero damage', () => {
+        it('should deal 0 damage when attacker.damage is 0', () => {
+            const zeroDamageEnemy: BattleUnit = { ...mockEnemy, damage: 0 };
+            const result = CombatEngine.executeStandardAttack(zeroDamageEnemy, [mockAttacker]);
+            expect(result.updatedTargets[0].currentHealth).toBe(100);
+        });
     });
 
     describe('regenerateSpirit - dead unit', () => {

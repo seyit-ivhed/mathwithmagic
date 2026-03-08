@@ -272,6 +272,19 @@ describe('encounter-flow.slice', () => {
 
         });
 
+        it('should use enemy id as name when enemy has no name property', () => {
+            const { initializeEncounter } = useTestStore.getState();
+            // Enemy without a name - covers the `enemy.name || enemy.id` fallback
+            initializeEncounter(['c1'], [
+                { id: 'nameless_enemy', maxHealth: 30, attack: 5, sprite: '' }
+            ], 0, 0, {});
+
+            const state = useTestStore.getState();
+            expect(state.monsters[0].name).toBe('nameless_enemy');
+        });
+    });
+
+    describe('processMonsterTurn', () => {
         it('should play attack sound when monster has one', () => {
             const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
             const { initializeEncounter, processMonsterTurn } = useTestStore.getState();

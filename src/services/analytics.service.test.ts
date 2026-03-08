@@ -77,7 +77,26 @@ describe('analyticsService', () => {
             sessionStorage.setItem('attribution', 'not-valid-json{{{');
             // Should not throw when calling getAttribution
             const fresh = await reloadWithSearch('');
+            // Call trackEvent which internally calls getAttribution → hits the catch block
+            await fresh.trackEvent('test_event_malformed');
             expect(fresh).toBeDefined();
+        });
+
+        it('includes attribution in trackEvent payload when valid attribution is stored', async () => {
+            const { supabase } = await import('./supabase.service');
+            const insertMock = vi.fn().mockResolvedValue({ error: null });
+            vi.mocked(supabase.from).mockReturnValue({ insert: insertMock } as unknown as ReturnType<typeof supabase.from>);
+
+            // Set valid attribution in sessionStorage
+            sessionStorage.setItem('attribution', JSON.stringify({ source: 'test', campaign: 'c1', medium: 'email' }));
+
+            await analyticsService.trackEvent('event_with_attribution');
+
+            expect(insertMock).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    attribution: expect.objectContaining({ source: 'test' })
+                })
+            );
         });
     });
 

@@ -82,6 +82,45 @@ describe('LatinSquareEngine', () => {
         });
     });
 
+    describe('generateLatinSquareData', () => {
+        afterEach(() => {
+            vi.restoreAllMocks();
+        });
+
+        it('should generate valid puzzle data structure', () => {
+            const data = generateLatinSquareData(1);
+            expect(data.puzzleType).toBe(PuzzleType.LATIN_SQUARE);
+            expect(data.targetValue).toBe(3); // Level 1 is 3x3
+            expect(Array.isArray(data.grid)).toBe(true);
+            expect(data.grid).toHaveLength(3);
+            expect(data.grid[0]).toHaveLength(3);
+            expect(data.selectedRunes).toHaveLength(3);
+        });
+
+        it('should have correct number of fixed elements based on difficulty', () => {
+            const dataEasy = generateLatinSquareData(1);
+            expect(dataEasy.fixedIndices).toHaveLength(5);
+            expect(dataEasy.grid).toHaveLength(3);
+
+            const dataMedium = generateLatinSquareData(2);
+            expect(dataMedium.fixedIndices).toHaveLength(8);
+            expect(dataMedium.grid).toHaveLength(4);
+
+            const dataHard = generateLatinSquareData(3);
+            expect(dataHard.fixedIndices).toHaveLength(6);
+            expect(dataHard.grid).toHaveLength(4);
+        });
+
+        it('should populate grid with fixed elements at specified indices', () => {
+            const data = generateLatinSquareData(1);
+            const { grid, fixedIndices } = data;
+
+            fixedIndices.forEach(({ row, col }) => {
+                expect(grid[row][col]).not.toBeNull();
+            });
+        });
+    });
+
     describe('generateLatinSquareData - edge cases', () => {
         it('should throw for invalid non-number difficulty', () => {
             const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});

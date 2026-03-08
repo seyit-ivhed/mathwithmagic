@@ -142,4 +142,27 @@ describe('playSfx', () => {
 
         vi.unstubAllGlobals();
     });
+
+    it('should handle autoplay rejection via .catch handler', async () => {
+        const autoplayError = new Error('NotAllowedError: autoplay prevented');
+        const mockPlay = vi.fn().mockRejectedValue(autoplayError);
+        const mockAudioInstance = { play: mockPlay, volume: 0 };
+
+        // Use a regular function (not arrow) so it can be called with `new`
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        vi.stubGlobal('Audio', function (this: unknown) { return mockAudioInstance; });
+
+        playSfx('battle/lion');
+
+        // Flush microtask queue so the rejected promise .catch fires
+        await Promise.resolve();
+        await Promise.resolve();
+
+        expect(vi.mocked(console.warn)).toHaveBeenCalledWith(
+            'SFX autoplay prevented:',
+            autoplayError
+        );
+
+        vi.unstubAllGlobals();
+    });
 });
