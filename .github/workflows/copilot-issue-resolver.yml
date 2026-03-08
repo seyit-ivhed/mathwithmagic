@@ -18,22 +18,9 @@ jobs:
         with:
           script: |
             const issue = context.payload.issue;
-
-            // Search for open PRs that reference this issue
-            const query = `repo:${context.repo.owner}/${context.repo.repo} is:pr is:open #${issue.number}`;
-            const searchResult = await github.rest.search.issuesAndPullRequests({ q: query });
-            const linkedPR = searchResult.data.items.find(item => item.pull_request);
-
-            let body;
-            if (linkedPR) {
-              body = `@copilot There is already an open pull request for this issue: #${linkedPR.number}. Please put on your **reviewer hat** and review it following the **code-reviewer** skill (\`.agent/skills/code-reviewer/SKILL.md\`). Review it as if you have no knowledge of the original implementation — focus on correctness, quality, test coverage, and adherence to the standards in \`/docs/developer-expectations.md\`. Apply all improvements directly. When done, mark the PR as ready for review and assign it to @seyit-ivhed.`;
-            } else {
-              body = `@copilot Please put on your **implementer hat** and resolve this issue following the **issue-resolver** skill (\`.agent/skills/issue-resolver/SKILL.md\`). When done, create a pull request and post a comment on that PR with the following message (replace nothing, post it verbatim):\n\n> @copilot Please put on your **reviewer hat** and do an independent code review of this pull request following the **code-reviewer** skill (\`.agent/skills/code-reviewer/SKILL.md\`). Review it as if you have no knowledge of the original implementation — focus on correctness, quality, test coverage, and adherence to the standards in \`/docs/developer-expectations.md\`. Apply all improvements directly. When done, mark the PR as ready for review and assign it to @seyit-ivhed.`;
-            }
-
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issue.number,
-              body
+              body: `@copilot Please resolve this issue following the **issue-resolver** skill (\`.agent/skills/issue-resolver/SKILL.md\`). When done, create a pull request and assign it to @seyit-ivhed for review.`
             });

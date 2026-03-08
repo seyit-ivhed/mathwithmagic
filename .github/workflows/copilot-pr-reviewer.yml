@@ -1,0 +1,26 @@
+name: Copilot PR Reviewer
+
+on:
+  pull_request:
+    types: [assigned]
+
+jobs:
+  trigger-copilot-review:
+    # Only run when the PR is assigned to the Copilot bot
+    if: contains(github.event.assignee.login, 'opilot')
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      - name: Post Copilot review trigger comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              body: `@copilot Please put on your **reviewer hat** and do an independent code review of this pull request following the **code-reviewer** skill (\`.agent/skills/code-reviewer/SKILL.md\`). Review it as if you have no knowledge of the original implementation — focus on correctness, quality, test coverage, and adherence to the standards in \`/docs/developer-expectations.md\`. Apply all improvements directly. When done, mark the PR as ready for review and assign it to @seyit-ivhed.`
+            });
