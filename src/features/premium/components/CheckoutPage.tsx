@@ -32,7 +32,8 @@ export const CheckoutPage: React.FC = () => {
     }, [authLoading, isAnonymous]);
 
     const handleBackToGame = () => {
-        window.location.href = '/';
+        const refSession = analyticsService.getRefSessionId();
+        window.location.href = refSession ? `/?game_session=${refSession}` : '/';
     };
 
     const handleSuccess = () => {
