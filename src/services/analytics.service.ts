@@ -4,7 +4,7 @@ import { supabase } from './supabase.service';
 // If the game is returning from the checkout flow, game_session restores the
 // original session so all events share a single session_id.
 const _urlParams = new URLSearchParams(window.location.search);
-const SESSION_ID: string = _urlParams.get('game_session') ?? crypto.randomUUID();
+const SESSION_ID: string = _urlParams.get('game_session') ?? _urlParams.get('ref_session') ?? crypto.randomUUID();
 
 // Remove game_session from the address bar after reading so it doesn't linger
 if (_urlParams.has('game_session')) {
