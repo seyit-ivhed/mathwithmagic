@@ -12,7 +12,6 @@ Review code, branches, or pull requests for quality, best practices, and potenti
 - Don't limit yourself to only the files edited or added, also check for any related files that might be affected by the changes
 - Make a plan for improving the code and execute all improvements including the minor or optional ones.
 - Check security: any new Supabase tables have RLS enabled; edge functions verify the user's JWT before any data operation; no secrets or service role keys appear in client-side code.
-- Check i18n completeness: every new user-visible string has keys added to both `src/locales/en.json` and `src/locales/sv.json`.
 - Check accessibility: interactive elements have accessible labels, modals trap focus and close on Escape, semantic HTML is used correctly (buttons for actions, links for navigation).
 
 # Output
