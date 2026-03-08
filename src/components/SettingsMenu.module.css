@@ -59,3 +59,9 @@
     color: #6b4c2a;
     text-decoration-color: rgba(139, 101, 50, 0.5);
 }
+
+.legalLinkGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}

@@ -69,6 +69,11 @@
     color: rgba(255, 255, 255, 0.75);
 }
 
+.confirmButton {
+    background: #c0392b !important;
+    border-color: #c0392b !important;
+}
+
 .spinner {
     animation: spin 1s linear infinite;
 }

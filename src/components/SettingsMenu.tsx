@@ -53,7 +53,7 @@ const SettingsMenu: React.FC = () => {
                         <h4 className={sectionStyles.sectionTitle}>
                             {t('legal.section_title', 'Legal')}
                         </h4>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <div className={styles.legalLinkGroup}>
                             <button
                                 className={styles.legalLink}
                                 onClick={() => setLegalModal('privacy')}
