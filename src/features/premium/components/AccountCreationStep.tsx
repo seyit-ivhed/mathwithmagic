@@ -23,6 +23,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [mode, setMode] = useState<'create' | 'signin'>('create');
+    const [showSignInLink, setShowSignInLink] = useState(false);
 
     const hasTrackedViewRef = useRef(false);
     useEffect(() => {
@@ -34,6 +35,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
     const switchToSignIn = () => {
         setMode('signin');
         setError(null);
+        setShowSignInLink(false);
         setConfirmEmail('');
     };
 
@@ -47,7 +49,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                 return;
             }
             if (!password) {
-                setError(translation('premium.store.account.errors.weak_password'));
+                setError(translation('premium.store.account.errors.password_required'));
                 return;
             }
 
@@ -58,7 +60,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                 onSuccess();
             } catch {
                 analyticsService.trackEvent('account_creation_failed');
-                setError(translation('premium.store.account.errors.sign_in_failed', { defaultValue: 'Incorrect email or password. Please try again.' }));
+                setError(translation('premium.store.account.errors.sign_in_failed'));
             } finally {
                 setLoading(false);
             }
@@ -87,6 +89,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                 onSuccess();
             } else if (result.error) {
                 analyticsService.trackEvent('account_creation_failed');
+                setShowSignInLink(result.emailAlreadyExists === true);
                 setError(result.error);
             }
         } finally {
@@ -107,12 +110,12 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
 
             <h3 className="account-title">
                 {mode === 'signin'
-                    ? translation('premium.store.account.sign_in_title', { defaultValue: 'Sign In' })
+                    ? translation('premium.store.account.sign_in_title')
                     : translation('premium.store.account.title')}
             </h3>
             <p className="account-subtitle">
                 {mode === 'signin'
-                    ? translation('premium.store.account.sign_in_subtitle', { defaultValue: 'Sign in to continue with your existing account.' })
+                    ? translation('premium.store.account.sign_in_subtitle')
                     : translation('premium.store.account.subtitle')}
             </p>
 
@@ -178,15 +181,15 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                         >
                             <AlertCircle size={16} />
                             <span>{error}</span>
-                            {mode === 'create' && (
+                            {mode === 'create' && showSignInLink && (
                                 <button
                                     type="button"
                                     className="sign-in-link"
                                     onClick={switchToSignIn}
                                     data-testid="switch-to-signin"
-                                    aria-label={translation('premium.store.account.sign_in_instead_aria', { defaultValue: 'Switch to sign in with existing account' })}
+                                    aria-label={translation('premium.store.account.sign_in_instead_aria')}
                                 >
-                                    {translation('premium.store.account.sign_in_instead', { defaultValue: 'Sign in instead' })}
+                                    {translation('premium.store.account.sign_in_instead')}
                                 </button>
                             )}
                         </motion.div>
@@ -204,7 +207,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                         {loading
                             ? <Loader2 className="spinner" />
                             : mode === 'signin'
-                                ? translation('premium.store.account.sign_in_btn', { defaultValue: 'Sign In' })
+                                ? translation('premium.store.account.sign_in_btn')
                                 : translation('premium.store.account.continue_btn')}
                     </PrimaryButton>
                 </div>

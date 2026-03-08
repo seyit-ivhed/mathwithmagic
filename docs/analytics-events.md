@@ -107,6 +107,7 @@ If the URL contains `utm_source` on load, `{ source, campaign, medium }` is capt
 | `account_creation_viewed` | — | `AccountCreationStep` | Account creation form shown during checkout flow. |
 | `account_created` | — | `AccountCreationStep` | New account successfully created. |
 | `account_creation_failed` | — | `AccountCreationStep` | Account creation attempt failed. |
+| `account_signed_in` | — | `AccountCreationStep` | Returning player signed in with existing credentials during checkout (triggered when the "email already registered" path is taken). |
 | `payment_submitted` | `{ content_pack_id: string }` | `CheckoutForm` | Player submits the payment form. |
 | `payment_succeeded` | `{ content_pack_id: string }` | `CheckoutForm` | Payment confirmed and verified. |
 | `payment_failed` | — | `CheckoutForm` | Payment failed (Stripe error or webhook timeout). |

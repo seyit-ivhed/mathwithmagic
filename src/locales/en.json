@@ -1,597 +1,604 @@
 {
-    "common": {
-        "continue": "Continue",
-        "start_over": "Start Over",
-        "back": "Back",
-        "level": "Level",
-        "lvl": "Lvl",
-        "back_to_map": "Back to Map"
-    },
-    "remainder_text": " R ",
-    "adventure": {
-        "title": "Adventures",
-        "start": "Start Adventure",
-        "back": "Back to Journey",
-        "locked": "Locked",
-        "completed": "Completed",
-        "rewards": "Rewards",
-        "not_found": "Adventure not found",
-        "nodes": {
-            "battle": "Battle",
-            "puzzle": "Puzzle",
-            "boss": "Boss"
-        }
-    },
-    "adventures": {
-        "1": {
-            "title": "The Hidden Entrance",
-            "story_hook": "Amara is a brave young explorer from a faraway jungle. She travels to the desert to visit her friend Tariq. They see something strange near the big stone arch. Together, they go to check out a hidden cave that appeared in the sand.",
-            "nodes": {
-                "1_1": {
-                    "label": "Stinging Scout"
-                },
-                "1_2": {
-                    "label": "Tiny Terrors"
-                },
-                "1_3": {
-                    "label": "The Sun-Drenched Oasis"
-                },
-                "1_4": {
-                    "label": "Dune Scavengers"
-                },
-                "1_5": {
-                    "label": "Bandit Hideout"
-                },
-                "1_6": {
-                    "label": "The Scales of Truth"
-                },
-                "1_7": {
-                    "label": "Sand Specters"
-                },
-                "1_8": {
-                    "label": "Star Gazer's Dune"
-                },
-                "1_9": {
-                    "label": "Spirit Guardians"
-                },
-                "1_10": {
-                    "label": "The Sand Colossus"
-                },
-                "1_11": {
-                    "label": "To the Ruins"
-                }
-            }
-        },
-        "2": {
-            "title": "The Ruins of Ashur",
-            "story_hook": "Amara and Tariq go deep into a cool cave. Inside, they find an old underground city called Ashur. But watch out! Bandits are hiding in the ruins, and the stones are moving like magic.",
-            "nodes": {
-                "2_1": {
-                    "label": "Bandit Lookout"
-                },
-                "2_2": {
-                    "label": "The Ancient Cistern"
-                },
-                "2_3": {
-                    "label": "Raider Ambush"
-                },
-                "2_4": {
-                    "label": "Bandit Headquarters"
-                },
-                "2_5": {
-                    "label": "Silent Sentinels"
-                },
-                "2_6": {
-                    "label": "The Sage's Pedestal"
-                },
-                "2_7": {
-                    "label": "Guardians of the Hall"
-                },
-                "2_8": {
-                    "label": "Mosaic Courtyard"
-                },
-                "2_9": {
-                    "label": "The Emperor's Elite"
-                },
-                "2_10": {
-                    "label": "The Stone Emperor"
-                },
-                "2_11": {
-                    "label": "Journey Onward"
-                }
-            }
-        },
-        "3": {
-            "title": "The Misty Foothills",
-            "story_hook": "Amara and Tariq climb the cold mountain tops. They meet Kenji, a boy with a wooden sword. He needs help! Bad ninjas and a dark mist are taking over his mountain home.",
-            "nodes": {
-                "3_1": {
-                    "label": "Bamboo Grove Ambush"
-                },
-                "3_2": {
-                    "label": "Mist Warrior Patrol"
-                },
-                "3_3": {
-                    "label": "The Mirror Pond"
-                },
-                "3_4": {
-                    "label": "Foothill Scouts"
-                },
-                "3_5": {
-                    "label": "Shrouded Samurai"
-                },
-                "3_6": {
-                    "label": "The Cipher Plates"
-                },
-                "3_7": {
-                    "label": "Samurai Squad"
-                },
-                "3_8": {
-                    "label": "The Constellation Stones"
-                },
-                "3_9": {
-                    "label": "The Captain's Fort"
-                },
-                "3_10": {
-                    "label": "Path to the Peaks"
-                }
-            }
-        },
-        "4": {
-            "title": "Rise of the Shadow Master",
-            "story_hook": "The mist clears, and our heroes see a big fortress. The Shadow Master lives there! You must sneak past the guards and solve puzzles to open the gates.",
-            "nodes": {
-                "4_1": {
-                    "label": "Shadow Scouts"
-                },
-                "4_2": {
-                    "label": "Night Patrol"
-                },
-                "4_3": {
-                    "label": "Gate Guards"
-                },
-                "4_4": {
-                    "label": "The Pressure Plates"
-                },
-                "4_5": {
-                    "label": "Fortress Archers"
-                },
-                "4_6": {
-                    "label": "The Locked Gears"
-                },
-                "4_7": {
-                    "label": "Watch Hounds"
-                },
-                "4_8": {
-                    "label": "Wall Sentinels"
-                },
-                "4_9": {
-                    "label": "Drill Grounds"
-                },
-                "4_10": {
-                    "label": "The Inner Circle"
-                },
-                "4_11": {
-                    "label": "The Shadow Master"
-                },
-                "4_12": {
-                    "label": "Journey Onward"
-                }
-            }
-        },
-        "5": {
-            "title": "The Scorched Plains",
-            "story_hook": "Amara, Tariq, and Kenji travel to the Scorched Plains and meet Zahara. It is very hot here! The lions are acting strange, and the spirits are upset. Zahara must use her magic to fix the plains.",
-            "nodes": {
-                "5_1": {
-                    "label": "Scavenger's Camp"
-                },
-                "5_2": {
-                    "label": "Lioness Ledge"
-                },
-                "5_3": {
-                    "label": "The Rusting Gate"
-                },
-                "5_4": {
-                    "label": "Rhino Riverbed"
-                },
-                "5_5": {
-                    "label": "Ember Ambush"
-                },
-                "5_6": {
-                    "label": "The Obsidian Path"
-                },
-                "5_7": {
-                    "label": "Mirage Plains"
-                },
-                "5_8": {
-                    "label": "Reflection Fields"
-                },
-                "5_9": {
-                    "label": "Scorched Skirmish"
-                },
-                "5_10": {
-                    "label": "Smoke Watch"
-                },
-                "5_11": {
-                    "label": "The Inferno Mane"
-                },
-                "5_12": {
-                    "label": "Zahara's Triumph"
-                }
-            }
-        },
-        "6": {
-            "title": "The Spirit Realm",
-            "story_hook": "The friends enter the Spirit Realm. A dark spell has taken over the Spirit King, making him wild and angry! You must battle him to break the spell and fix the world.",
-            "nodes": {
-                "6_1": {
-                    "label": "Hollow Shells"
-                },
-                "6_2": {
-                    "label": "Twisted Reflections"
-                },
-                "6_3": {
-                    "label": "Mirror of Spirits"
-                },
-                "6_4": {
-                    "label": "Discordant Echoes"
-                },
-                "6_5": {
-                    "label": "Shadow Surge"
-                },
-                "6_6": {
-                    "label": "The Spirit Square"
-                },
-                "6_7": {
-                    "label": "Fractured Reflections"
-                },
-                "6_8": {
-                    "label": "The Spirit Equation"
-                },
-                "6_9": {
-                    "label": "Final Discord"
-                },
-                "6_10": {
-                    "label": "The Spirit King"
-                },
-                "6_11": {
-                    "label": "Eternal Harmony"
-                }
-            }
-        }
-    },
-    "chronicle": {
-        "title": "The Chronicle",
-        "chapter_prefix": "Chapter",
-        "mystery_path": "This path remains shrouded in mystery...",
-        "completed": "Completed",
-        "replay_chapter": "Replay Adventure",
-        "continue_chapter": "Continue",
-        "begin_chapter": "Begin Adventure",
-        "locked": "Locked",
-        "page_x_of_y": "{{current}} of {{total}}",
-        "next_chapter": "Next Chapter",
-        "subtitle": "Your Journey Through the Ages",
-        "adventure_fallback": "Adventure {{id}}"
-    },
-    "shared_xp": "Shared XP",
-    "combat": {
-        "completion": {
-            "victory_title": "VICTORY!",
-            "defeat_title": "DEFEAT",
-            "continue_button": "Continue"
-        },
-        "turn": {
-            "player": "Your Turn",
-            "enemy": "Enemy Turn"
-        }
-    },
-    "rewards": {
-        "gained": "XP Gained:"
-    },
-    "difficulty": {
-        "start": "Start",
-        "apprentice": "Apprentice",
-        "scout": "Scout",
-        "adventurer": "Adventurer",
-        "desc_1": "Addition and subtraction up to 10",
-        "desc_2": "Addition and subtraction up to 20, simple multiplication",
-        "desc_3": "Arithmetic up to 100 and multiplication tables",
-        "select_title": "Select Math Level",
-        "change_later_subtitle": "You can always change this in the game"
-    },
-    "encounter": {
-        "victory": "Victory!",
-        "defeat": "Defeat",
-        "rewards": "Combat Rewards",
-        "xp": "XP Gained",
-        "continue": "Continue",
-        "retry": "Try Again",
-        "vs": "VS"
-    },
-    "puzzle": {
-        "reset": "Reset",
-        "success": "Success!",
-        "sequence": {
-            "instruction": "Connect the stars in the correct order!"
-        },
-        "refill_canteen": {
-            "instruction": "Refill your canteen by choosing the right amount of water"
-        },
-        "balance": {
-            "instruction": "Remove stones to make both piles weigh equal!"
-        },
-        "number_path": {
-            "instruction": "Create a continuous path by filling in the numbers!"
-        },
-        "mirror": {
-            "instruction": "Rotate the runes to match the reflection!",
-            "pattern_title": "Pattern",
-            "mirror_title": "Mirror",
-            "rune_alt": "Rune"
-        },
-        "latin_square": {
-            "instruction": "Put runes in the grid. Use each rune only once in every row and column."
-        },
-        "equation": {
-            "instruction": "Find the value of the mystery symbol!"
-        },
-        "replay_instruction": "Replay Instruction",
-        "not_found": "Puzzle Not Found"
-    },
-    "companions": {
-        "unlock": "New Companion Unlocked!",
-        "level_up": "Level Up!",
-        "too_easy": "Too Easy...",
-        "evolution": "Growing Up",
-        "stats": {
-            "hp": "HP",
-            "spirit": "Spirit",
-            "attack": "Attack",
-            "shield": "Shield"
-        },
-        "amara": {
-            "title": "The Jungle Ranger",
-            "evolution_1": "Jungle Tracker",
-            "evolution_2": "Apex Stalker",
-            "evolution_3": "Nature's Wrath"
-        },
-        "tariq": {
-            "title": "The Desert Alchemist",
-            "evolution_1": "Desert Physician",
-            "evolution_2": "Master Alchemist",
-            "evolution_3": "Sage of Sands"
-        },
-        "kenji": {
-            "title": "The Mountain Samurai",
-            "evolution_1": "Warrior Defender",
-            "evolution_2": "Steel Sentinel",
-            "evolution_3": "Shadow Wall"
-        },
-        "zahara": {
-            "title": "The Savannah Mage",
-            "evolution_1": "Sun Caller",
-            "evolution_2": "Ember Weaver",
-            "evolution_3": "Radiant Seer"
-        }
-    },
-    "abilities": {
-        "precision_shot": {
-            "name": "Precision Shot",
-            "description": "Deals {{value}} damage to a single enemy."
-        },
-        "elixir_of_life": {
-            "name": "Elixir of Life",
-            "description": "Heals all allies for {{value}} HP."
-        },
-        "blade_barrier": {
-            "name": "Blade Barrier",
-            "description": "Deals {{damage}} damage and shields all allies for {{duration}} turns."
-        },
-        "ancestral_storm": {
-            "name": "Ancestral Storm",
-            "description": "Deals {{value}} damage to all enemies."
-        }
-    },
-    "monsters": {
-        "scorpion_1": {
-            "name": "Desert Scorpion"
-        },
-        "tiny_scorpion": {
-            "name": "Tiny Scorpion"
-        },
-        "desert_scavenger": {
-            "name": "Desert Scavenger"
-        },
-        "sand_spirit_1": {
-            "name": "Sand Spirit"
-        },
-        "sand_colossus": {
-            "name": "The Sand Colossus"
-        },
-        "bandit_raider": {
-            "name": "Bandit Raider"
-        },
-        "stone_guardian": {
-            "name": "Stone Guardian"
-        },
-        "assyrian_guardian": {
-            "name": "Assyrian Guardian"
-        },
-        "the_stone_emperor": {
-            "name": "The Stone Emperor"
-        },
-        "bandit_leader": {
-            "name": "Bandit Leader"
-        },
-        "mist_ronin": {
-            "name": "Mist Warrior"
-        },
-        "ninja_scout": {
-            "name": "Ninja Scout"
-        },
-        "samurai_vanguard": {
-            "name": "Samurai Scout"
-        },
-        "samurai_archer": {
-            "name": "Samurai Archer"
-        },
-        "war_hound": {
-            "name": "War Hound"
-        },
-        "samurai_soldier": {
-            "name": "Samurai Soldier"
-        },
-        "samurai_commander": {
-            "name": "The Samurai Captain"
-        },
-        "evil_shogun": {
-            "name": "The Shadow Master"
-        },
-        "blaze_hyena": {
-            "name": "Blaze Hyena"
-        },
-        "ember_lioness": {
-            "name": "Ember Lioness"
-        },
-        "sun_scorched_rhino": {
-            "name": "Sun-Scorched Rhino"
-        },
-        "mirage_spirit": {
-            "name": "Mirage Spirit"
-        },
-        "inferno_mane": {
-            "name": "The Inferno Mane"
-        },
-        "discord_spirit": {
-            "name": "Discord Spirit"
-        },
-        "hollow_shell": {
-            "name": "Hollow Shell"
-        },
-        "twisted_reflection": {
-            "name": "Twisted Reflection"
-        },
-        "spirit_king": {
-            "name": "The Spirit King"
-        }
-    },
-    "premium": {
-        "store": {
-            "title": "Unlock the Journey",
-            "description": "The journey has just begun...",
-            "features": {
-                "adventures_title": "Unlock 5 More Adventures",
-                "companions_title": "Unlock 2 More Companions",
-                "evolutions_title": "Unlock All Companion Evolutions",
-                "opponents_title": "New Opponents",
-                "puzzles_title": "New Puzzles",
-                "support_title": "Support a Solo Developer"
-            },
-            "price": "59 SEK",
-            "buy_now": "Unlock",
-            "account": {
-                "title": "Secure Your Journey",
-                "subtitle": "Create an account to save your progress and play on any device.",
-                "email_label": "Email Address",
-                "email_placeholder": "your@email.com",
-                "confirm_email_label": "Confirm Email Address",
-                "password_label": "Password",
-                "password_placeholder": "Choose a strong password",
-                "continue_btn": "Continue",
-                "already_registered": "Already have an account? Sign In",
-                "errors": {
-                    "invalid_email": "Please enter a valid email.",
-                    "emails_dont_match": "Email addresses do not match.",
-                    "weak_password": "Password must be at least 6 characters.",
-                    "already_exists": "This email is already registered. Please sign in."
-                }
-            },
-            "success_title": "Premium Unlocked!",
-            "success_message": "Thank you for your support!",
-            "processing_payment": "Securing your adventure...",
-            "verifying_access": "Verifying your new content...",
-            "verification_timeout": "Payment succeeded, but we are still processing your access. It will appear in your account shortly.",
-            "total_amount": "Total Amount"
-        }
-    },
-    "landing": {
-        "start_game": "New Journey",
-        "continue_journey": "Continue",
-        "login": "Log In",
-        "first_edition": "First Edition",
-        "title": "Play to Learn",
-        "subtitle": "Embark on an epic journey of knowledge and adventure."
-    },
-    "login": {
-        "member_access": "Login",
-        "back_to_cover": "Back to Cover",
-        "email_label": "Email Address",
-        "email_placeholder": "name@example.com",
-        "password_label": "Password",
-        "password_placeholder": "••••••••",
-        "open_journal": "Login",
-        "invalid_credentials": "Invalid email or password",
-        "forgot_password": "Forgot your password?"
-    },
-    "forgot_password": {
-        "title": "Recover Password",
-        "subtitle": "Enter your email address and we will send you a recovery link.",
-        "email_label": "Email Address",
-        "email_placeholder": "name@example.com",
-        "submit_btn": "Send Recovery Link",
-        "success_title": "Check Your Inbox",
-        "success_message": "If an account exists for that email, a recovery link has been sent. This may take a few minutes — remember to check your spam folder.",
-        "error_generic": "Something went wrong. Please try again."
-    },
-    "reset_password": {
-        "title": "Set New Password",
-        "new_password_label": "New Password",
-        "new_password_placeholder": "Choose a strong password",
-        "confirm_password_label": "Confirm New Password",
-        "confirm_password_placeholder": "Repeat your password",
-        "submit_btn": "Save New Password",
-        "success_title": "Password Updated",
-        "success_message": "Your password has been updated. You can now log in with your new password.",
-        "go_to_login": "Go to Login",
-        "errors": {
-            "passwords_dont_match": "Passwords do not match.",
-            "weak_password": "Password must be at least 6 characters.",
-            "generic": "Something went wrong. Please try again.",
-            "invalid_link": "This recovery link is invalid or has expired. Please request a new one."
-        }
-    },
-    "settings": {
-        "title": "Settings",
-        "language": "Language",
-        "debug_console": "Open Debug Console",
-        "sound": "Sound",
-        "master_volume": "Master Volume",
-        "music_volume": "Music Volume",
-        "sfx_volume": "SFX Volume",
-        "voice_volume": "Voice Volume"
-    },
-    "change_password": {
-        "title": "Password",
-        "submit_btn": "Send Password Change Link",
-        "success_message": "A password change link has been sent to your email. Check your inbox.",
-        "error_generic": "Something went wrong. Please try again."
-    },
-    "loading": {
-        "initializing": "INITIALIZING ADVENTURE",
-        "connection_error_title": "CONNECTION ERROR",
-        "connection_error_message": "Cannot access the game server. Please check your connectivity or try again later.",
-        "retry": "RETRY CONNECTION"
-    },
-    "game_complete": {
-        "title": "Journey Complete!",
-        "subtitle": "You have conquered all six adventures!",
-        "adventure_label": "Adventure {{number}}",
-        "adventure_stats_heading": "Your Journey",
-        "play_again_higher": "Play Again on {{difficulty}}",
-        "play_again_max": "Play Again",
-        "play_again_hint": "Complete the adventures again at a higher difficulty to collect all the stars!",
-        "play_again_max_hint": "You're at the highest difficulty. Replay the adventures to earn every star!"
+  "common": {
+    "continue": "Continue",
+    "start_over": "Start Over",
+    "back": "Back",
+    "level": "Level",
+    "lvl": "Lvl",
+    "back_to_map": "Back to Map"
+  },
+  "remainder_text": " R ",
+  "adventure": {
+    "title": "Adventures",
+    "start": "Start Adventure",
+    "back": "Back to Journey",
+    "locked": "Locked",
+    "completed": "Completed",
+    "rewards": "Rewards",
+    "not_found": "Adventure not found",
+    "nodes": {
+      "battle": "Battle",
+      "puzzle": "Puzzle",
+      "boss": "Boss"
     }
+  },
+  "adventures": {
+    "1": {
+      "title": "The Hidden Entrance",
+      "story_hook": "Amara is a brave young explorer from a faraway jungle. She travels to the desert to visit her friend Tariq. They see something strange near the big stone arch. Together, they go to check out a hidden cave that appeared in the sand.",
+      "nodes": {
+        "1_1": {
+          "label": "Stinging Scout"
+        },
+        "1_2": {
+          "label": "Tiny Terrors"
+        },
+        "1_3": {
+          "label": "The Sun-Drenched Oasis"
+        },
+        "1_4": {
+          "label": "Dune Scavengers"
+        },
+        "1_5": {
+          "label": "Bandit Hideout"
+        },
+        "1_6": {
+          "label": "The Scales of Truth"
+        },
+        "1_7": {
+          "label": "Sand Specters"
+        },
+        "1_8": {
+          "label": "Star Gazer's Dune"
+        },
+        "1_9": {
+          "label": "Spirit Guardians"
+        },
+        "1_10": {
+          "label": "The Sand Colossus"
+        },
+        "1_11": {
+          "label": "To the Ruins"
+        }
+      }
+    },
+    "2": {
+      "title": "The Ruins of Ashur",
+      "story_hook": "Amara and Tariq go deep into a cool cave. Inside, they find an old underground city called Ashur. But watch out! Bandits are hiding in the ruins, and the stones are moving like magic.",
+      "nodes": {
+        "2_1": {
+          "label": "Bandit Lookout"
+        },
+        "2_2": {
+          "label": "The Ancient Cistern"
+        },
+        "2_3": {
+          "label": "Raider Ambush"
+        },
+        "2_4": {
+          "label": "Bandit Headquarters"
+        },
+        "2_5": {
+          "label": "Silent Sentinels"
+        },
+        "2_6": {
+          "label": "The Sage's Pedestal"
+        },
+        "2_7": {
+          "label": "Guardians of the Hall"
+        },
+        "2_8": {
+          "label": "Mosaic Courtyard"
+        },
+        "2_9": {
+          "label": "The Emperor's Elite"
+        },
+        "2_10": {
+          "label": "The Stone Emperor"
+        },
+        "2_11": {
+          "label": "Journey Onward"
+        }
+      }
+    },
+    "3": {
+      "title": "The Misty Foothills",
+      "story_hook": "Amara and Tariq climb the cold mountain tops. They meet Kenji, a boy with a wooden sword. He needs help! Bad ninjas and a dark mist are taking over his mountain home.",
+      "nodes": {
+        "3_1": {
+          "label": "Bamboo Grove Ambush"
+        },
+        "3_2": {
+          "label": "Mist Warrior Patrol"
+        },
+        "3_3": {
+          "label": "The Mirror Pond"
+        },
+        "3_4": {
+          "label": "Foothill Scouts"
+        },
+        "3_5": {
+          "label": "Shrouded Samurai"
+        },
+        "3_6": {
+          "label": "The Cipher Plates"
+        },
+        "3_7": {
+          "label": "Samurai Squad"
+        },
+        "3_8": {
+          "label": "The Constellation Stones"
+        },
+        "3_9": {
+          "label": "The Captain's Fort"
+        },
+        "3_10": {
+          "label": "Path to the Peaks"
+        }
+      }
+    },
+    "4": {
+      "title": "Rise of the Shadow Master",
+      "story_hook": "The mist clears, and our heroes see a big fortress. The Shadow Master lives there! You must sneak past the guards and solve puzzles to open the gates.",
+      "nodes": {
+        "4_1": {
+          "label": "Shadow Scouts"
+        },
+        "4_2": {
+          "label": "Night Patrol"
+        },
+        "4_3": {
+          "label": "Gate Guards"
+        },
+        "4_4": {
+          "label": "The Pressure Plates"
+        },
+        "4_5": {
+          "label": "Fortress Archers"
+        },
+        "4_6": {
+          "label": "The Locked Gears"
+        },
+        "4_7": {
+          "label": "Watch Hounds"
+        },
+        "4_8": {
+          "label": "Wall Sentinels"
+        },
+        "4_9": {
+          "label": "Drill Grounds"
+        },
+        "4_10": {
+          "label": "The Inner Circle"
+        },
+        "4_11": {
+          "label": "The Shadow Master"
+        },
+        "4_12": {
+          "label": "Journey Onward"
+        }
+      }
+    },
+    "5": {
+      "title": "The Scorched Plains",
+      "story_hook": "Amara, Tariq, and Kenji travel to the Scorched Plains and meet Zahara. It is very hot here! The lions are acting strange, and the spirits are upset. Zahara must use her magic to fix the plains.",
+      "nodes": {
+        "5_1": {
+          "label": "Scavenger's Camp"
+        },
+        "5_2": {
+          "label": "Lioness Ledge"
+        },
+        "5_3": {
+          "label": "The Rusting Gate"
+        },
+        "5_4": {
+          "label": "Rhino Riverbed"
+        },
+        "5_5": {
+          "label": "Ember Ambush"
+        },
+        "5_6": {
+          "label": "The Obsidian Path"
+        },
+        "5_7": {
+          "label": "Mirage Plains"
+        },
+        "5_8": {
+          "label": "Reflection Fields"
+        },
+        "5_9": {
+          "label": "Scorched Skirmish"
+        },
+        "5_10": {
+          "label": "Smoke Watch"
+        },
+        "5_11": {
+          "label": "The Inferno Mane"
+        },
+        "5_12": {
+          "label": "Zahara's Triumph"
+        }
+      }
+    },
+    "6": {
+      "title": "The Spirit Realm",
+      "story_hook": "The friends enter the Spirit Realm. A dark spell has taken over the Spirit King, making him wild and angry! You must battle him to break the spell and fix the world.",
+      "nodes": {
+        "6_1": {
+          "label": "Hollow Shells"
+        },
+        "6_2": {
+          "label": "Twisted Reflections"
+        },
+        "6_3": {
+          "label": "Mirror of Spirits"
+        },
+        "6_4": {
+          "label": "Discordant Echoes"
+        },
+        "6_5": {
+          "label": "Shadow Surge"
+        },
+        "6_6": {
+          "label": "The Spirit Square"
+        },
+        "6_7": {
+          "label": "Fractured Reflections"
+        },
+        "6_8": {
+          "label": "The Spirit Equation"
+        },
+        "6_9": {
+          "label": "Final Discord"
+        },
+        "6_10": {
+          "label": "The Spirit King"
+        },
+        "6_11": {
+          "label": "Eternal Harmony"
+        }
+      }
+    }
+  },
+  "chronicle": {
+    "title": "The Chronicle",
+    "chapter_prefix": "Chapter",
+    "mystery_path": "This path remains shrouded in mystery...",
+    "completed": "Completed",
+    "replay_chapter": "Replay Adventure",
+    "continue_chapter": "Continue",
+    "begin_chapter": "Begin Adventure",
+    "locked": "Locked",
+    "page_x_of_y": "{{current}} of {{total}}",
+    "next_chapter": "Next Chapter",
+    "subtitle": "Your Journey Through the Ages",
+    "adventure_fallback": "Adventure {{id}}"
+  },
+  "shared_xp": "Shared XP",
+  "combat": {
+    "completion": {
+      "victory_title": "VICTORY!",
+      "defeat_title": "DEFEAT",
+      "continue_button": "Continue"
+    },
+    "turn": {
+      "player": "Your Turn",
+      "enemy": "Enemy Turn"
+    }
+  },
+  "rewards": {
+    "gained": "XP Gained:"
+  },
+  "difficulty": {
+    "start": "Start",
+    "apprentice": "Apprentice",
+    "scout": "Scout",
+    "adventurer": "Adventurer",
+    "desc_1": "Addition and subtraction up to 10",
+    "desc_2": "Addition and subtraction up to 20, simple multiplication",
+    "desc_3": "Arithmetic up to 100 and multiplication tables",
+    "select_title": "Select Math Level",
+    "change_later_subtitle": "You can always change this in the game"
+  },
+  "encounter": {
+    "victory": "Victory!",
+    "defeat": "Defeat",
+    "rewards": "Combat Rewards",
+    "xp": "XP Gained",
+    "continue": "Continue",
+    "retry": "Try Again",
+    "vs": "VS"
+  },
+  "puzzle": {
+    "reset": "Reset",
+    "success": "Success!",
+    "sequence": {
+      "instruction": "Connect the stars in the correct order!"
+    },
+    "refill_canteen": {
+      "instruction": "Refill your canteen by choosing the right amount of water"
+    },
+    "balance": {
+      "instruction": "Remove stones to make both piles weigh equal!"
+    },
+    "number_path": {
+      "instruction": "Create a continuous path by filling in the numbers!"
+    },
+    "mirror": {
+      "instruction": "Rotate the runes to match the reflection!",
+      "pattern_title": "Pattern",
+      "mirror_title": "Mirror",
+      "rune_alt": "Rune"
+    },
+    "latin_square": {
+      "instruction": "Put runes in the grid. Use each rune only once in every row and column."
+    },
+    "equation": {
+      "instruction": "Find the value of the mystery symbol!"
+    },
+    "replay_instruction": "Replay Instruction",
+    "not_found": "Puzzle Not Found"
+  },
+  "companions": {
+    "unlock": "New Companion Unlocked!",
+    "level_up": "Level Up!",
+    "too_easy": "Too Easy...",
+    "evolution": "Growing Up",
+    "stats": {
+      "hp": "HP",
+      "spirit": "Spirit",
+      "attack": "Attack",
+      "shield": "Shield"
+    },
+    "amara": {
+      "title": "The Jungle Ranger",
+      "evolution_1": "Jungle Tracker",
+      "evolution_2": "Apex Stalker",
+      "evolution_3": "Nature's Wrath"
+    },
+    "tariq": {
+      "title": "The Desert Alchemist",
+      "evolution_1": "Desert Physician",
+      "evolution_2": "Master Alchemist",
+      "evolution_3": "Sage of Sands"
+    },
+    "kenji": {
+      "title": "The Mountain Samurai",
+      "evolution_1": "Warrior Defender",
+      "evolution_2": "Steel Sentinel",
+      "evolution_3": "Shadow Wall"
+    },
+    "zahara": {
+      "title": "The Savannah Mage",
+      "evolution_1": "Sun Caller",
+      "evolution_2": "Ember Weaver",
+      "evolution_3": "Radiant Seer"
+    }
+  },
+  "abilities": {
+    "precision_shot": {
+      "name": "Precision Shot",
+      "description": "Deals {{value}} damage to a single enemy."
+    },
+    "elixir_of_life": {
+      "name": "Elixir of Life",
+      "description": "Heals all allies for {{value}} HP."
+    },
+    "blade_barrier": {
+      "name": "Blade Barrier",
+      "description": "Deals {{damage}} damage and shields all allies for {{duration}} turns."
+    },
+    "ancestral_storm": {
+      "name": "Ancestral Storm",
+      "description": "Deals {{value}} damage to all enemies."
+    }
+  },
+  "monsters": {
+    "scorpion_1": {
+      "name": "Desert Scorpion"
+    },
+    "tiny_scorpion": {
+      "name": "Tiny Scorpion"
+    },
+    "desert_scavenger": {
+      "name": "Desert Scavenger"
+    },
+    "sand_spirit_1": {
+      "name": "Sand Spirit"
+    },
+    "sand_colossus": {
+      "name": "The Sand Colossus"
+    },
+    "bandit_raider": {
+      "name": "Bandit Raider"
+    },
+    "stone_guardian": {
+      "name": "Stone Guardian"
+    },
+    "assyrian_guardian": {
+      "name": "Assyrian Guardian"
+    },
+    "the_stone_emperor": {
+      "name": "The Stone Emperor"
+    },
+    "bandit_leader": {
+      "name": "Bandit Leader"
+    },
+    "mist_ronin": {
+      "name": "Mist Warrior"
+    },
+    "ninja_scout": {
+      "name": "Ninja Scout"
+    },
+    "samurai_vanguard": {
+      "name": "Samurai Scout"
+    },
+    "samurai_archer": {
+      "name": "Samurai Archer"
+    },
+    "war_hound": {
+      "name": "War Hound"
+    },
+    "samurai_soldier": {
+      "name": "Samurai Soldier"
+    },
+    "samurai_commander": {
+      "name": "The Samurai Captain"
+    },
+    "evil_shogun": {
+      "name": "The Shadow Master"
+    },
+    "blaze_hyena": {
+      "name": "Blaze Hyena"
+    },
+    "ember_lioness": {
+      "name": "Ember Lioness"
+    },
+    "sun_scorched_rhino": {
+      "name": "Sun-Scorched Rhino"
+    },
+    "mirage_spirit": {
+      "name": "Mirage Spirit"
+    },
+    "inferno_mane": {
+      "name": "The Inferno Mane"
+    },
+    "discord_spirit": {
+      "name": "Discord Spirit"
+    },
+    "hollow_shell": {
+      "name": "Hollow Shell"
+    },
+    "twisted_reflection": {
+      "name": "Twisted Reflection"
+    },
+    "spirit_king": {
+      "name": "The Spirit King"
+    }
+  },
+  "premium": {
+    "store": {
+      "title": "Unlock the Journey",
+      "description": "The journey has just begun...",
+      "features": {
+        "adventures_title": "Unlock 5 More Adventures",
+        "companions_title": "Unlock 2 More Companions",
+        "evolutions_title": "Unlock All Companion Evolutions",
+        "opponents_title": "New Opponents",
+        "puzzles_title": "New Puzzles",
+        "support_title": "Support a Solo Developer"
+      },
+      "price": "59 SEK",
+      "buy_now": "Unlock",
+      "account": {
+        "title": "Secure Your Journey",
+        "subtitle": "Create an account to save your progress and play on any device.",
+        "email_label": "Email Address",
+        "email_placeholder": "your@email.com",
+        "confirm_email_label": "Confirm Email Address",
+        "password_label": "Password",
+        "password_placeholder": "Choose a strong password",
+        "continue_btn": "Continue",
+        "already_registered": "Already have an account? Sign In",
+        "errors": {
+          "invalid_email": "Please enter a valid email.",
+          "emails_dont_match": "Email addresses do not match.",
+          "weak_password": "Password must be at least 6 characters.",
+          "already_exists": "This email is already registered. Please sign in.",
+          "sign_in_failed": "Incorrect email or password. Please try again.",
+          "password_required": "Please enter your password."
+        },
+        "sign_in_title": "Sign In",
+        "sign_in_subtitle": "Sign in to continue with your existing account.",
+        "sign_in_btn": "Sign In",
+        "sign_in_instead": "Sign in instead",
+        "sign_in_instead_aria": "Switch to sign in with existing account"
+      },
+      "success_title": "Premium Unlocked!",
+      "success_message": "Thank you for your support!",
+      "processing_payment": "Securing your adventure...",
+      "verifying_access": "Verifying your new content...",
+      "verification_timeout": "Payment succeeded, but we are still processing your access. It will appear in your account shortly.",
+      "total_amount": "Total Amount"
+    }
+  },
+  "landing": {
+    "start_game": "New Journey",
+    "continue_journey": "Continue",
+    "login": "Log In",
+    "first_edition": "First Edition",
+    "title": "Play to Learn",
+    "subtitle": "Embark on an epic journey of knowledge and adventure."
+  },
+  "login": {
+    "member_access": "Login",
+    "back_to_cover": "Back to Cover",
+    "email_label": "Email Address",
+    "email_placeholder": "name@example.com",
+    "password_label": "Password",
+    "password_placeholder": "••••••••",
+    "open_journal": "Login",
+    "invalid_credentials": "Invalid email or password",
+    "forgot_password": "Forgot your password?"
+  },
+  "forgot_password": {
+    "title": "Recover Password",
+    "subtitle": "Enter your email address and we will send you a recovery link.",
+    "email_label": "Email Address",
+    "email_placeholder": "name@example.com",
+    "submit_btn": "Send Recovery Link",
+    "success_title": "Check Your Inbox",
+    "success_message": "If an account exists for that email, a recovery link has been sent. This may take a few minutes — remember to check your spam folder.",
+    "error_generic": "Something went wrong. Please try again."
+  },
+  "reset_password": {
+    "title": "Set New Password",
+    "new_password_label": "New Password",
+    "new_password_placeholder": "Choose a strong password",
+    "confirm_password_label": "Confirm New Password",
+    "confirm_password_placeholder": "Repeat your password",
+    "submit_btn": "Save New Password",
+    "success_title": "Password Updated",
+    "success_message": "Your password has been updated. You can now log in with your new password.",
+    "go_to_login": "Go to Login",
+    "errors": {
+      "passwords_dont_match": "Passwords do not match.",
+      "weak_password": "Password must be at least 6 characters.",
+      "generic": "Something went wrong. Please try again.",
+      "invalid_link": "This recovery link is invalid or has expired. Please request a new one."
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "debug_console": "Open Debug Console",
+    "sound": "Sound",
+    "master_volume": "Master Volume",
+    "music_volume": "Music Volume",
+    "sfx_volume": "SFX Volume",
+    "voice_volume": "Voice Volume"
+  },
+  "change_password": {
+    "title": "Password",
+    "submit_btn": "Send Password Change Link",
+    "success_message": "A password change link has been sent to your email. Check your inbox.",
+    "error_generic": "Something went wrong. Please try again."
+  },
+  "loading": {
+    "initializing": "INITIALIZING ADVENTURE",
+    "connection_error_title": "CONNECTION ERROR",
+    "connection_error_message": "Cannot access the game server. Please check your connectivity or try again later.",
+    "retry": "RETRY CONNECTION"
+  },
+  "game_complete": {
+    "title": "Journey Complete!",
+    "subtitle": "You have conquered all six adventures!",
+    "adventure_label": "Adventure {{number}}",
+    "adventure_stats_heading": "Your Journey",
+    "play_again_higher": "Play Again on {{difficulty}}",
+    "play_again_max": "Play Again",
+    "play_again_hint": "Complete the adventures again at a higher difficulty to collect all the stars!",
+    "play_again_max_hint": "You're at the highest difficulty. Replay the adventures to earn every star!"
+  }
 }

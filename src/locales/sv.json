@@ -1,597 +1,604 @@
 {
-    "common": {
-        "continue": "Fortsätt",
-        "start_over": "Börja om",
-        "back": "Tillbaka",
-        "level": "Nivå",
-        "lvl": "Nivå",
-        "back_to_map": "Tillbaka till kartan"
-    },
-    "remainder_text": " rest ",
-    "adventure": {
-        "title": "Äventyr",
-        "start": "Starta äventyr",
-        "back": "Tillbaka till resan",
-        "locked": "Låst",
-        "completed": "Slutfört",
-        "rewards": "Belöningar",
-        "not_found": "Äventyr hittades inte",
-        "nodes": {
-            "battle": "Strid",
-            "puzzle": "Pussel",
-            "boss": "Boss"
-        }
-    },
-    "adventures": {
-        "1": {
-            "title": "Den gömda ingången",
-            "story_hook": "Amara är en modig ung utforskare från en avlägsen djungel. Hon reser till öknen för att besöka sin vän Tariq. De ser något konstigt nära den stora stenporten. Tillsammans går de för att undersöka en hemlig grotta som dök upp i sanden.",
-            "nodes": {
-                "1_1": {
-                    "label": "Stickande spanare"
-                },
-                "1_2": {
-                    "label": "Små plågor"
-                },
-                "1_3": {
-                    "label": "Den solkyssta oasen"
-                },
-                "1_4": {
-                    "label": "Dynernas plundrare"
-                },
-                "1_5": {
-                    "label": "Banditernas gömställe"
-                },
-                "1_6": {
-                    "label": "Sanningens våg"
-                },
-                "1_7": {
-                    "label": "Sandgengångare"
-                },
-                "1_8": {
-                    "label": "Stjärnskådarens dyn"
-                },
-                "1_9": {
-                    "label": "Andeväktare"
-                },
-                "1_10": {
-                    "label": "Sandkolossen"
-                },
-                "1_11": {
-                    "label": "Till ruinerna"
-                }
-            }
-        },
-        "2": {
-            "title": "Ashurs ruiner",
-            "story_hook": "Amara och Tariq går djupt in i en sval grotta. Där inne hittar de en gammal underjordisk stad som heter Ashur. Men se upp! Banditer gömmer sig i ruinerna, och stenarna rör sig som magi.",
-            "nodes": {
-                "2_1": {
-                    "label": "Banditutkik"
-                },
-                "2_2": {
-                    "label": "Den uråldriga cisternen"
-                },
-                "2_3": {
-                    "label": "Plundrarnas bakhåll"
-                },
-                "2_4": {
-                    "label": "Banditernas högkvarter"
-                },
-                "2_5": {
-                    "label": "Tysta väktare"
-                },
-                "2_6": {
-                    "label": "Den vises piedestal"
-                },
-                "2_7": {
-                    "label": "Salens väktare"
-                },
-                "2_8": {
-                    "label": "Mosaikgården"
-                },
-                "2_9": {
-                    "label": "Kejsarens elit"
-                },
-                "2_10": {
-                    "label": "Stenkejsaren"
-                },
-                "2_11": {
-                    "label": "Res vidare"
-                }
-            }
-        },
-        "3": {
-            "title": "De dimmiga fotbergen",
-            "story_hook": "Amara och Tariq klättrar upp för de kalla bergstopparna. De träffar Kenji, en pojke med ett träsvärd. Han behöver hjälp! Elaka ninjor och en mörk dimma tar över hans berghem.",
-            "nodes": {
-                "3_1": {
-                    "label": "Bambudungens bakhåll"
-                },
-                "3_2": {
-                    "label": "Dimkrigarpatrull"
-                },
-                "3_3": {
-                    "label": "Spegeldammen"
-                },
-                "3_4": {
-                    "label": "Fotbergsspanare"
-                },
-                "3_5": {
-                    "label": "Höljda samurajer"
-                },
-                "3_6": {
-                    "label": "Chifferplattorna"
-                },
-                "3_7": {
-                    "label": "Samuraj-trupp"
-                },
-                "3_8": {
-                    "label": "Stjärnbildsstenarna"
-                },
-                "3_9": {
-                    "label": "Kaptenens fäste"
-                },
-                "3_10": {
-                    "label": "Vägen till topparna"
-                }
-            }
-        },
-        "4": {
-            "title": "Skuggmästarens uppgång",
-            "story_hook": "Dimman lättar och våra hjältar ser en stor fästning. Skuggmästaren bor där! Du måste smyga förbi vakterna och lösa pussel för att öppna portarna.",
-            "nodes": {
-                "4_1": {
-                    "label": "Skuggspanare"
-                },
-                "4_2": {
-                    "label": "Nattpatrull"
-                },
-                "4_3": {
-                    "label": "Portvaktare"
-                },
-                "4_4": {
-                    "label": "Tryckplattorna"
-                },
-                "4_5": {
-                    "label": "Fästningens bågskyttar"
-                },
-                "4_6": {
-                    "label": "De låsta kugghjulen"
-                },
-                "4_7": {
-                    "label": "Vakthundar"
-                },
-                "4_8": {
-                    "label": "Murväktare"
-                },
-                "4_9": {
-                    "label": "Övningsfältet"
-                },
-                "4_10": {
-                    "label": "Den inre cirkeln"
-                },
-                "4_11": {
-                    "label": "Skuggmästaren"
-                },
-                "4_12": {
-                    "label": "Res vidare"
-                }
-            }
-        },
-        "5": {
-            "title": "De Svedda Slätterna",
-            "story_hook": "Amara, Tariq och Kenji reser till de Svedda Slätterna och träffar Zahara. Det är väldigt varmt här! Lejonen beter sig konstigt och andarna är upprörda. Zahara måste använda sin magi för att laga slätterna.",
-            "nodes": {
-                "5_1": {
-                    "label": "Plundrarens läger"
-                },
-                "5_2": {
-                    "label": "Lejoninnans avsats"
-                },
-                "5_3": {
-                    "label": "Den rostiga porten"
-                },
-                "5_4": {
-                    "label": "Noshörningens flodbädd"
-                },
-                "5_5": {
-                    "label": "Glödens bakhåll"
-                },
-                "5_6": {
-                    "label": "Obsidianvägen"
-                },
-                "5_7": {
-                    "label": "Hägringens slätter"
-                },
-                "5_8": {
-                    "label": "Reflektionsfälten"
-                },
-                "5_9": {
-                    "label": "Svedd drabbning"
-                },
-                "5_10": {
-                    "label": "Rökspaning"
-                },
-                "5_11": {
-                    "label": "Inferno-Man"
-                },
-                "5_12": {
-                    "label": "Zaharas triumf"
-                }
-            }
-        },
-        "6": {
-            "title": "Andevärlden",
-            "story_hook": "Vännerna går in i Andevärlden. En mörk magi har tagit över Andekonungen och gjort honom vild och arg! Du måste strida mot honom för att bryta förtrollningen och laga världen.",
-            "nodes": {
-                "6_1": {
-                    "label": "Tomma skal"
-                },
-                "6_2": {
-                    "label": "Förvridna spegelbilder"
-                },
-                "6_3": {
-                    "label": "Andarnas spegel"
-                },
-                "6_4": {
-                    "label": "Oredans ekon"
-                },
-                "6_5": {
-                    "label": "Skuggvåg"
-                },
-                "6_6": {
-                    "label": "Andarnas ruta"
-                },
-                "6_7": {
-                    "label": "Splittrade spegelbilder"
-                },
-                "6_8": {
-                    "label": "Andarnas ekvation"
-                },
-                "6_9": {
-                    "label": "Den sista oredan"
-                },
-                "6_10": {
-                    "label": "Andekonungen"
-                },
-                "6_11": {
-                    "label": "Evig harmoni"
-                }
-            }
-        }
-    },
-    "chronicle": {
-        "title": "Krönikan",
-        "chapter_prefix": "Kapitel",
-        "mystery_path": "Denna väg förblir höljd i dunkel...",
-        "completed": "Slutfört",
-        "replay_chapter": "Spela om äventyr",
-        "continue_chapter": "Fortsätt",
-        "begin_chapter": "Börja äventyr",
-        "locked": "Låst",
-        "page_x_of_y": "{{current}} av {{total}}",
-        "next_chapter": "Nästa kapitel",
-        "subtitle": "Din resa genom tidsåldrarna",
-        "adventure_fallback": "Äventyr {{id}}"
-    },
-    "shared_xp": "Delad XP",
-    "combat": {
-        "completion": {
-            "victory_title": "SEGER!",
-            "defeat_title": "NEDERLAG",
-            "continue_button": "Fortsätt"
-        },
-        "turn": {
-            "player": "Din tur",
-            "enemy": "Fiendens tur"
-        }
-    },
-    "rewards": {
-        "gained": "XP erhållen:"
-    },
-    "difficulty": {
-        "start": "Börja",
-        "apprentice": "Lärling",
-        "scout": "Spanare",
-        "adventurer": "Äventyrare",
-        "desc_1": "Addition och subtraktion upp till 10",
-        "desc_2": "Addition och subtraktion upp till 20, enkel multiplikation",
-        "desc_3": "Aritmetik upp till 100 och multiplikationstabeller",
-        "select_title": "Välj matematisk nivå",
-        "change_later_subtitle": "Du kan alltid ändra detta senare i spelet"
-    },
-    "encounter": {
-        "victory": "Seger!",
-        "defeat": "Nederlag",
-        "rewards": "Stridsbelöningar",
-        "xp": "XP vunnet",
-        "continue": "Fortsätt",
-        "retry": "Försök igen",
-        "vs": "MOT"
-    },
-    "puzzle": {
-        "reset": "Nollställ",
-        "success": "Bra jobbat!",
-        "sequence": {
-            "instruction": "Koppla ihop stjärnorna i rätt ordning!"
-        },
-        "refill_canteen": {
-            "instruction": "Fyll på din fältflaska genom att välja rätt mängd vatten"
-        },
-        "balance": {
-            "instruction": "Ta bort stenar för att få båda stenhögarna att väga lika mycket!"
-        },
-        "number_path": {
-            "instruction": "Fyll i siffrorna för att skapa en sammanhängande stig!"
-        },
-        "mirror": {
-            "instruction": "Rotera runorna för att matcha spegelbilden!",
-            "pattern_title": "Mönster",
-            "mirror_title": "Spegel",
-            "rune_alt": "Runa"
-        },
-        "latin_square": {
-            "instruction": "Placera runor i rutnätet. Använd varje runa bara en gång i varje rad och kolumn."
-        },
-        "equation": {
-            "instruction": "Hitta värdet på den hemliga symbolen!"
-        },
-        "replay_instruction": "Lyssna på instruktionen igen",
-        "not_found": "Pusslet hittades inte"
-    },
-    "companions": {
-        "unlock": "Ny följeslagare upplåst!",
-        "level_up": "Nivå upp!",
-        "too_easy": "För enkelt...",
-        "evolution": "Växer upp",
-        "stats": {
-            "hp": "HP",
-            "spirit": "Ande",
-            "attack": "Attack",
-            "shield": "Sköld"
-        },
-        "amara": {
-            "title": "Djungelväktaren",
-            "evolution_1": "Djungelspåraren",
-            "evolution_2": "Toppjägaren",
-            "evolution_3": "Naturens vrede"
-        },
-        "tariq": {
-            "title": "Ökenalkemisten",
-            "evolution_1": "Ökenläkaren",
-            "evolution_2": "Mästeralkemisten",
-            "evolution_3": "Sandens vise"
-        },
-        "kenji": {
-            "title": "Bergets samuraj",
-            "evolution_1": "Krigarförsvarare",
-            "evolution_2": "Stålväktaren",
-            "evolution_3": "Skuggmuren"
-        },
-        "zahara": {
-            "title": "Savannmagikern",
-            "evolution_1": "Solväckaren",
-            "evolution_2": "Glödvävaren",
-            "evolution_3": "Strålande siare"
-        }
-    },
-    "abilities": {
-        "precision_shot": {
-            "name": "Precisionsskott",
-            "description": "Gör {{value}} skada på en enskild fiende."
-        },
-        "elixir_of_life": {
-            "name": "Livselixir",
-            "description": "Helar alla allierade med {{value}} HP."
-        },
-        "blade_barrier": {
-            "name": "Bladbarriär",
-            "description": "Gör {{damage}} skada och skyddar alla allierade i {{duration}} turer."
-        },
-        "ancestral_storm": {
-            "name": "Urgammal storm",
-            "description": "Gör {{value}} skada på alla fiender."
-        }
-    },
-    "monsters": {
-        "scorpion_1": {
-            "name": "Ökenskorpion"
-        },
-        "tiny_scorpion": {
-            "name": "Liten skorpion"
-        },
-        "desert_scavenger": {
-            "name": "Ökenplundrare"
-        },
-        "sand_spirit_1": {
-            "name": "Sandande"
-        },
-        "sand_colossus": {
-            "name": "Sandkolossen"
-        },
-        "bandit_raider": {
-            "name": "Banditplundrare"
-        },
-        "stone_guardian": {
-            "name": "Stenväktare"
-        },
-        "assyrian_guardian": {
-            "name": "Assyrisk väktare"
-        },
-        "the_stone_emperor": {
-            "name": "Stenkejsaren"
-        },
-        "bandit_leader": {
-            "name": "Banditledare"
-        },
-        "mist_ronin": {
-            "name": "Dimkrigare"
-        },
-        "ninja_scout": {
-            "name": "Ninjaspanare"
-        },
-        "samurai_vanguard": {
-            "name": "Samuraj-spanare"
-        },
-        "samurai_archer": {
-            "name": "Samuraj-bågskytt"
-        },
-        "war_hound": {
-            "name": "Krigshund"
-        },
-        "samurai_soldier": {
-            "name": "Samuraj-soldat"
-        },
-        "samurai_commander": {
-            "name": "Samuraj-kaptenen"
-        },
-        "evil_shogun": {
-            "name": "Skuggmästaren"
-        },
-        "blaze_hyena": {
-            "name": "Låghyena"
-        },
-        "ember_lioness": {
-            "name": "Glödlejoninna"
-        },
-        "sun_scorched_rhino": {
-            "name": "Solsvedd Noshörning"
-        },
-        "mirage_spirit": {
-            "name": "Hägringsande"
-        },
-        "inferno_mane": {
-            "name": "Inferno-Man"
-        },
-        "discord_spirit": {
-            "name": "Oredans ande"
-        },
-        "hollow_shell": {
-            "name": "Tomt skal"
-        },
-        "twisted_reflection": {
-            "name": "Förvriden spegelbild"
-        },
-        "spirit_king": {
-            "name": "Andekonungen"
-        }
-    },
-    "premium": {
-        "store": {
-            "title": "Lås upp resan",
-            "description": "Resan har bara börjat...",
-            "features": {
-                "adventures_title": "Lås upp 5 fler äventyr",
-                "companions_title": "Lås upp 2 fler följeslagare",
-                "evolutions_title": "Lås upp alla följeslagar-evolutioner",
-                "opponents_title": "Nya motståndare",
-                "puzzles_title": "Nya pussel",
-                "support_title": "Stöd en soloutvecklare"
-            },
-            "price": "59 KR",
-            "buy_now": "Lås upp",
-            "account": {
-                "title": "Säkra din resa",
-                "subtitle": "Skapa ett konto för att spara dina framsteg och spela på valfri enhet.",
-                "email_label": "E-postadress",
-                "email_placeholder": "din@e-post.se",
-                "confirm_email_label": "Bekräfta e-postadress",
-                "password_label": "Lösenord",
-                "password_placeholder": "Välj ett starkt lösenord",
-                "continue_btn": "Fortsätt",
-                "already_registered": "Har du redan ett konto? Logga in",
-                "errors": {
-                    "invalid_email": "Ange en giltig e-postadress.",
-                    "emails_dont_match": "E-postadresserna matchar inte.",
-                    "weak_password": "Lösenordet måste vara minst 6 tecken.",
-                    "already_exists": "E-postadressen är redan registrerad. Vänligen logga in."
-                }
-            },
-            "success_title": "Premium upplåst!",
-            "success_message": "Tack för ditt stöd!",
-            "processing_payment": "Säkrar ditt äventyr...",
-            "verifying_access": "Verifierar ditt nya innehåll...",
-            "verification_timeout": "Betalningen lyckades, men vi behandlar fortfarande din åtkomst. Den kommer att dyka upp på ditt konto inom kort.",
-            "total_amount": "Totalt belopp"
-        }
-    },
-    "landing": {
-        "start_game": "Ny resa",
-        "continue_journey": "Fortsätt",
-        "login": "Logga in",
-        "first_edition": "Första upplagan",
-        "title": "Spela för att lära",
-        "subtitle": "Ge dig ut på en episk resa av kunskap och äventyr."
-    },
-    "login": {
-        "member_access": "Logga in",
-        "back_to_cover": "Tillbaka till omslaget",
-        "email_label": "E-postadress",
-        "email_placeholder": "namn@exempel.se",
-        "password_label": "Lösenord",
-        "password_placeholder": "••••••••",
-        "open_journal": "Logga in",
-        "invalid_credentials": "Ogiltig e-post eller lösenord",
-        "forgot_password": "Glömt ditt lösenord?"
-    },
-    "forgot_password": {
-        "title": "Återställ lösenord",
-        "subtitle": "Ange din e-postadress så skickar vi en återställningslänk.",
-        "email_label": "E-postadress",
-        "email_placeholder": "namn@exempel.se",
-        "submit_btn": "Skicka återställningslänk",
-        "success_title": "Kolla din inkorg",
-        "success_message": "Om ett konto finns för den e-postadressen har en återställningslänk skickats. Det kan ta några minuter — kom ihåg att kolla din skräppost.",
-        "error_generic": "Något gick fel. Försök igen."
-    },
-    "reset_password": {
-        "title": "Ange nytt lösenord",
-        "new_password_label": "Nytt lösenord",
-        "new_password_placeholder": "Välj ett starkt lösenord",
-        "confirm_password_label": "Bekräfta nytt lösenord",
-        "confirm_password_placeholder": "Upprepa ditt lösenord",
-        "submit_btn": "Spara nytt lösenord",
-        "success_title": "Lösenord uppdaterat",
-        "success_message": "Ditt lösenord har uppdaterats. Du kan nu logga in med ditt nya lösenord.",
-        "go_to_login": "Gå till inloggning",
-        "errors": {
-            "passwords_dont_match": "Lösenorden matchar inte.",
-            "weak_password": "Lösenordet måste vara minst 6 tecken.",
-            "generic": "Något gick fel. Försök igen.",
-            "invalid_link": "Denna återställningslänk är ogiltig eller har gått ut. Begär en ny."
-        }
-    },
-    "settings": {
-        "title": "Inställningar",
-        "language": "Språk",
-        "debug_console": "Öppna felsökningskonsolen",
-        "sound": "Ljud",
-        "master_volume": "Huvudvolym",
-        "music_volume": "Musikvolym",
-        "sfx_volume": "Ljudeffekter",
-        "voice_volume": "Röstvolym"
-    },
-    "change_password": {
-        "title": "Lösenord",
-        "submit_btn": "Skicka länk för lösenordsändring",
-        "success_message": "En länk för lösenordsändring har skickats till din e-post. Kolla din inkorg.",
-        "error_generic": "Något gick fel. Försök igen."
-    },
-    "loading": {
-        "initializing": "INITIERAR ÄVENTYR",
-        "connection_error_title": "ANSLUTNINGSFEL",
-        "connection_error_message": "Kan inte nå spelservern. Kontrollera din anslutning eller försök igen senare.",
-        "retry": "FÖRSÖK IGEN"
-    },
-    "game_complete": {
-        "title": "Resan slutförd!",
-        "subtitle": "Du har erövrat alla sex äventyr!",
-        "adventure_label": "Äventyr {{number}}",
-        "adventure_stats_heading": "Din resa",
-        "play_again_higher": "Spela igen på {{difficulty}}",
-        "play_again_max": "Spela igen",
-        "play_again_hint": "Slutför äventyren igen på en högre svårighetsnivå för att samla alla stjärnor!",
-        "play_again_max_hint": "Du är på den högsta svårighetsnivån. Spela om äventyren för att tjäna alla stjärnor!"
+  "common": {
+    "continue": "Fortsätt",
+    "start_over": "Börja om",
+    "back": "Tillbaka",
+    "level": "Nivå",
+    "lvl": "Nivå",
+    "back_to_map": "Tillbaka till kartan"
+  },
+  "remainder_text": " rest ",
+  "adventure": {
+    "title": "Äventyr",
+    "start": "Starta äventyr",
+    "back": "Tillbaka till resan",
+    "locked": "Låst",
+    "completed": "Slutfört",
+    "rewards": "Belöningar",
+    "not_found": "Äventyr hittades inte",
+    "nodes": {
+      "battle": "Strid",
+      "puzzle": "Pussel",
+      "boss": "Boss"
     }
+  },
+  "adventures": {
+    "1": {
+      "title": "Den gömda ingången",
+      "story_hook": "Amara är en modig ung utforskare från en avlägsen djungel. Hon reser till öknen för att besöka sin vän Tariq. De ser något konstigt nära den stora stenporten. Tillsammans går de för att undersöka en hemlig grotta som dök upp i sanden.",
+      "nodes": {
+        "1_1": {
+          "label": "Stickande spanare"
+        },
+        "1_2": {
+          "label": "Små plågor"
+        },
+        "1_3": {
+          "label": "Den solkyssta oasen"
+        },
+        "1_4": {
+          "label": "Dynernas plundrare"
+        },
+        "1_5": {
+          "label": "Banditernas gömställe"
+        },
+        "1_6": {
+          "label": "Sanningens våg"
+        },
+        "1_7": {
+          "label": "Sandgengångare"
+        },
+        "1_8": {
+          "label": "Stjärnskådarens dyn"
+        },
+        "1_9": {
+          "label": "Andeväktare"
+        },
+        "1_10": {
+          "label": "Sandkolossen"
+        },
+        "1_11": {
+          "label": "Till ruinerna"
+        }
+      }
+    },
+    "2": {
+      "title": "Ashurs ruiner",
+      "story_hook": "Amara och Tariq går djupt in i en sval grotta. Där inne hittar de en gammal underjordisk stad som heter Ashur. Men se upp! Banditer gömmer sig i ruinerna, och stenarna rör sig som magi.",
+      "nodes": {
+        "2_1": {
+          "label": "Banditutkik"
+        },
+        "2_2": {
+          "label": "Den uråldriga cisternen"
+        },
+        "2_3": {
+          "label": "Plundrarnas bakhåll"
+        },
+        "2_4": {
+          "label": "Banditernas högkvarter"
+        },
+        "2_5": {
+          "label": "Tysta väktare"
+        },
+        "2_6": {
+          "label": "Den vises piedestal"
+        },
+        "2_7": {
+          "label": "Salens väktare"
+        },
+        "2_8": {
+          "label": "Mosaikgården"
+        },
+        "2_9": {
+          "label": "Kejsarens elit"
+        },
+        "2_10": {
+          "label": "Stenkejsaren"
+        },
+        "2_11": {
+          "label": "Res vidare"
+        }
+      }
+    },
+    "3": {
+      "title": "De dimmiga fotbergen",
+      "story_hook": "Amara och Tariq klättrar upp för de kalla bergstopparna. De träffar Kenji, en pojke med ett träsvärd. Han behöver hjälp! Elaka ninjor och en mörk dimma tar över hans berghem.",
+      "nodes": {
+        "3_1": {
+          "label": "Bambudungens bakhåll"
+        },
+        "3_2": {
+          "label": "Dimkrigarpatrull"
+        },
+        "3_3": {
+          "label": "Spegeldammen"
+        },
+        "3_4": {
+          "label": "Fotbergsspanare"
+        },
+        "3_5": {
+          "label": "Höljda samurajer"
+        },
+        "3_6": {
+          "label": "Chifferplattorna"
+        },
+        "3_7": {
+          "label": "Samuraj-trupp"
+        },
+        "3_8": {
+          "label": "Stjärnbildsstenarna"
+        },
+        "3_9": {
+          "label": "Kaptenens fäste"
+        },
+        "3_10": {
+          "label": "Vägen till topparna"
+        }
+      }
+    },
+    "4": {
+      "title": "Skuggmästarens uppgång",
+      "story_hook": "Dimman lättar och våra hjältar ser en stor fästning. Skuggmästaren bor där! Du måste smyga förbi vakterna och lösa pussel för att öppna portarna.",
+      "nodes": {
+        "4_1": {
+          "label": "Skuggspanare"
+        },
+        "4_2": {
+          "label": "Nattpatrull"
+        },
+        "4_3": {
+          "label": "Portvaktare"
+        },
+        "4_4": {
+          "label": "Tryckplattorna"
+        },
+        "4_5": {
+          "label": "Fästningens bågskyttar"
+        },
+        "4_6": {
+          "label": "De låsta kugghjulen"
+        },
+        "4_7": {
+          "label": "Vakthundar"
+        },
+        "4_8": {
+          "label": "Murväktare"
+        },
+        "4_9": {
+          "label": "Övningsfältet"
+        },
+        "4_10": {
+          "label": "Den inre cirkeln"
+        },
+        "4_11": {
+          "label": "Skuggmästaren"
+        },
+        "4_12": {
+          "label": "Res vidare"
+        }
+      }
+    },
+    "5": {
+      "title": "De Svedda Slätterna",
+      "story_hook": "Amara, Tariq och Kenji reser till de Svedda Slätterna och träffar Zahara. Det är väldigt varmt här! Lejonen beter sig konstigt och andarna är upprörda. Zahara måste använda sin magi för att laga slätterna.",
+      "nodes": {
+        "5_1": {
+          "label": "Plundrarens läger"
+        },
+        "5_2": {
+          "label": "Lejoninnans avsats"
+        },
+        "5_3": {
+          "label": "Den rostiga porten"
+        },
+        "5_4": {
+          "label": "Noshörningens flodbädd"
+        },
+        "5_5": {
+          "label": "Glödens bakhåll"
+        },
+        "5_6": {
+          "label": "Obsidianvägen"
+        },
+        "5_7": {
+          "label": "Hägringens slätter"
+        },
+        "5_8": {
+          "label": "Reflektionsfälten"
+        },
+        "5_9": {
+          "label": "Svedd drabbning"
+        },
+        "5_10": {
+          "label": "Rökspaning"
+        },
+        "5_11": {
+          "label": "Inferno-Man"
+        },
+        "5_12": {
+          "label": "Zaharas triumf"
+        }
+      }
+    },
+    "6": {
+      "title": "Andevärlden",
+      "story_hook": "Vännerna går in i Andevärlden. En mörk magi har tagit över Andekonungen och gjort honom vild och arg! Du måste strida mot honom för att bryta förtrollningen och laga världen.",
+      "nodes": {
+        "6_1": {
+          "label": "Tomma skal"
+        },
+        "6_2": {
+          "label": "Förvridna spegelbilder"
+        },
+        "6_3": {
+          "label": "Andarnas spegel"
+        },
+        "6_4": {
+          "label": "Oredans ekon"
+        },
+        "6_5": {
+          "label": "Skuggvåg"
+        },
+        "6_6": {
+          "label": "Andarnas ruta"
+        },
+        "6_7": {
+          "label": "Splittrade spegelbilder"
+        },
+        "6_8": {
+          "label": "Andarnas ekvation"
+        },
+        "6_9": {
+          "label": "Den sista oredan"
+        },
+        "6_10": {
+          "label": "Andekonungen"
+        },
+        "6_11": {
+          "label": "Evig harmoni"
+        }
+      }
+    }
+  },
+  "chronicle": {
+    "title": "Krönikan",
+    "chapter_prefix": "Kapitel",
+    "mystery_path": "Denna väg förblir höljd i dunkel...",
+    "completed": "Slutfört",
+    "replay_chapter": "Spela om äventyr",
+    "continue_chapter": "Fortsätt",
+    "begin_chapter": "Börja äventyr",
+    "locked": "Låst",
+    "page_x_of_y": "{{current}} av {{total}}",
+    "next_chapter": "Nästa kapitel",
+    "subtitle": "Din resa genom tidsåldrarna",
+    "adventure_fallback": "Äventyr {{id}}"
+  },
+  "shared_xp": "Delad XP",
+  "combat": {
+    "completion": {
+      "victory_title": "SEGER!",
+      "defeat_title": "NEDERLAG",
+      "continue_button": "Fortsätt"
+    },
+    "turn": {
+      "player": "Din tur",
+      "enemy": "Fiendens tur"
+    }
+  },
+  "rewards": {
+    "gained": "XP erhållen:"
+  },
+  "difficulty": {
+    "start": "Börja",
+    "apprentice": "Lärling",
+    "scout": "Spanare",
+    "adventurer": "Äventyrare",
+    "desc_1": "Addition och subtraktion upp till 10",
+    "desc_2": "Addition och subtraktion upp till 20, enkel multiplikation",
+    "desc_3": "Aritmetik upp till 100 och multiplikationstabeller",
+    "select_title": "Välj matematisk nivå",
+    "change_later_subtitle": "Du kan alltid ändra detta senare i spelet"
+  },
+  "encounter": {
+    "victory": "Seger!",
+    "defeat": "Nederlag",
+    "rewards": "Stridsbelöningar",
+    "xp": "XP vunnet",
+    "continue": "Fortsätt",
+    "retry": "Försök igen",
+    "vs": "MOT"
+  },
+  "puzzle": {
+    "reset": "Nollställ",
+    "success": "Bra jobbat!",
+    "sequence": {
+      "instruction": "Koppla ihop stjärnorna i rätt ordning!"
+    },
+    "refill_canteen": {
+      "instruction": "Fyll på din fältflaska genom att välja rätt mängd vatten"
+    },
+    "balance": {
+      "instruction": "Ta bort stenar för att få båda stenhögarna att väga lika mycket!"
+    },
+    "number_path": {
+      "instruction": "Fyll i siffrorna för att skapa en sammanhängande stig!"
+    },
+    "mirror": {
+      "instruction": "Rotera runorna för att matcha spegelbilden!",
+      "pattern_title": "Mönster",
+      "mirror_title": "Spegel",
+      "rune_alt": "Runa"
+    },
+    "latin_square": {
+      "instruction": "Placera runor i rutnätet. Använd varje runa bara en gång i varje rad och kolumn."
+    },
+    "equation": {
+      "instruction": "Hitta värdet på den hemliga symbolen!"
+    },
+    "replay_instruction": "Lyssna på instruktionen igen",
+    "not_found": "Pusslet hittades inte"
+  },
+  "companions": {
+    "unlock": "Ny följeslagare upplåst!",
+    "level_up": "Nivå upp!",
+    "too_easy": "För enkelt...",
+    "evolution": "Växer upp",
+    "stats": {
+      "hp": "HP",
+      "spirit": "Ande",
+      "attack": "Attack",
+      "shield": "Sköld"
+    },
+    "amara": {
+      "title": "Djungelväktaren",
+      "evolution_1": "Djungelspåraren",
+      "evolution_2": "Toppjägaren",
+      "evolution_3": "Naturens vrede"
+    },
+    "tariq": {
+      "title": "Ökenalkemisten",
+      "evolution_1": "Ökenläkaren",
+      "evolution_2": "Mästeralkemisten",
+      "evolution_3": "Sandens vise"
+    },
+    "kenji": {
+      "title": "Bergets samuraj",
+      "evolution_1": "Krigarförsvarare",
+      "evolution_2": "Stålväktaren",
+      "evolution_3": "Skuggmuren"
+    },
+    "zahara": {
+      "title": "Savannmagikern",
+      "evolution_1": "Solväckaren",
+      "evolution_2": "Glödvävaren",
+      "evolution_3": "Strålande siare"
+    }
+  },
+  "abilities": {
+    "precision_shot": {
+      "name": "Precisionsskott",
+      "description": "Gör {{value}} skada på en enskild fiende."
+    },
+    "elixir_of_life": {
+      "name": "Livselixir",
+      "description": "Helar alla allierade med {{value}} HP."
+    },
+    "blade_barrier": {
+      "name": "Bladbarriär",
+      "description": "Gör {{damage}} skada och skyddar alla allierade i {{duration}} turer."
+    },
+    "ancestral_storm": {
+      "name": "Urgammal storm",
+      "description": "Gör {{value}} skada på alla fiender."
+    }
+  },
+  "monsters": {
+    "scorpion_1": {
+      "name": "Ökenskorpion"
+    },
+    "tiny_scorpion": {
+      "name": "Liten skorpion"
+    },
+    "desert_scavenger": {
+      "name": "Ökenplundrare"
+    },
+    "sand_spirit_1": {
+      "name": "Sandande"
+    },
+    "sand_colossus": {
+      "name": "Sandkolossen"
+    },
+    "bandit_raider": {
+      "name": "Banditplundrare"
+    },
+    "stone_guardian": {
+      "name": "Stenväktare"
+    },
+    "assyrian_guardian": {
+      "name": "Assyrisk väktare"
+    },
+    "the_stone_emperor": {
+      "name": "Stenkejsaren"
+    },
+    "bandit_leader": {
+      "name": "Banditledare"
+    },
+    "mist_ronin": {
+      "name": "Dimkrigare"
+    },
+    "ninja_scout": {
+      "name": "Ninjaspanare"
+    },
+    "samurai_vanguard": {
+      "name": "Samuraj-spanare"
+    },
+    "samurai_archer": {
+      "name": "Samuraj-bågskytt"
+    },
+    "war_hound": {
+      "name": "Krigshund"
+    },
+    "samurai_soldier": {
+      "name": "Samuraj-soldat"
+    },
+    "samurai_commander": {
+      "name": "Samuraj-kaptenen"
+    },
+    "evil_shogun": {
+      "name": "Skuggmästaren"
+    },
+    "blaze_hyena": {
+      "name": "Låghyena"
+    },
+    "ember_lioness": {
+      "name": "Glödlejoninna"
+    },
+    "sun_scorched_rhino": {
+      "name": "Solsvedd Noshörning"
+    },
+    "mirage_spirit": {
+      "name": "Hägringsande"
+    },
+    "inferno_mane": {
+      "name": "Inferno-Man"
+    },
+    "discord_spirit": {
+      "name": "Oredans ande"
+    },
+    "hollow_shell": {
+      "name": "Tomt skal"
+    },
+    "twisted_reflection": {
+      "name": "Förvriden spegelbild"
+    },
+    "spirit_king": {
+      "name": "Andekonungen"
+    }
+  },
+  "premium": {
+    "store": {
+      "title": "Lås upp resan",
+      "description": "Resan har bara börjat...",
+      "features": {
+        "adventures_title": "Lås upp 5 fler äventyr",
+        "companions_title": "Lås upp 2 fler följeslagare",
+        "evolutions_title": "Lås upp alla följeslagar-evolutioner",
+        "opponents_title": "Nya motståndare",
+        "puzzles_title": "Nya pussel",
+        "support_title": "Stöd en soloutvecklare"
+      },
+      "price": "59 KR",
+      "buy_now": "Lås upp",
+      "account": {
+        "title": "Säkra din resa",
+        "subtitle": "Skapa ett konto för att spara dina framsteg och spela på valfri enhet.",
+        "email_label": "E-postadress",
+        "email_placeholder": "din@e-post.se",
+        "confirm_email_label": "Bekräfta e-postadress",
+        "password_label": "Lösenord",
+        "password_placeholder": "Välj ett starkt lösenord",
+        "continue_btn": "Fortsätt",
+        "already_registered": "Har du redan ett konto? Logga in",
+        "errors": {
+          "invalid_email": "Ange en giltig e-postadress.",
+          "emails_dont_match": "E-postadresserna matchar inte.",
+          "weak_password": "Lösenordet måste vara minst 6 tecken.",
+          "already_exists": "E-postadressen är redan registrerad. Vänligen logga in.",
+          "sign_in_failed": "Fel e-postadress eller lösenord. Försök igen.",
+          "password_required": "Ange ditt lösenord."
+        },
+        "sign_in_title": "Logga in",
+        "sign_in_subtitle": "Logga in för att fortsätta med ditt befintliga konto.",
+        "sign_in_btn": "Logga in",
+        "sign_in_instead": "Logga in istället",
+        "sign_in_instead_aria": "Byt till inloggning med befintligt konto"
+      },
+      "success_title": "Premium upplåst!",
+      "success_message": "Tack för ditt stöd!",
+      "processing_payment": "Säkrar ditt äventyr...",
+      "verifying_access": "Verifierar ditt nya innehåll...",
+      "verification_timeout": "Betalningen lyckades, men vi behandlar fortfarande din åtkomst. Den kommer att dyka upp på ditt konto inom kort.",
+      "total_amount": "Totalt belopp"
+    }
+  },
+  "landing": {
+    "start_game": "Ny resa",
+    "continue_journey": "Fortsätt",
+    "login": "Logga in",
+    "first_edition": "Första upplagan",
+    "title": "Spela för att lära",
+    "subtitle": "Ge dig ut på en episk resa av kunskap och äventyr."
+  },
+  "login": {
+    "member_access": "Logga in",
+    "back_to_cover": "Tillbaka till omslaget",
+    "email_label": "E-postadress",
+    "email_placeholder": "namn@exempel.se",
+    "password_label": "Lösenord",
+    "password_placeholder": "••••••••",
+    "open_journal": "Logga in",
+    "invalid_credentials": "Ogiltig e-post eller lösenord",
+    "forgot_password": "Glömt ditt lösenord?"
+  },
+  "forgot_password": {
+    "title": "Återställ lösenord",
+    "subtitle": "Ange din e-postadress så skickar vi en återställningslänk.",
+    "email_label": "E-postadress",
+    "email_placeholder": "namn@exempel.se",
+    "submit_btn": "Skicka återställningslänk",
+    "success_title": "Kolla din inkorg",
+    "success_message": "Om ett konto finns för den e-postadressen har en återställningslänk skickats. Det kan ta några minuter — kom ihåg att kolla din skräppost.",
+    "error_generic": "Något gick fel. Försök igen."
+  },
+  "reset_password": {
+    "title": "Ange nytt lösenord",
+    "new_password_label": "Nytt lösenord",
+    "new_password_placeholder": "Välj ett starkt lösenord",
+    "confirm_password_label": "Bekräfta nytt lösenord",
+    "confirm_password_placeholder": "Upprepa ditt lösenord",
+    "submit_btn": "Spara nytt lösenord",
+    "success_title": "Lösenord uppdaterat",
+    "success_message": "Ditt lösenord har uppdaterats. Du kan nu logga in med ditt nya lösenord.",
+    "go_to_login": "Gå till inloggning",
+    "errors": {
+      "passwords_dont_match": "Lösenorden matchar inte.",
+      "weak_password": "Lösenordet måste vara minst 6 tecken.",
+      "generic": "Något gick fel. Försök igen.",
+      "invalid_link": "Denna återställningslänk är ogiltig eller har gått ut. Begär en ny."
+    }
+  },
+  "settings": {
+    "title": "Inställningar",
+    "language": "Språk",
+    "debug_console": "Öppna felsökningskonsolen",
+    "sound": "Ljud",
+    "master_volume": "Huvudvolym",
+    "music_volume": "Musikvolym",
+    "sfx_volume": "Ljudeffekter",
+    "voice_volume": "Röstvolym"
+  },
+  "change_password": {
+    "title": "Lösenord",
+    "submit_btn": "Skicka länk för lösenordsändring",
+    "success_message": "En länk för lösenordsändring har skickats till din e-post. Kolla din inkorg.",
+    "error_generic": "Något gick fel. Försök igen."
+  },
+  "loading": {
+    "initializing": "INITIERAR ÄVENTYR",
+    "connection_error_title": "ANSLUTNINGSFEL",
+    "connection_error_message": "Kan inte nå spelservern. Kontrollera din anslutning eller försök igen senare.",
+    "retry": "FÖRSÖK IGEN"
+  },
+  "game_complete": {
+    "title": "Resan slutförd!",
+    "subtitle": "Du har erövrat alla sex äventyr!",
+    "adventure_label": "Äventyr {{number}}",
+    "adventure_stats_heading": "Din resa",
+    "play_again_higher": "Spela igen på {{difficulty}}",
+    "play_again_max": "Spela igen",
+    "play_again_hint": "Slutför äventyren igen på en högre svårighetsnivå för att samla alla stjärnor!",
+    "play_again_max_hint": "Du är på den högsta svårighetsnivån. Spela om äventyren för att tjäna alla stjärnor!"
+  }
 }
