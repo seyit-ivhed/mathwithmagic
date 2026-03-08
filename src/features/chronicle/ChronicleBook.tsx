@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game/store';
 import { calculateAdventureStars } from '../../utils/progression.utils';
 import { ChapterPage } from './components/ChapterPage';
@@ -19,11 +18,11 @@ import { Header } from '../../components/Header';
 import { playSfx } from '../../components/audio/audio.utils';
 import { analyticsService } from '../../services/analytics.service';
 import { LegalModal, type LegalDocumentType } from '../legal/LegalModal';
+import { ChroniclesLegalFooter } from './components/ChroniclesLegalFooter';
 
 export const ChronicleBook: React.FC = () => {
     const { adventureStatuses, isAdventureUnlocked, encounterResults, setEncounterDifficulty } = useGameStore();
     const navigate = useNavigate();
-    const { t } = useTranslation();
     const { pageId } = useParams<{ pageId: string }>();
 
     // Check if user has any progress to decide initial state
@@ -245,23 +244,7 @@ export const ChronicleBook: React.FC = () => {
                 sourceAdventureId={premiumSourceAdventureId}
             />
 
-            <footer className={styles.legalFooter}>
-                <button
-                    className={styles.legalFooterLink}
-                    onClick={() => setLegalModal('privacy')}
-                    data-testid="footer-privacy-link"
-                >
-                    {t('legal.privacy_policy', 'Privacy Policy')}
-                </button>
-                <span className={styles.legalFooterSeparator}>|</span>
-                <button
-                    className={styles.legalFooterLink}
-                    onClick={() => setLegalModal('terms')}
-                    data-testid="footer-terms-link"
-                >
-                    {t('legal.terms_of_service', 'Terms of Service')}
-                </button>
-            </footer>
+            <ChroniclesLegalFooter onOpen={setLegalModal} />
 
             {legalModal && (
                 <LegalModal type={legalModal} onClose={() => setLegalModal(null)} />

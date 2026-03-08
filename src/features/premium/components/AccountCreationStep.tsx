@@ -7,7 +7,8 @@ import { useAuth } from '../../../hooks/useAuth';
 import { supabase } from '../../../services/supabase.service';
 import { validateAccountCreationForm, performAccountConversion } from '../utils/account-creation.utils';
 import { analyticsService } from '../../../services/analytics.service';
-import { LegalModal, type LegalDocumentType } from '../../legal/LegalModal';
+import { ConsentCheckboxes } from './ConsentCheckboxes';
+import type { LegalDocumentType } from '../../legal/LegalModal';
 
 interface AccountCreationStepProps {
     onSuccess: () => void;
@@ -110,13 +111,12 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
     };
 
     return (
-        <>
-            <motion.div
-                className="account-step"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.05 }}
-            >
+        <motion.div
+            className="account-step"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.05 }}
+        >
                 <div className="account-icon">
                     <ShieldCheck size={48} />
                 </div>
@@ -184,59 +184,18 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                     </div>
 
                     {mode === 'create' && (
-                        <div className="consent-checkboxes">
-                            <label className="consent-label" data-testid="age-consent-label">
-                                <input
-                                    type="checkbox"
-                                    checked={ageConsent}
-                                    onChange={(e) => setAgeConsent(e.target.checked)}
-                                    disabled={loading}
-                                    data-testid="age-consent-checkbox"
-                                />
-                                <span>{translation('account_creation.age_consent', 'I am 18 years or older and I am creating this account as a parent or guardian for my child.')}</span>
-                            </label>
-
-                            <label className="consent-label" data-testid="terms-consent-label">
-                                <input
-                                    type="checkbox"
-                                    checked={termsConsent}
-                                    onChange={(e) => setTermsConsent(e.target.checked)}
-                                    disabled={loading}
-                                    data-testid="terms-consent-checkbox"
-                                />
-                                <span>
-                                    {translation('account_creation.terms_consent_prefix', 'I agree to the')}{' '}
-                                    <button
-                                        type="button"
-                                        className="consent-link"
-                                        onClick={() => setLegalModal('terms')}
-                                        data-testid="terms-link"
-                                    >
-                                        {translation('legal.terms_of_service', 'Terms of Service')}
-                                    </button>
-                                    {' '}{translation('account_creation.terms_consent_and', 'and')}{' '}
-                                    <button
-                                        type="button"
-                                        className="consent-link"
-                                        onClick={() => setLegalModal('privacy')}
-                                        data-testid="privacy-link"
-                                    >
-                                        {translation('legal.privacy_policy', 'Privacy Policy')}
-                                    </button>.
-                                </span>
-                            </label>
-
-                            <label className="consent-label consent-label--optional" data-testid="product-updates-label">
-                                <input
-                                    type="checkbox"
-                                    checked={productUpdates}
-                                    onChange={(e) => setProductUpdates(e.target.checked)}
-                                    disabled={loading}
-                                    data-testid="product-updates-checkbox"
-                                />
-                                <span>{translation('account_creation.product_updates', 'Notify me about new adventures and game updates. You can unsubscribe at any time.')}</span>
-                            </label>
-                        </div>
+                        <ConsentCheckboxes
+                            ageConsent={ageConsent}
+                            termsConsent={termsConsent}
+                            productUpdates={productUpdates}
+                            disabled={loading}
+                            onAgeConsentChange={setAgeConsent}
+                            onTermsConsentChange={setTermsConsent}
+                            onProductUpdatesChange={setProductUpdates}
+                            legalModal={legalModal}
+                            onOpenLegalModal={setLegalModal}
+                            onCloseLegalModal={() => setLegalModal(null)}
+                        />
                     )}
 
                     <AnimatePresence>
@@ -282,10 +241,5 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                     </div>
                 </form>
             </motion.div>
-
-            {legalModal && (
-                <LegalModal type={legalModal} onClose={() => setLegalModal(null)} />
-            )}
-        </>
-    );
+        );
 };

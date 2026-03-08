@@ -74,7 +74,7 @@ export const DeleteAccountSettings: React.FC = () => {
                         onClick={handleConfirmDelete}
                         disabled={loading}
                         data-testid="delete-account-confirm-btn"
-                        style={{ background: '#c0392b', borderColor: '#c0392b' }}
+                        className={styles.confirmButton}
                     >
                         {loading
                             ? <Loader2 size={14} className={styles.spinner} />
