@@ -18,14 +18,6 @@ jobs:
           script: |
             const pr = context.payload.pull_request;
 
-            // Remove the label immediately to prevent re-triggering
-            await github.rest.issues.removeLabel({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: pr.number,
-              name: 'copilot-review-requested'
-            });
-
             // Post the review comment to trigger the Copilot reviewer
             await github.rest.issues.createComment({
               owner: context.repo.owner,
