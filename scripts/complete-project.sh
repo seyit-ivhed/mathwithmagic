@@ -8,9 +8,9 @@ NC='\033[0m' # No Color
 
 echo -e "${GREEN}Starting project completion workflow...${NC}\n"
 
-# Step 1: Check if we're on main branch
+# Check if we're on main branch
 CURRENT_BRANCH=$(git branch --show-current)
-echo -e "${YELLOW}Step 1: Current branch: $CURRENT_BRANCH${NC}\n"
+echo -e "${YELLOW}Current branch: $CURRENT_BRANCH${NC}\n"
 
 if [ "$CURRENT_BRANCH" = "main" ]; then
     echo -e "${RED}You are currently on the main branch.${NC}"
@@ -18,8 +18,8 @@ if [ "$CURRENT_BRANCH" = "main" ]; then
     exit 1
 fi
 
-# Step 2: Check for uncommitted changes
-echo -e "${YELLOW}Step 2: Checking for uncommitted changes...${NC}"
+# Check for uncommitted changes
+echo -e "${YELLOW}Checking for uncommitted changes...${NC}"
 if [ -n "$(git status --porcelain)" ]; then
     echo -e "${RED}You have uncommitted or unstaged changes:${NC}\n"
     git status --short
@@ -29,8 +29,8 @@ fi
 
 echo -e "${GREEN}Working directory is clean.${NC}\n"
 
-# Step 3: Check translation synchronization
-echo -e "${YELLOW}Step 3: Checking translation key synchronization...${NC}"
+# Check translation synchronization
+echo -e "${YELLOW}Checking translation key synchronization...${NC}"
 node scripts/check-translations.js
 if [ $? -ne 0 ]; then
     echo -e "${RED}Translation check failed. Please synchronize all translation files.${NC}"
@@ -39,8 +39,8 @@ fi
 
 echo -e "${GREEN}Translation keys are synchronized.${NC}\n"
 
-# Step 4: Full lint check
-echo -e "${YELLOW}Step 4: Running full lint check (ESLint + Type Check)...${NC}"
+# Full lint check
+echo -e "${YELLOW}Running full lint check (ESLint + Type Check)...${NC}"
 npm run lint && npm run build
 if [ $? -ne 0 ]; then
     echo -e "${RED}Lint check, Type check or Build failed (errors or warnings found). Please fix them before proceeding.${NC}"
@@ -49,8 +49,8 @@ fi
 
 echo -e "${GREEN}Lint and Type checks passed.${NC}\n"
 
-# Step 5: Fetch latest changes
-echo -e "${YELLOW}Step 5: Fetching latest changes from origin...${NC}"
+# Fetch latest changes
+echo -e "${YELLOW}Fetching latest changes from origin...${NC}"
 git fetch origin
 if [ $? -ne 0 ]; then
     echo -e "${RED}Failed to fetch from origin. Please check your connection.${NC}"
@@ -59,8 +59,8 @@ fi
 
 echo -e "${GREEN}Successfully fetched latest changes.${NC}\n"
 
-# Step 6: Merge main into current branch
-echo -e "${YELLOW}Step 6: Merging main into $CURRENT_BRANCH...${NC}"
+# Merge main into current branch
+echo -e "${YELLOW}Merging main into $CURRENT_BRANCH...${NC}"
 git merge origin/main --no-edit
 if [ $? -ne 0 ]; then
     echo -e "${RED}Merge conflicts detected!${NC}"
@@ -71,8 +71,8 @@ fi
 
 echo -e "${GREEN}Successfully merged main into $CURRENT_BRANCH.${NC}\n"
 
-# Step 7: Run unit tests
-echo -e "${YELLOW}Step 7: Running unit tests...${NC}"
+# Run unit tests
+echo -e "${YELLOW}Running unit tests...${NC}"
 npm run test -- --run
 if [ $? -ne 0 ]; then
     echo -e "${RED}Unit tests failed. Please fix the tests before merging to main.${NC}"
@@ -81,8 +81,8 @@ fi
 
 echo -e "${GREEN}Unit tests passed.${NC}\n"
 
-# Step 8: Run Edge Function tests
-echo -e "${YELLOW}Step 8: Running Edge Function tests (Deno)...${NC}"
+# Run Edge Function tests
+echo -e "${YELLOW}Running Edge Function tests (Deno)...${NC}"
 if command -v deno &> /dev/null; then
     deno test --allow-all supabase/functions/
     if [ $? -ne 0 ]; then
@@ -95,18 +95,8 @@ else
     echo -e "${YELLOW}Please install Deno to ensure Edge Functions are tested locally.${NC}\n"
 fi
 
-# Step 9: Run E2E tests
-# echo -e "${YELLOW}Step 9: Running E2E tests...${NC}"
-# npx playwright test
-# if [ $? -ne 0 ]; then
-#     echo -e "${RED}E2E tests failed. Please fix the tests before merging to main.${NC}"
-#     exit 1
-# fi
-
-echo -e "${GREEN}E2E tests passed.${NC}\n"
-
-# Step 10: Push current branch changes
-echo -e "${YELLOW}Step 10: Pushing current branch changes...${NC}"
+# Push current branch changes
+echo -e "${YELLOW}Pushing current branch changes...${NC}"
 git push origin "$CURRENT_BRANCH"
 if [ $? -ne 0 ]; then
     echo -e "${RED}Failed to push changes to origin.${NC}"
@@ -115,8 +105,8 @@ fi
 
 echo -e "${GREEN}Successfully pushed changes.${NC}\n"
 
-# Step 11: Switch to main branch
-echo -e "${YELLOW}Step 11: Switching to main branch...${NC}"
+# Switch to main branch
+echo -e "${YELLOW}Switching to main branch...${NC}"
 git checkout main
 if [ $? -ne 0 ]; then
     echo -e "${RED}Failed to checkout main branch.${NC}"
@@ -125,8 +115,8 @@ fi
 
 echo -e "${GREEN}Switched to main branch.${NC}\n"
 
-# Step 12: Merge feature branch into main
-echo -e "${YELLOW}Step 12: Merging $CURRENT_BRANCH into main...${NC}"
+# Merge feature branch into main
+echo -e "${YELLOW}Merging $CURRENT_BRANCH into main...${NC}"
 git merge "$CURRENT_BRANCH" --no-edit
 if [ $? -ne 0 ]; then
     echo -e "${RED}Merge conflicts detected!${NC}"
@@ -138,8 +128,8 @@ fi
 
 echo -e "${GREEN}Successfully merged $CURRENT_BRANCH into main.${NC}\n"
 
-# Step 13: Run unit tests on main
-echo -e "${YELLOW}Step 13: Running unit tests on main...${NC}"
+# Run unit tests on main
+echo -e "${YELLOW}Running unit tests on main...${NC}"
 npm run test -- --run
 if [ $? -ne 0 ]; then
     echo -e "${RED}Unit tests failed on main. Rolling back...${NC}"
@@ -150,8 +140,8 @@ fi
 
 echo -e "${GREEN}Unit tests passed on main.${NC}\n"
 
-# Step 14: Run Edge Function tests on main
-echo -e "${YELLOW}Step 14: Running Edge Function tests on main...${NC}"
+# Run Edge Function tests on main
+echo -e "${YELLOW}Running Edge Function tests on main...${NC}"
 if command -v deno &> /dev/null; then
     deno test --allow-all supabase/functions/
     if [ $? -ne 0 ]; then
@@ -165,20 +155,20 @@ else
     echo -e "${YELLOW}Deno not found. Skipping Edge Function tests on main.${NC}\n"
 fi
 
-# Step 15: Run E2E tests on main
-# echo -e "${YELLOW}Step 15: Running E2E tests on main...${NC}"
-# npx playwright test
-# if [ $? -ne 0 ]; then
-#     echo -e "${RED}E2E tests failed on main. Rolling back...${NC}"
-#     git reset --hard HEAD~1
-#     git checkout "$CURRENT_BRANCH"
-#     exit 1
-# fi
+# Run E2E tests on main
+echo -e "${YELLOW}Running E2E tests on main...${NC}"
+npm run test:e2e
+if [ $? -ne 0 ]; then
+    echo -e "${RED}E2E tests failed on main. Rolling back...${NC}"
+    git reset --hard HEAD~1
+    git checkout "$CURRENT_BRANCH"
+    exit 1
+fi
 
 echo -e "${GREEN}E2E tests passed on main.${NC}\n"
 
-# Step 16: Push main to origin
-echo -e "${YELLOW}Step 16: Pushing main to origin...${NC}"
+# Push main to origin
+echo -e "${YELLOW}Pushing main to origin...${NC}"
 git push origin main
 if [ $? -ne 0 ]; then
     echo -e "${RED}Failed to push main to origin.${NC}"
@@ -187,8 +177,8 @@ fi
 
 echo -e "${GREEN}Successfully pushed main to origin.${NC}\n"
 
-# Step 17: Delete feature branch locally and remotely
-echo -e "${YELLOW}Step 17: Deleting branch $CURRENT_BRANCH...${NC}"
+# Delete feature branch locally and remotely
+echo -e "${YELLOW}Deleting branch $CURRENT_BRANCH...${NC}"
 git branch -d "$CURRENT_BRANCH"
 if [ $? -ne 0 ]; then
     echo -e "${RED}Failed to delete local branch $CURRENT_BRANCH.${NC}"
