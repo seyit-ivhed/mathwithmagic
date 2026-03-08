@@ -1,5 +1,4 @@
 import { supabase } from './supabase.service';
-import { IdentityService } from './identity.service';
 import { DebouncedQueue } from '../utils/debounced-queue';
 import { mergeGameState } from '../utils/merge-game-state';
 import type { GameState } from '../stores/game/interfaces';
@@ -23,13 +22,11 @@ export const PersistenceService = {
      * Returns the profile id.
      */
     async getOrCreateProfile(authId: string) {
-        // Since authId IS the profile id now, we can just upsert to ensure it exists
-        // and update the device_id.
+        // Since authId IS the profile id now, we can just upsert to ensure it exists.
         const { data, error } = await supabase
             .from('player_profiles')
             .upsert({
                 id: authId,
-                device_id: IdentityService.getDeviceId(),
                 last_login: new Date().toISOString()
             }, {
                 onConflict: 'id'

@@ -6,7 +6,6 @@ DO NOT ADD UNIT TESTS FOR THIS FILE (even though we want .ts files to have unit 
 import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '../services/supabase.service';
 
-import { IdentityService } from '../services/identity.service';
 import type { Session, User } from '@supabase/supabase-js';
 
 const AUTH_TIMEOUT_MS = 8000;
@@ -44,12 +43,6 @@ export const useAuth = () => {
             ]).finally(clearAuthTimeout);
             setSession(session);
 
-            if (session?.user?.id) {
-                IdentityService.setPlayerId(session.user.id);
-            } else {
-                IdentityService.clearPlayerId();
-            }
-
             setUser(session?.user ?? null);
             setLoading(false);
         };
@@ -58,13 +51,6 @@ export const useAuth = () => {
         // Listen for auth changes
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
             const newUser = session?.user ?? null;
-
-            // Sync IdentityService
-            if (newUser?.id) {
-                IdentityService.setPlayerId(newUser.id);
-            } else {
-                IdentityService.clearPlayerId();
-            }
 
             setUser(newUser);
 
