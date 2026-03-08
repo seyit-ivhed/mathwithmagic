@@ -143,7 +143,7 @@ describe('account-creation.utils', () => {
             });
 
             expect(result.success).toBe(false);
-            expect(result.error).toBe('Network error');
+            expect(result.error).toBe('premium.store.account.errors.generic');
         });
     });
 });

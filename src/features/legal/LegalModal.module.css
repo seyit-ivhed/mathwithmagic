@@ -159,6 +159,11 @@
     margin: 3rem 0;
 }
 
+.refundTitle {
+    font-size: 1.8rem;
+    margin-top: 2rem;
+}
+
 @media (max-width: 600px) {
     .legalModalOverlay {
         padding: 0.75rem;
