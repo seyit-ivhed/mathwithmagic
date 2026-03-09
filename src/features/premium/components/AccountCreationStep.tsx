@@ -44,6 +44,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
         analyticsService.trackEvent('account_creation_viewed');
     }, []);
 
+
     const switchToSignIn = () => {
         setMode('signin');
         setError(null);
