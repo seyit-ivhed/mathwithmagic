@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/useAuth';
 import { analyticsService } from '../../services/analytics.service';
+import { clearAppStorage } from '../../utils/app-storage';
 import { Loader2, AlertTriangle, Trash2 } from 'lucide-react';
 import { PrimaryButton } from '../ui/PrimaryButton';
 import sectionStyles from './SettingsSection.module.css';
@@ -38,6 +39,8 @@ export const DeleteAccountSettings: React.FC = () => {
         try {
             await deleteAccount(password);
             analyticsService.trackEvent('account_deleted');
+            clearAppStorage();
+            window.location.href = '/farewell';
         } catch (err: unknown) {
             console.error('Account deletion failed:', err);
             analyticsService.trackEvent('account_delete_failed');

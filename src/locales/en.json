@@ -643,5 +643,9 @@
     "password_placeholder": "Your password",
     "password_required": "Please enter your password to confirm.",
     "wrong_password": "Incorrect password. Please try again."
+  },
+  "farewell": {
+    "title": "Farewell, Adventurer",
+    "message": "It's sad for you to go, but thanks for the adventure"
   }
 }

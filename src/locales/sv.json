@@ -643,5 +643,9 @@
     "password_placeholder": "Ditt lösenord",
     "password_required": "Ange ditt lösenord för att bekräfta.",
     "wrong_password": "Fel lösenord. Försök igen."
+  },
+  "farewell": {
+    "title": "Adjö, äventyrare",
+    "message": "Det är tråkigt att du lämnar, men tack för äventyret"
   }
 }

@@ -12,6 +12,7 @@ import { AdventureGuard } from './components/guards/AdventureGuard';
 import { BackgroundMusic } from './components/audio/BackgroundMusic';
 import { RootRedirect } from './components/RootRedirect';
 import { AccountPage } from './features/account/AccountPage';
+import { FarewellPage } from './features/farewell/FarewellPage';
 import { AuthProvider } from './context/AuthContext';
 
 function AppContent() {
@@ -66,7 +67,10 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <AppContent />
+        <Routes>
+          <Route path="/farewell" element={<FarewellPage />} />
+          <Route path="/*" element={<AppContent />} />
+        </Routes>
       </AuthProvider>
     </BrowserRouter>
   );
