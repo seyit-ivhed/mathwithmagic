@@ -508,7 +508,8 @@
           "already_exists": "E-postadressen är redan registrerad. Vänligen logga in.",
           "sign_in_failed": "Fel e-postadress eller lösenord. Försök igen.",
           "password_required": "Ange ditt lösenord.",
-          "generic": "Något gick fel. Försök igen."
+          "generic": "Något gick fel. Försök igen.",
+          "session_timeout": "Kontot skapades men sessionen aktiverades inte i tid. Försök logga in."
         },
         "sign_in_title": "Logga in",
         "sign_in_subtitle": "Logga in för att fortsätta med ditt befintliga konto.",
@@ -521,7 +522,8 @@
       "processing_payment": "Säkrar ditt äventyr...",
       "verifying_access": "Verifierar ditt nya innehåll...",
       "verification_timeout": "Betalningen lyckades, men vi behandlar fortfarande din åtkomst. Den kommer att dyka upp på ditt konto inom kort.",
-      "total_amount": "Totalt belopp"
+      "total_amount": "Totalt belopp",
+      "payment_failed": "Betalningen misslyckades. Försök igen."
     }
   },
   "landing": {

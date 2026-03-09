@@ -95,6 +95,17 @@
   padding: 0;
 }
 
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+  
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: var(--color-brand-accent);
+    -webkit-box-shadow: 0 0 1px;
+}
+
 body {
   margin: 0;
   display: flex;

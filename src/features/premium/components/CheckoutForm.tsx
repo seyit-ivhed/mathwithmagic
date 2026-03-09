@@ -3,6 +3,7 @@ import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { useTranslation } from 'react-i18next';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import { supabase } from '../../../services/supabase.service';
+import { pollUntil } from '../../../utils/poll-until';
 import { analyticsService } from '../../../services/analytics.service';
 import './Premium.css';
 
@@ -27,26 +28,19 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) return false;
 
-        // Poll for up to 30 seconds (15 retries * 2 seconds)
-        // High latency on edge functions is expected during redeploys
-        const maxRetries = 15;
-        const delay = 2000;
-
-        for (let i = 0; i < maxRetries; i++) {
-            const { data: entitlement } = await supabase
-                .from('player_entitlements')
-                .select('id')
-                .eq('player_id', user.id)
-                .eq('content_pack_id', contentPackId)
-                .maybeSingle();
-
-            if (entitlement) {
-                return true;
-            }
-            await new Promise(resolve => setTimeout(resolve, delay));
-        }
-
-        return false;
+        // Poll for up to 30 seconds — high latency on edge functions is expected during redeploys
+        return pollUntil(
+            async () => {
+                const { data: entitlement } = await supabase
+                    .from('player_entitlements')
+                    .select('id')
+                    .eq('player_id', user.id)
+                    .eq('content_pack_id', contentPackId)
+                    .maybeSingle();
+                return !!entitlement;
+            },
+            { intervalMs: 2000, timeoutMs: 30000 }
+        );
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -80,7 +74,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
             if (error) {
                 console.error('Stripe confirmPayment error:', error);
                 analyticsService.trackEvent('payment_failed');
-                setErrorMessage(error.message || 'Payment failed');
+                setErrorMessage(error.message || t('premium.store.payment_failed'));
                 setIsProcessing(false);
             } else if (paymentIntent) {
                 if (paymentIntent.status === 'succeeded') {
@@ -110,9 +104,8 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
             }
         } catch (err: unknown) {
             console.error('Submission error:', err);
-            const message = err instanceof Error ? err.message : 'An unexpected error occurred';
             analyticsService.trackEvent('payment_failed');
-            setErrorMessage(message);
+            setErrorMessage(t('premium.store.payment_failed'));
             setIsProcessing(false);
             setIsVerifying(false);
         }

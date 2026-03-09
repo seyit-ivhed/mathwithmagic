@@ -1,4 +1,18 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { pollUntil } from '../../../utils/poll-until';
+
+const POLL_INTERVAL_MS = 300;
+const POLL_TIMEOUT_MS = 8000;
+
+export async function waitForSession(client: SupabaseClient): Promise<boolean> {
+    return pollUntil(
+        async () => {
+            const { data: { session } } = await client.auth.getSession();
+            return !!(session?.user && !session.user.is_anonymous);
+        },
+        { intervalMs: POLL_INTERVAL_MS, timeoutMs: POLL_TIMEOUT_MS }
+    );
+}
 
 interface AccountConversionResult {
     success: boolean;
@@ -15,10 +29,6 @@ interface AccountConversionParams {
     supabaseClient: SupabaseClient;
 }
 
-/**
- * Validates the account creation form fields.
- * Returns an error message if invalid, or null if valid.
- */
 export const validateAccountCreationForm = (
     email: string,
     confirmEmail: string,
@@ -40,10 +50,6 @@ export const validateAccountCreationForm = (
     return null;
 };
 
-/**
- * Creates a fresh Supabase account for the player and uploads any local game state.
- * Progress is only synced to Supabase once the player has a real account.
- */
 export const performAccountConversion = async ({
     email,
     password,
@@ -94,11 +100,12 @@ export const performAccountConversion = async ({
         // 4. Force a session refresh to get the updated JWT
         await refreshSession();
 
-        // 5. Double check we have a valid session now
-        await supabaseClient.auth.getSession();
+        // 5. Poll until the session reflects the newly created account
+        const sessionReady = await waitForSession(supabaseClient);
+        if (!sessionReady) {
+            return { success: false, error: translation('premium.store.account.errors.session_timeout') };
+        }
 
-        // 6. Slightly longer delay to ensure the session is propagated before proceeding to checkout
-        await new Promise(resolve => setTimeout(resolve, 1500));
         return { success: true };
 
     } catch (err: unknown) {

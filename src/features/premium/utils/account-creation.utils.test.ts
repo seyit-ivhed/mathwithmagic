@@ -1,5 +1,5 @@
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { validateAccountCreationForm, performAccountConversion } from './account-creation.utils';
+import { validateAccountCreationForm, performAccountConversion, waitForSession } from './account-creation.utils';
 import type { SupabaseClient, Session, User, AuthError } from '@supabase/supabase-js';
 
 describe('account-creation.utils', () => {
@@ -80,7 +80,7 @@ describe('account-creation.utils', () => {
                 supabaseClient: mockSupabaseClient as unknown as SupabaseClient
             });
 
-            // Fast-forward through the 1.5s delay
+            // Advance timers to allow the polling interval to fire
             await vi.runAllTimersAsync();
 
             const result = await conversionPromise;
@@ -88,6 +88,32 @@ describe('account-creation.utils', () => {
             expect(result.success).toBe(true);
             expect(mockSupabaseClient.auth.signUp).toHaveBeenCalledWith({ email, password });
             expect(refreshSession).toHaveBeenCalled();
+        });
+
+        it('should return session_timeout error when session never becomes non-anonymous', async () => {
+            // Initial check returns no session; all subsequent polling calls also return no session
+            mockSupabaseClient.auth.getSession.mockResolvedValue({ data: { session: null }, error: null });
+
+            mockSupabaseClient.auth.signUp.mockResolvedValueOnce({
+                data: { user: { id: '123' } as unknown as User, session: null },
+                error: null
+            });
+
+            const conversionPromise = performAccountConversion({
+                email,
+                password,
+                refreshSession,
+                translation,
+                supabaseClient: mockSupabaseClient as unknown as SupabaseClient
+            });
+
+            // Advance timers past the 8-second polling timeout
+            await vi.runAllTimersAsync();
+
+            const result = await conversionPromise;
+
+            expect(result.success).toBe(false);
+            expect(result.error).toBe('premium.store.account.errors.session_timeout');
         });
 
         it('should skip creation if user is already permanently authenticated', async () => {
@@ -182,7 +208,7 @@ describe('account-creation.utils', () => {
         it('should succeed when signup returns no user id (no userId branch)', async () => {
             mockSupabaseClient.auth.getSession
                 .mockResolvedValueOnce({ data: { session: null }, error: null })
-                .mockResolvedValueOnce({ data: { session: null }, error: null });
+                .mockResolvedValueOnce({ data: { session: { user: { id: '123', is_anonymous: false } } as unknown as Session }, error: null });
 
             mockSupabaseClient.auth.signUp.mockResolvedValueOnce({
                 data: { user: null, session: null },
@@ -238,6 +264,49 @@ describe('account-creation.utils', () => {
 
             expect(result.success).toBe(false);
             expect(result.error).toBe('premium.store.account.errors.generic');
+        });
+    });
+
+    describe('waitForSession', () => {
+        let mockClient: { auth: { getSession: ReturnType<typeof vi.fn> } };
+
+        beforeEach(() => {
+            vi.useFakeTimers();
+            mockClient = { auth: { getSession: vi.fn() } };
+        });
+
+        afterEach(() => {
+            vi.useRealTimers();
+        });
+
+        it('should return true immediately when session is already non-anonymous', async () => {
+            mockClient.auth.getSession.mockResolvedValueOnce({
+                data: { session: { user: { id: '1', is_anonymous: false } } as unknown as Session }
+            });
+
+            const result = await waitForSession(mockClient as unknown as SupabaseClient);
+            expect(result).toBe(true);
+        });
+
+        it('should return true after polling when session becomes non-anonymous', async () => {
+            mockClient.auth.getSession
+                .mockResolvedValueOnce({ data: { session: null } })
+                .mockResolvedValueOnce({ data: { session: { user: { id: '1', is_anonymous: false } } as unknown as Session } });
+
+            const promise = waitForSession(mockClient as unknown as SupabaseClient);
+            await vi.runAllTimersAsync();
+
+            expect(await promise).toBe(true);
+            expect(mockClient.auth.getSession).toHaveBeenCalledTimes(2);
+        });
+
+        it('should return false after the timeout expires without a valid session', async () => {
+            mockClient.auth.getSession.mockResolvedValue({ data: { session: null } });
+
+            const promise = waitForSession(mockClient as unknown as SupabaseClient);
+            await vi.runAllTimersAsync();
+
+            expect(await promise).toBe(false);
         });
     });
 });
