@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { interceptSupabaseAuth } from './helpers';
+import { interceptSupabaseAuth, expectEventFired } from './helpers';
 
 test.describe('Encounter (Battle)', () => {
     test.beforeEach(async ({ page }) => {
@@ -10,6 +10,7 @@ test.describe('Encounter (Battle)', () => {
         await page.goto('/encounter/1/1');
         // Wait for at least one unit card to appear (encounter initializes on mount)
         await expect(page.locator('[data-testid^="unit-card-"]').first()).toBeVisible();
+        await expectEventFired(page, 'encounter_started');
     });
 
     test('party unit cards are rendered for adventure 1 first encounter', async ({ page }) => {

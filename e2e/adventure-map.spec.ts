@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { interceptSupabaseAuth } from './helpers';
+import { interceptSupabaseAuth, expectEventFired } from './helpers';
 
 test.describe('Adventure Map', () => {
     test.beforeEach(async ({ page }) => {
@@ -17,6 +17,7 @@ test.describe('Adventure Map', () => {
         await expect(mapNode).toBeVisible();
         await mapNode.dispatchEvent('click');
         await expect(page.locator('[data-testid="difficulty-modal"]')).toBeVisible();
+        await expectEventFired(page, 'node_clicked');
     });
 
     test('difficulty modal contains a start button and dropdown', async ({ page }) => {
@@ -37,6 +38,7 @@ test.describe('Adventure Map', () => {
         await expect(page.locator('[data-testid="difficulty-modal"]')).toBeVisible();
         await page.click('[data-testid="difficulty-start-btn"]', { force: true });
         await expect(page).toHaveURL(/\/encounter\/1\/1/);
+        await expectEventFired(page, 'encounter_difficulty_selected');
     });
 
     test('back button on the map navigates to the chronicle', async ({ page }) => {

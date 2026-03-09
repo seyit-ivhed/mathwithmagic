@@ -5,6 +5,7 @@ import {
     mockSupabaseRestApis,
     mockStripe,
     mockPaymentIntent,
+    expectEventFired,
 } from './helpers';
 
 /**
@@ -32,6 +33,7 @@ test.describe('Checkout Flow', () => {
 
         await expect(page.locator('[data-testid="checkout-form"]')).toBeVisible();
         await expect(page.locator('[data-testid="account-creation-form"]')).not.toBeVisible();
+        await expectEventFired(page, 'checkout_viewed');
     });
 
     test('payment form shows the price', async ({ page }) => {
@@ -54,6 +56,8 @@ test.describe('Checkout Flow', () => {
         // stripe.confirmPayment() resolves immediately (mock), then verifyEntitlement()
         // finds the entitlement on the first query (mock), calling onSuccess()
         await expect(page.locator('[data-testid="success-screen"]')).toBeVisible({ timeout: 10000 });
+        await expectEventFired(page, 'payment_submitted');
+        await expectEventFired(page, 'payment_succeeded');
     });
 
     test('shows success screen immediately when content is already owned', async ({ page }) => {

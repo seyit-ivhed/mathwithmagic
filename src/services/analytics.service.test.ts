@@ -33,6 +33,7 @@ describe('analyticsService', () => {
     beforeEach(() => {
         sessionStorage.clear();
         vi.clearAllMocks();
+        delete (window as Window & { __analyticsEvents?: unknown }).__analyticsEvents;
     });
 
     afterEach(() => {
@@ -136,6 +137,18 @@ describe('analyticsService', () => {
             vi.mocked(supabase.from).mockReturnValue({ insert: insertMock } as unknown as ReturnType<typeof supabase.from>);
 
             await expect(analyticsService.trackEvent('test_event')).resolves.toBeUndefined();
+        });
+
+        it('pushes event to window.__analyticsEvents in dev mode', async () => {
+            delete (window as Window & { __analyticsEvents?: unknown }).__analyticsEvents;
+
+            await analyticsService.trackEvent('test_window_event', { key: 'val' });
+
+            expect(window.__analyticsEvents).toHaveLength(1);
+            expect(window.__analyticsEvents![0]).toMatchObject({
+                event_type: 'test_window_event',
+                payload: { key: 'val' },
+            });
         });
     });
 

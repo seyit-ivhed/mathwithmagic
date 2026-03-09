@@ -41,13 +41,20 @@ async function trackEvent(
     eventType: string,
     payload?: Record<string, unknown>
 ): Promise<void> {
+    const record = {
+        session_id: SESSION_ID,
+        event_type: eventType,
+        payload: payload ?? null,
+        attribution: getAttribution(),
+    };
+
+    if (import.meta.env.DEV) {
+        window.__analyticsEvents = window.__analyticsEvents ?? [];
+        window.__analyticsEvents.push(record);
+    }
+
     try {
-        await supabase.from('play_events').insert({
-            session_id: SESSION_ID,
-            event_type: eventType,
-            payload: payload ?? null,
-            attribution: getAttribution(),
-        });
+        await supabase.from('play_events').insert(record);
     } catch {
         // Silently swallow — analytics must never surface errors to players
     }
