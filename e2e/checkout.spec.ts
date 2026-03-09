@@ -48,7 +48,8 @@ test.describe('Checkout Flow', () => {
         await page.goto('/checkout.html');
 
         await expect(page.locator('[data-testid="checkout-submit"]')).toBeVisible();
-        await page.locator('[data-testid="checkout-submit"]').click();
+        await page.locator('[data-testid="withdrawal-consent-checkbox"]').check();
+        await page.locator('[data-testid="checkout-submit"]').click({ force: true });
 
         // stripe.confirmPayment() resolves immediately (mock), then verifyEntitlement()
         // finds the entitlement on the first query (mock), calling onSuccess()

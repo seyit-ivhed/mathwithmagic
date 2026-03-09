@@ -17,6 +17,8 @@ import { getBookStateFromUrl, calculatePageZIndex } from './utils/chronicle.util
 import { Header } from '../../components/Header';
 import { playSfx } from '../../components/audio/audio.utils';
 import { analyticsService } from '../../services/analytics.service';
+import { LegalModal, type LegalDocumentType } from '../legal/LegalModal';
+import { ChroniclesLegalFooter } from './components/ChroniclesLegalFooter';
 
 export const ChronicleBook: React.FC = () => {
     const { adventureStatuses, isAdventureUnlocked, encounterResults, setEncounterDifficulty } = useGameStore();
@@ -33,6 +35,7 @@ export const ChronicleBook: React.FC = () => {
     // UI State
     const [isPremiumModalOpen, setIsPremiumModalOpen] = React.useState(false);
     const [premiumSourceAdventureId, setPremiumSourceAdventureId] = React.useState<string | undefined>(undefined);
+    const [legalModal, setLegalModal] = React.useState<LegalDocumentType | null>(null);
 
     // Hooks
     const {
@@ -240,6 +243,12 @@ export const ChronicleBook: React.FC = () => {
                 }}
                 sourceAdventureId={premiumSourceAdventureId}
             />
+
+            <ChroniclesLegalFooter onOpen={setLegalModal} />
+
+            {legalModal && (
+                <LegalModal type={legalModal} onClose={() => setLegalModal(null)} onOpenPrivacy={() => setLegalModal('privacy')} />
+            )}
         </>
     );
 };

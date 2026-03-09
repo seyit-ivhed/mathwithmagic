@@ -22,10 +22,12 @@ test.describe('Account Creation Step', () => {
         await interceptSupabaseAuth(page);
         await page.goto('/checkout.html');
 
+        await page.locator('[data-testid="age-consent-checkbox"]').check();
+        await page.locator('[data-testid="terms-consent-checkbox"]').check();
         await page.locator('[data-testid="email-input"]').fill('not-an-email');
         await page.locator('[data-testid="confirm-email-input"]').fill('not-an-email');
         await page.locator('[data-testid="password-input"]').fill(VALID_PASSWORD);
-        await page.locator('[data-testid="account-creation-submit"]').click();
+        await page.locator('[data-testid="account-creation-submit"]').click({ force: true });
 
         await expect(page.locator('[data-testid="form-error"]')).toBeVisible();
     });
@@ -34,10 +36,12 @@ test.describe('Account Creation Step', () => {
         await interceptSupabaseAuth(page);
         await page.goto('/checkout.html');
 
+        await page.locator('[data-testid="age-consent-checkbox"]').check();
+        await page.locator('[data-testid="terms-consent-checkbox"]').check();
         await page.locator('[data-testid="email-input"]').fill(VALID_EMAIL);
         await page.locator('[data-testid="confirm-email-input"]').fill('different@example.com');
         await page.locator('[data-testid="password-input"]').fill(VALID_PASSWORD);
-        await page.locator('[data-testid="account-creation-submit"]').click();
+        await page.locator('[data-testid="account-creation-submit"]').click({ force: true });
 
         await expect(page.locator('[data-testid="form-error"]')).toBeVisible();
     });
@@ -46,10 +50,12 @@ test.describe('Account Creation Step', () => {
         await interceptSupabaseAuth(page);
         await page.goto('/checkout.html');
 
+        await page.locator('[data-testid="age-consent-checkbox"]').check();
+        await page.locator('[data-testid="terms-consent-checkbox"]').check();
         await page.locator('[data-testid="email-input"]').fill(VALID_EMAIL);
         await page.locator('[data-testid="confirm-email-input"]').fill(VALID_EMAIL);
         await page.locator('[data-testid="password-input"]').fill('abc');
-        await page.locator('[data-testid="account-creation-submit"]').click();
+        await page.locator('[data-testid="account-creation-submit"]').click({ force: true });
 
         await expect(page.locator('[data-testid="form-error"]')).toBeVisible();
     });
@@ -59,10 +65,12 @@ test.describe('Account Creation Step', () => {
         await mockSupabaseAuthForAlreadyRegistered(page);
         await page.goto('/checkout.html');
 
+        await page.locator('[data-testid="age-consent-checkbox"]').check();
+        await page.locator('[data-testid="terms-consent-checkbox"]').check();
         await page.locator('[data-testid="email-input"]').fill(VALID_EMAIL);
         await page.locator('[data-testid="confirm-email-input"]').fill(VALID_EMAIL);
         await page.locator('[data-testid="password-input"]').fill(VALID_PASSWORD);
-        await page.locator('[data-testid="account-creation-submit"]').click();
+        await page.locator('[data-testid="account-creation-submit"]').click({ force: true });
 
         await expect(page.locator('[data-testid="form-error"]')).toBeVisible();
     });
@@ -81,10 +89,12 @@ test.describe('Account Creation Step', () => {
 
         await expect(page.locator('[data-testid="account-creation-form"]')).toBeVisible();
 
+        await page.locator('[data-testid="age-consent-checkbox"]').check();
+        await page.locator('[data-testid="terms-consent-checkbox"]').check();
         await page.locator('[data-testid="email-input"]').fill(VALID_EMAIL);
         await page.locator('[data-testid="confirm-email-input"]').fill(VALID_EMAIL);
         await page.locator('[data-testid="password-input"]').fill(VALID_PASSWORD);
-        await page.locator('[data-testid="account-creation-submit"]').click();
+        await page.locator('[data-testid="account-creation-submit"]').click({ force: true });
 
         // After refreshSession fires TOKEN_REFRESHED, useAuth updates to the
         // authenticated user and CheckoutPage swaps in CheckoutOverlay

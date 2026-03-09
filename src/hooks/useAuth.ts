@@ -6,10 +6,18 @@ DO NOT ADD UNIT TESTS FOR THIS FILE (even though we want .ts files to have unit 
 import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '../services/supabase.service';
 
-import { IdentityService } from '../services/identity.service';
 import type { Session, User } from '@supabase/supabase-js';
 
 const AUTH_TIMEOUT_MS = 8000;
+
+function createAuthTimeoutPromise(ms: number) {
+    let cancel = () => {};
+    const promise = new Promise<{ data: { session: null } }>((resolve) => {
+        const id = setTimeout(() => resolve({ data: { session: null } }), ms);
+        cancel = () => clearTimeout(id);
+    });
+    return { promise, cancel };
+}
 
 export const useAuth = () => {
     const [session, setSession] = useState<Session | null>(null);
@@ -33,22 +41,12 @@ export const useAuth = () => {
     useEffect(() => {
         // Initial load
         const init = async () => {
-            let clearAuthTimeout = () => {};
-            const timeoutResult = new Promise<{ data: { session: null } }>((resolve) => {
-                const id = setTimeout(() => resolve({ data: { session: null } }), AUTH_TIMEOUT_MS);
-                clearAuthTimeout = () => clearTimeout(id);
-            });
+            const { promise: timeoutPromise, cancel } = createAuthTimeoutPromise(AUTH_TIMEOUT_MS);
             const { data: { session } } = await Promise.race([
                 supabase.auth.getSession(),
-                timeoutResult
-            ]).finally(clearAuthTimeout);
+                timeoutPromise
+            ]).finally(cancel);
             setSession(session);
-
-            if (session?.user?.id) {
-                IdentityService.setPlayerId(session.user.id);
-            } else {
-                IdentityService.clearPlayerId();
-            }
 
             setUser(session?.user ?? null);
             setLoading(false);
@@ -58,13 +56,6 @@ export const useAuth = () => {
         // Listen for auth changes
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
             const newUser = session?.user ?? null;
-
-            // Sync IdentityService
-            if (newUser?.id) {
-                IdentityService.setPlayerId(newUser.id);
-            } else {
-                IdentityService.clearPlayerId();
-            }
 
             setUser(newUser);
 
@@ -102,6 +93,27 @@ export const useAuth = () => {
         if (error) throw error;
     };
 
+    const deleteAccount = async (): Promise<void> => {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session?.access_token) throw new Error('Not authenticated');
+
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
+        const response = await fetch(`${supabaseUrl}/functions/v1/delete-account`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${session.access_token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            const data = await response.json() as { error?: string };
+            throw new Error(data.error || 'Failed to delete account');
+        }
+
+        await supabase.auth.signOut();
+    };
+
     return {
         session,
         user,
@@ -110,6 +122,7 @@ export const useAuth = () => {
         signIn,
         refreshSession,
         resetPasswordForEmail,
-        updatePassword
+        updatePassword,
+        deleteAccount
     };
 };

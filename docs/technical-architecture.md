@@ -254,13 +254,15 @@ persistence, following an anonymous-first progression model.
 
 ### 1. Progressive Authentication
 
+Identity is managed solely through **Supabase Auth** — no local device IDs or
+fingerprints are stored.
+
 - **Anonymous Entry**: On first launch, the app creates an anonymous Supabase
   session. Players can start playing immediately without registration.
-- **Anonymous Account Creation**: After completing 3 encounters in the game, an
-  anonymous account is created in Supabase.
+
 - **Account Upgrade**: Players are prompted to "upgrade" their account (link an
   email) before making purchases or to ensure cross-device persistence.
-- **Identity Linking**: Local anonymous state is merged with the permanent
+- **State Migration**: Local game state (Zustand) is merged with the permanent
   account upon registration/login.
 
 ### 2. Persistence Strategy
@@ -271,12 +273,11 @@ persistence, following an anonymous-first progression model.
   Supabase (PostgreSQL) in the background on certain events.
 - **Sync Triggers**: Sync occurs at critical gameplay milestones, specifically
   after completing an encounter or making a purchase.
-- **Conflict Resolution**: In case of multi-device conflicts, the server-side
-  state (Supabase) acts as the source of truth (Server Wins).
+- **Conflict Resolution**: In case of multi-device conflicts, we have a merging system that prevents player loosing any progress.
 
 ### 3. Service Integration
 
-- **Supabase Auth**: Manages anonymous and authenticated user sessions.
+- **Supabase Auth**: Manages authenticated user sessions.
 - **Supabase Edge Functions**: Handles server-authoritative logic (e.g., secure
   payment verification).
 - **PostgreSQL**: Stores flattened JSONB blobs of game state for flexible

@@ -218,7 +218,7 @@ describe('account-creation.utils', () => {
             });
 
             expect(result.success).toBe(false);
-            expect(result.error).toBe('Network error');
+            expect(result.error).toBe('premium.store.account.errors.generic');
         });
 
         it('should throw and catch sign-up error that is not an email duplicate', async () => {
