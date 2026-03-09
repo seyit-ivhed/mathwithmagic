@@ -1,5 +1,20 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 
+const POLL_INTERVAL_MS = 300;
+const POLL_TIMEOUT_MS = 8000;
+
+export async function waitForSession(client: SupabaseClient): Promise<boolean> {
+    const deadline = Date.now() + POLL_TIMEOUT_MS;
+    while (Date.now() < deadline) {
+        const { data: { session } } = await client.auth.getSession();
+        if (session?.user && !session.user.is_anonymous) {
+            return true;
+        }
+        await new Promise(resolve => setTimeout(resolve, POLL_INTERVAL_MS));
+    }
+    return false;
+}
+
 interface AccountConversionResult {
     success: boolean;
     error?: string;
@@ -94,11 +109,12 @@ export const performAccountConversion = async ({
         // 4. Force a session refresh to get the updated JWT
         await refreshSession();
 
-        // 5. Double check we have a valid session now
-        await supabaseClient.auth.getSession();
+        // 5. Poll until the session reflects the newly created account
+        const sessionReady = await waitForSession(supabaseClient);
+        if (!sessionReady) {
+            return { success: false, error: translation('premium.store.account.errors.session_timeout') };
+        }
 
-        // 6. Slightly longer delay to ensure the session is propagated before proceeding to checkout
-        await new Promise(resolve => setTimeout(resolve, 1500));
         return { success: true };
 
     } catch (err: unknown) {

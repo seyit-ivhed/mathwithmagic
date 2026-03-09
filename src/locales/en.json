@@ -508,7 +508,8 @@
           "already_exists": "This email is already registered. Please sign in.",
           "sign_in_failed": "Incorrect email or password. Please try again.",
           "password_required": "Please enter your password.",
-          "generic": "Something went wrong. Please try again."
+          "generic": "Something went wrong. Please try again.",
+          "session_timeout": "Account created but session did not activate in time. Please try signing in."
         },
         "sign_in_title": "Sign In",
         "sign_in_subtitle": "Sign in to continue with your existing account.",
