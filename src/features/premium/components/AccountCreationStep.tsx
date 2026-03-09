@@ -7,6 +7,8 @@ import { useAuth } from '../../../context/useAuth';
 import { supabase } from '../../../services/supabase.service';
 import { validateAccountCreationForm, performAccountConversion } from '../utils/account-creation.utils';
 import { analyticsService } from '../../../services/analytics.service';
+import { PersistenceService } from '../../../services/persistence.service';
+import { useGameStore } from '../../../stores/game/store';
 import { ConsentCheckboxes } from './ConsentCheckboxes';
 import type { LegalDocumentType } from '../../legal/LegalModal';
 
@@ -68,8 +70,11 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
 
             setLoading(true);
             try {
-                await signIn(email, password);
+                const signInData = await signIn(email, password);
                 analyticsService.trackEvent('account_signed_in');
+                if (signInData?.user?.id) {
+                    await PersistenceService.pushState(signInData.user.id, useGameStore.getState());
+                }
                 onSuccess();
             } catch {
                 analyticsService.trackEvent('sign_in_failed');
@@ -100,6 +105,10 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
 
             if (result.success) {
                 analyticsService.trackEvent('account_created');
+                const { data: { session } } = await supabase.auth.getSession();
+                if (session?.user?.id) {
+                    await PersistenceService.pushState(session.user.id, useGameStore.getState());
+                }
                 onSuccess();
             } else if (result.error) {
                 analyticsService.trackEvent('account_creation_failed');
