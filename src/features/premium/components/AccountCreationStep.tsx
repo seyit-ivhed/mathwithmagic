@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, ShieldCheck, AlertCircle, Loader2 } from 'lucide-react';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
-import { useAuth } from '../../../context/AuthContext';
+import { useAuth } from '../../../context/useAuth';
 import { supabase } from '../../../services/supabase.service';
 import { validateAccountCreationForm, performAccountConversion } from '../utils/account-creation.utils';
 import { analyticsService } from '../../../services/analytics.service';

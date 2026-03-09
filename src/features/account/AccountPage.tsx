@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/useAuth';
 import { Header } from '../../components/Header';
 import { ChangePasswordSettings } from '../../components/settings/ChangePasswordSettings';
 import { DeleteAccountSettings } from '../../components/settings/DeleteAccountSettings';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/useAuth';
 import { analyticsService } from '../../services/analytics.service';
 import { Loader2, AlertCircle, CheckCircle, Mail } from 'lucide-react';
 import sectionStyles from './SettingsSection.module.css';

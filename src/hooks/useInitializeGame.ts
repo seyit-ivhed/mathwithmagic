@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 import { useGameStore } from '../stores/game/store';
 import { usePremiumStore } from '../stores/premium.store';
 import { PersistenceService } from '../services/persistence.service';

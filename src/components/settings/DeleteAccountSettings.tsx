@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/useAuth';
 import { analyticsService } from '../../services/analytics.service';
 import { Loader2, AlertTriangle, Trash2 } from 'lucide-react';
 import { PrimaryButton } from '../ui/PrimaryButton';

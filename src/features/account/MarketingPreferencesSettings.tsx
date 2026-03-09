@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '../../services/supabase.service';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/useAuth';
 import sectionStyles from '../../components/settings/SettingsSection.module.css';
 import styles from './MarketingPreferencesSettings.module.css';
 

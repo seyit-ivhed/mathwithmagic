@@ -1,14 +1,14 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook, waitFor, act } from '@testing-library/react';
 import { useInitializeGame, INIT_TIMEOUT_MS } from './useInitializeGame';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 import { usePremiumStore, type PremiumState } from '../stores/premium.store';
 import { PersistenceService } from '../services/persistence.service';
 import { mergeGameState } from '../utils/merge-game-state';
 import type { Session, User } from '@supabase/supabase-js';
 import type { GameState } from '../stores/game/interfaces';
 
-vi.mock('../context/AuthContext');
+vi.mock('../context/useAuth');
 vi.mock('../services/persistence.service');
 vi.mock('../utils/merge-game-state');
 vi.mock('../stores/premium.store');

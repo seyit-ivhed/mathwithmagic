@@ -3,10 +3,11 @@ This file is ignored by vitest unit test coverage. The reason is that it takes t
 long to run unit tests for this file as it accesses supabase
 DO NOT ADD UNIT TESTS FOR THIS FILE (even though we want .ts files to have unit tests)
 ***/
-import { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import { supabase } from '../services/supabase.service';
 import type { Session, User } from '@supabase/supabase-js';
+import { AuthContext } from './auth.context';
 
 const AUTH_TIMEOUT_MS = 8000;
 
@@ -18,20 +19,6 @@ function createAuthTimeoutPromise(ms: number) {
     });
     return { promise, cancel };
 }
-
-interface AuthContextValue {
-    session: Session | null;
-    user: User | null;
-    isAuthenticated: boolean;
-    loading: boolean;
-    signIn: (email: string, password: string) => Promise<{ user: User; session: Session }>;
-    refreshSession: () => Promise<void>;
-    resetPasswordForEmail: (email: string, redirectTo: string) => Promise<void>;
-    updatePassword: (newPassword: string) => Promise<void>;
-    deleteAccount: (password: string) => Promise<void>;
-}
-
-const AuthContext = createContext<AuthContextValue | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [session, setSession] = useState<Session | null>(null);
@@ -130,10 +117,3 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     );
 };
 
-export const useAuth = (): AuthContextValue => {
-    const ctx = useContext(AuthContext);
-    if (!ctx) {
-        throw new Error('useAuth must be used within AuthProvider');
-    }
-    return ctx;
-};
