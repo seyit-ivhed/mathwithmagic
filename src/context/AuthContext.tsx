@@ -102,10 +102,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (!session?.access_token) { throw new Error('Not authenticated'); }
 
         const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
+        const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
         const response = await fetch(`${supabaseUrl}/functions/v1/delete-account`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${session.access_token}`,
+                'apikey': supabaseAnonKey,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ password }),
