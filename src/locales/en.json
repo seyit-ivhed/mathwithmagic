@@ -5,7 +5,8 @@
     "back": "Back",
     "level": "Level",
     "lvl": "Lvl",
-    "back_to_map": "Back to Map"
+    "back_to_map": "Back to Map",
+    "loading": "Loading..."
   },
   "remainder_text": " R ",
   "adventure": {
@@ -582,6 +583,16 @@
     "sfx_volume": "SFX Volume",
     "voice_volume": "Voice Volume"
   },
+  "account": {
+    "title": "Account",
+    "manage_account_btn": "Account"
+  },
+  "marketing_preferences": {
+    "section_title": "Notifications",
+    "label": "Notify me about new adventures and game updates. You can unsubscribe at any time.",
+    "save_success": "Preferences saved.",
+    "save_error": "Something went wrong. Please try again."
+  },
   "change_password": {
     "title": "Password",
     "submit_btn": "Send Password Change Link",
@@ -627,6 +638,10 @@
     "confirm_button": "Yes, permanently delete my account",
     "cancel_button": "Cancel",
     "success": "Your account has been deleted.",
-    "error_generic": "Something went wrong. Please try again or contact support."
+    "error_generic": "Something went wrong. Please try again or contact support.",
+    "password_label": "Confirm with your password",
+    "password_placeholder": "Your password",
+    "password_required": "Please enter your password to confirm.",
+    "wrong_password": "Incorrect password. Please try again."
   }
 }

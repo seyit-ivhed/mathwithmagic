@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../context/useAuth';
 import { analyticsService } from '../../services/analytics.service';
-import { Loader2, AlertCircle, CheckCircle } from 'lucide-react';
-import { PrimaryButton } from '../ui/PrimaryButton';
+import { Loader2, AlertCircle, CheckCircle, Mail } from 'lucide-react';
 import sectionStyles from './SettingsSection.module.css';
 import styles from './ChangePasswordSettings.module.css';
 
@@ -54,13 +53,14 @@ export const ChangePasswordSettings: React.FC = () => {
                             <span>{error}</span>
                         </div>
                     )}
-                    <PrimaryButton
+                    <button
+                        className={styles.sendLinkButton}
                         onClick={handleChangePassword}
                         disabled={loading}
                         data-testid="change-password-btn"
                     >
-                        {loading ? <Loader2 /> : t('change_password.submit_btn')}
-                    </PrimaryButton>
+                        {loading ? <Loader2 size={14} /> : <><Mail size={14} />{t('change_password.submit_btn')}</>}
+                    </button>
                 </>
             )}
         </div>

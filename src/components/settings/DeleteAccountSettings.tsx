@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../context/useAuth';
 import { analyticsService } from '../../services/analytics.service';
 import { Loader2, AlertTriangle, Trash2 } from 'lucide-react';
 import { PrimaryButton } from '../ui/PrimaryButton';
@@ -12,31 +12,41 @@ export const DeleteAccountSettings: React.FC = () => {
     const { deleteAccount } = useAuth();
 
     const [confirming, setConfirming] = useState(false);
+    const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     const handleRequestDelete = () => {
         setConfirming(true);
+        setPassword('');
         setError(null);
     };
 
     const handleCancelDelete = () => {
         setConfirming(false);
+        setPassword('');
         setError(null);
     };
 
     const handleConfirmDelete = async () => {
+        if (!password) {
+            setError(t('delete_account.password_required', 'Please enter your password to confirm.'));
+            return;
+        }
         setError(null);
         setLoading(true);
         try {
-            await deleteAccount();
+            await deleteAccount(password);
             analyticsService.trackEvent('account_deleted');
-            // After deletion the auth state change will redirect the user
         } catch (err: unknown) {
-            const errObj = err as Error;
-            console.error('Account deletion failed:', errObj);
+            console.error('Account deletion failed:', err);
             analyticsService.trackEvent('account_delete_failed');
-            setError(t('delete_account.error_generic', 'Something went wrong. Please try again or contact support.'));
+            const message = err instanceof Error ? err.message : '';
+            if (message === 'Incorrect password') {
+                setError(t('delete_account.wrong_password', 'Incorrect password. Please try again.'));
+            } else {
+                setError(t('delete_account.error_generic', 'Something went wrong. Please try again or contact support.'));
+            }
         } finally {
             setLoading(false);
         }
@@ -62,6 +72,22 @@ export const DeleteAccountSettings: React.FC = () => {
                     <div className={styles.warningMessage}>
                         <AlertTriangle size={16} className={styles.warningIcon} />
                         <span>{t('delete_account.warning', 'This will permanently delete your account and all associated game data. This action cannot be undone.')}</span>
+                    </div>
+
+                    <div className={styles.passwordField}>
+                        <label htmlFor="delete-account-password" className={styles.passwordLabel}>
+                            {t('delete_account.password_label', 'Confirm with your password')}
+                        </label>
+                        <input
+                            id="delete-account-password"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder={t('delete_account.password_placeholder', 'Your password')}
+                            disabled={loading}
+                            className={styles.passwordInput}
+                            data-testid="delete-account-password-input"
+                        />
                     </div>
 
                     {error && (

@@ -11,6 +11,8 @@ import { LoadingScreen } from './components/LoadingScreen';
 import { AdventureGuard } from './components/guards/AdventureGuard';
 import { BackgroundMusic } from './components/audio/BackgroundMusic';
 import { RootRedirect } from './components/RootRedirect';
+import { AccountPage } from './features/account/AccountPage';
+import { AuthProvider } from './context/AuthContext';
 
 function AppContent() {
   const { isInitializing, error, retry } = useInitializeGame();
@@ -33,6 +35,9 @@ function AppContent() {
 
           {/* Password Reset Route */}
           <Route path="/reset-password" element={<ResetPasswordPage />} />
+
+          {/* Account Management Route */}
+          <Route path="/account" element={<AccountPage />} />
 
           {/* Protected Adventure Routes */}
           <Route path="/map/:adventureId" element={
@@ -60,7 +65,9 @@ function AppContent() {
 function App() {
   return (
     <BrowserRouter>
-      <AppContent />
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </BrowserRouter>
   );
 }

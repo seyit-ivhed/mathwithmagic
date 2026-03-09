@@ -332,7 +332,7 @@
 
 /* Solved liquid state */
 .liquid.solved {
-    background: linear-gradient(180deg, #34d399 0%, var(--color-success, #10b981) 100%);
+    background: linear-gradient(180deg, #34d399 0%, var(--color-success) 100%);
     box-shadow: 0 -5px 10px rgba(52, 211, 153, 0.3);
 }
 

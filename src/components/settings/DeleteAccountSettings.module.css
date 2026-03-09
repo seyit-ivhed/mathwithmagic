@@ -46,6 +46,40 @@
     margin-top: 0.1rem;
 }
 
+.passwordField {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.passwordLabel {
+    font-size: 0.85rem;
+    color: var(--color-chronicle-text-dark, #2c1e11);
+    font-weight: 500;
+}
+
+.passwordInput {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid rgba(139, 101, 50, 0.35);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.6);
+    color: var(--color-chronicle-text-dark, #2c1e11);
+    font-family: var(--font-body, inherit);
+    font-size: 0.9rem;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.passwordInput::placeholder {
+    color: rgba(44, 30, 17, 0.4);
+}
+
+.passwordInput:focus {
+    border-color: rgba(139, 101, 50, 0.7);
+    outline: none;
+}
+
 .errorMessage {
     font-size: 0.85rem;
     color: #c0392b;
@@ -55,7 +89,7 @@
 .cancelButton {
     background: none;
     border: none;
-    color: rgba(255, 255, 255, 0.45);
+    color: rgba(44, 30, 17, 0.5);
     font-family: var(--font-body, inherit);
     font-size: 0.85rem;
     cursor: pointer;
@@ -66,7 +100,7 @@
 }
 
 .cancelButton:hover {
-    color: rgba(255, 255, 255, 0.75);
+    color: var(--color-chronicle-text-dark, #2c1e11);
 }
 
 .confirmButton {

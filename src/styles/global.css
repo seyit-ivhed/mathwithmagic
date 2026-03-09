@@ -19,12 +19,14 @@
   /* Treasure Gold */
 
   /* Functional Colors */
-  --color-success: #2ed573;
+  --color-success: #0c6330;
   /* Emerald Guard */
   --color-danger: #ff4757;
   /* Dragon Red */
   --color-warning: #ffa502;
   /* Treasure Gold */
+  --color-error: #d32f2f;
+  /* Crimson Error */
   --color-info: #1e90ff;
   /* Mana Blue */
 

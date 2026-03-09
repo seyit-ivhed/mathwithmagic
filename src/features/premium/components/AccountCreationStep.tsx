@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, ShieldCheck, AlertCircle, Loader2 } from 'lucide-react';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
-import { useAuth } from '../../../hooks/useAuth';
+import { useAuth } from '../../../context/useAuth';
 import { supabase } from '../../../services/supabase.service';
 import { validateAccountCreationForm, performAccountConversion } from '../utils/account-creation.utils';
 import { analyticsService } from '../../../services/analytics.service';
@@ -135,11 +135,12 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
 
                 <form onSubmit={handleSubmit} className="account-form" data-testid="account-creation-form" noValidate>
                     <div className="input-group">
-                        <label>
+                        <label htmlFor="account-email">
                             <Mail size={16} />
                             {translation('premium.store.account.email_label')}
                         </label>
                         <input
+                            id="account-email"
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -152,11 +153,12 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
 
                     {mode === 'create' && (
                         <div className="input-group">
-                            <label>
+                            <label htmlFor="account-confirm-email">
                                 <Mail size={16} />
                                 {translation('premium.store.account.confirm_email_label')}
                             </label>
                             <input
+                                id="account-confirm-email"
                                 type="email"
                                 value={confirmEmail}
                                 onChange={(e) => setConfirmEmail(e.target.value)}
@@ -169,11 +171,12 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                     )}
 
                     <div className="input-group">
-                        <label>
+                        <label htmlFor="account-password">
                             <Lock size={16} />
                             {translation('premium.store.account.password_label')}
                         </label>
                         <input
+                            id="account-password"
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}

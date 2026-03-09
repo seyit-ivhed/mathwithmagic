@@ -24,43 +24,41 @@ through space-themed missions and challenges.
    cd mathwithmagic
    ```
 
-2. **Install Frontend Dependencies:**
+2. **Install Dependencies:**
    ```bash
    npm install
    ```
 
-3. **Install Backend Dependencies:** Navigate to the server directory and
-   install dependencies:
-   ```bash
-   cd server
-   npm install
-   cd ..
-   ```
-
-4. **Set up environment files:** Copy the example templates and fill in your values:
+3. **Set up environment files:** Copy the example templates and fill in your values:
    ```bash
    cp .env.example .env                                  # Production Supabase + Stripe keys
    cp .env.local.example .env.local                      # Local Supabase keys (from `supabase status`)
    cp supabase/functions/.env.example supabase/functions/.env  # Stripe secret keys for Edge Functions
    ```
 
+## Local HTTPS Setup
+
+The dev server runs over HTTPS. You need locally-trusted SSL certificates:
+
+1. **Install mkcert:**
+   ```bash
+   brew install mkcert
+   mkcert -install
+   ```
+
+2. **Generate certificates** (from the project root):
+   ```bash
+   mkcert localhost 127.0.0.1
+   ```
+
+   This creates `localhost+1.pem` and `localhost+1-key.pem` in the project root (git-ignored).
+
 ## Running the Project
 
 To run the full application, you will need to start both the client (frontend)
 and the server (backend) in separate terminal instances.
 
-### 1. Start the Server (Backend)
-
-Open a terminal and run:
-
-```bash
-cd server
-npm run dev
-```
-
-This will start the backend server in watch mode using `tsx`.
-
-### 2. Start the Client (Frontend)
+### 1. Start the Client (Frontend)
 
 Open a new terminal window (from the root directory) and run:
 
@@ -69,7 +67,7 @@ npm run dev
 ```
 
 This will start the Vite development server. Open your browser and navigate to
-the URL shown in the terminal (usually `http://localhost:5173`).
+the URL shown in the terminal (usually `https://127.0.0.1:5173`).
 
 ## Backend Setup (Supabase)
 

@@ -5,7 +5,8 @@
     "back": "Tillbaka",
     "level": "Nivå",
     "lvl": "Nivå",
-    "back_to_map": "Tillbaka till kartan"
+    "back_to_map": "Tillbaka till kartan",
+    "loading": "Laddar..."
   },
   "remainder_text": " rest ",
   "adventure": {
@@ -582,6 +583,16 @@
     "sfx_volume": "Ljudeffekter",
     "voice_volume": "Röstvolym"
   },
+  "account": {
+    "title": "Konto",
+    "manage_account_btn": "Konto"
+  },
+  "marketing_preferences": {
+    "section_title": "Notifikationer",
+    "label": "Meddela mig om nya äventyr och speluppdateringar. Du kan avregistrera dig när som helst.",
+    "save_success": "Inställningar sparade.",
+    "save_error": "Något gick fel. Försök igen."
+  },
   "change_password": {
     "title": "Lösenord",
     "submit_btn": "Skicka länk för lösenordsändring",
@@ -627,6 +638,10 @@
     "confirm_button": "Ja, radera mitt konto permanent",
     "cancel_button": "Avbryt",
     "success": "Ditt konto har raderats.",
-    "error_generic": "Något gick fel. Försök igen eller kontakta support."
+    "error_generic": "Något gick fel. Försök igen eller kontakta support.",
+    "password_label": "Bekräfta med ditt lösenord",
+    "password_placeholder": "Ditt lösenord",
+    "password_required": "Ange ditt lösenord för att bekräfta.",
+    "wrong_password": "Fel lösenord. Försök igen."
   }
 }
