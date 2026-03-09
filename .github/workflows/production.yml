@@ -4,6 +4,10 @@ on:
   push:
     branches: [production]
 
+concurrency:
+  group: production
+  cancel-in-progress: false
+
 jobs:
   deploy-production:
     name: Run migrations and deploy to production

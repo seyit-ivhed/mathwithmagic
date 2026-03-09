@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
 
+concurrency:
+  group: staging
+  cancel-in-progress: true
+
 jobs:
   deploy-staging:
     name: Run migrations and deploy to staging

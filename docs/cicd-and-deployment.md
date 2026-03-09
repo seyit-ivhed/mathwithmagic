@@ -276,9 +276,12 @@ When implementing this setup, work in this order:
 
 1. **Deploy frontend to Vercel** — connect the GitHub repo, set `production` as the production branch
 2. **Create staging Supabase project** — mirror the schema, connect to `main` deployments
-3. **Add `ci.yml`** — lint + build + unit tests on every PR
-4. **Add `staging.yml`** — migrations + confirmation that staging deploys work
-5. **Add `production.yml`** — migrations gate on the `production` branch
+3. ~~**Add `ci.yml`** — lint + build + unit tests on every PR~~ ✅ Done
+4. ~~**Add `staging.yml`** — migrations + confirmation that staging deploys work~~ ✅ Done
+5. ~~**Add `production.yml`** — migrations gate on the `production` branch~~ ✅ Done
 6. **Configure GitHub environment** — add yourself as a required reviewer for the `production` environment
 7. **Add Sentry** — production error visibility so you know immediately if something breaks
-8. **Add Playwright to CI** — E2E tests against Vercel preview URLs on every PR
+8. ~~**Add Playwright to CI**~~ ✅ Done — E2E tests run on every PR via `ci.yml`
+9. **Add staging smoke tests** — real-environment tests in `e2e/staging/` using `playwright.staging.config.ts`, triggered after staging deploys (see the [Staging Environment Testing Strategy](#staging-environment-testing-strategy) section above)
+
+For step-by-step instructions on completing the remaining items, see [staging-production-setup.md](staging-production-setup.md).

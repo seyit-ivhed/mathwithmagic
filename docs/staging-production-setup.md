@@ -282,6 +282,13 @@ git push origin main
      `4242 4242 4242 4242`
    - Sign in again and verify game state is preserved
 
+> **Staging smoke tests (future):** `cicd-and-deployment.md` documents a second
+> real-environment test suite in `e2e/staging/` that runs against the live staging
+> URL using a real Supabase database and Stripe test mode. This suite does not
+> exist yet. When you add it, also add `playwright.staging.config.ts` (see the
+> [Playwright config for staging](cicd-and-deployment.md#playwright-config-for-staging)
+> section) and extend `staging.yml` with a post-deploy step to run it.
+
 ### 5.2 Promote to production
 
 When staging looks good, open a pull request from `main` → `production`:
