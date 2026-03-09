@@ -5,12 +5,15 @@ export const resolveCurrentAdventureIndex = (adventures: Adventure[], adventureI
     return idx !== -1 ? idx : 0;
 };
 
-export const getBookStateFromUrl = (pageId?: string): 'COVER' | 'LOGIN' | 'FORGOT_PASSWORD' | 'DIFFICULTY' | 'ADVENTURE' => {
+export const getBookStateFromUrl = (pageId?: string): 'COVER' | 'LOGIN' | 'LOGIN_SUCCESS' | 'FORGOT_PASSWORD' | 'DIFFICULTY' | 'ADVENTURE' => {
     if (!pageId || pageId === 'cover') {
         return 'COVER';
     }
     if (pageId === 'login') {
         return 'LOGIN';
+    }
+    if (pageId === 'login-success') {
+        return 'LOGIN_SUCCESS';
     }
     if (pageId === 'forgot-password') {
         return 'FORGOT_PASSWORD';

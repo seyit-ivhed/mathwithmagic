@@ -544,7 +544,10 @@
     "password_placeholder": "••••••••",
     "open_journal": "Logga in",
     "invalid_credentials": "Ogiltig e-post eller lösenord",
-    "forgot_password": "Glömt ditt lösenord?"
+    "forgot_password": "Glömt ditt lösenord?",
+    "success_title": "Välkommen tillbaka!",
+    "success_message": "Du har loggat in. Ditt äventyr väntar!",
+    "success_continue": "Fortsätt resan"
   },
   "forgot_password": {
     "title": "Återställ lösenord",

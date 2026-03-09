@@ -544,7 +544,10 @@
     "password_placeholder": "••••••••",
     "open_journal": "Login",
     "invalid_credentials": "Invalid email or password",
-    "forgot_password": "Forgot your password?"
+    "forgot_password": "Forgot your password?",
+    "success_title": "Welcome Back!",
+    "success_message": "You have successfully signed in. Your adventure awaits!",
+    "success_continue": "Continue Journey"
   },
   "forgot_password": {
     "title": "Recover Password",
