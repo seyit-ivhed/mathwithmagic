@@ -20,24 +20,18 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
     onSuccess
 }) => {
     const { t: translation } = useTranslation();
-    const { refreshSession, signIn } = useAuth();
+    const { refreshSession } = useAuth();
     const [email, setEmail] = useState('');
     const [confirmEmail, setConfirmEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [mode, setMode] = useState<'create' | 'signin'>('create');
-    const [showSignInLink, setShowSignInLink] = useState(false);
-
-    // Consent checkboxes (create mode only)
     const [ageConsent, setAgeConsent] = useState(false);
     const [termsConsent, setTermsConsent] = useState(false);
     const [productUpdates, setProductUpdates] = useState(false);
     const [legalModal, setLegalModal] = useState<LegalDocumentType | null>(null);
 
-    const isCreateSubmitEnabled = mode === 'create'
-        ? ageConsent && termsConsent && !loading
-        : !loading;
+    const isCreateSubmitEnabled = ageConsent && termsConsent && !loading;
 
     const hasTrackedViewRef = useRef(false);
     useEffect(() => {
@@ -47,43 +41,10 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
     }, []);
 
 
-    const switchToSignIn = () => {
-        setMode('signin');
-        setError(null);
-        setShowSignInLink(false);
-        setConfirmEmail('');
-    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
-
-        if (mode === 'signin') {
-            if (!email || !email.includes('@')) {
-                setError(translation('premium.store.account.errors.invalid_email'));
-                return;
-            }
-            if (!password) {
-                setError(translation('premium.store.account.errors.password_required'));
-                return;
-            }
-
-            setLoading(true);
-            try {
-                const signInData = await signIn(email, password);
-                analyticsService.trackEvent('account_signed_in');
-                if (signInData?.user?.id) {
-                    await PersistenceService.pushState(signInData.user.id, useGameStore.getState());
-                }
-                onSuccess();
-            } catch {
-                analyticsService.trackEvent('sign_in_failed');
-                setError(translation('premium.store.account.errors.sign_in_failed'));
-            } finally {
-                setLoading(false);
-            }
-            return;
-        }
 
         const validationError = validateAccountCreationForm(email, confirmEmail, password, translation);
         if (validationError) {
@@ -112,7 +73,6 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                 onSuccess();
             } else if (result.error) {
                 analyticsService.trackEvent('account_creation_failed');
-                setShowSignInLink(!!result.emailAlreadyExists);
                 setError(result.error);
             }
         } finally {
@@ -132,14 +92,10 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                 </div>
 
                 <h3 className="account-title">
-                    {mode === 'signin'
-                        ? translation('premium.store.account.sign_in_title')
-                        : translation('premium.store.account.title')}
+                    {translation('premium.store.account.title')}
                 </h3>
                 <p className="account-subtitle">
-                    {mode === 'signin'
-                        ? translation('premium.store.account.sign_in_subtitle')
-                        : translation('premium.store.account.subtitle')}
+                    {translation('premium.store.account.subtitle')}
                 </p>
 
                 <form onSubmit={handleSubmit} className="account-form" data-testid="account-creation-form" noValidate>
@@ -160,24 +116,22 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                         />
                     </div>
 
-                    {mode === 'create' && (
-                        <div className="input-group">
-                            <label htmlFor="account-confirm-email">
-                                <Mail size={16} />
-                                {translation('premium.store.account.confirm_email_label')}
-                            </label>
-                            <input
-                                id="account-confirm-email"
-                                type="email"
-                                value={confirmEmail}
-                                onChange={(e) => setConfirmEmail(e.target.value)}
-                                placeholder={translation('premium.store.account.email_placeholder')}
-                                required
-                                disabled={loading}
-                                data-testid="confirm-email-input"
-                            />
-                        </div>
-                    )}
+                    <div className="input-group">
+                        <label htmlFor="account-confirm-email">
+                            <Mail size={16} />
+                            {translation('premium.store.account.confirm_email_label')}
+                        </label>
+                        <input
+                            id="account-confirm-email"
+                            type="email"
+                            value={confirmEmail}
+                            onChange={(e) => setConfirmEmail(e.target.value)}
+                            placeholder={translation('premium.store.account.email_placeholder')}
+                            required
+                            disabled={loading}
+                            data-testid="confirm-email-input"
+                        />
+                    </div>
 
                     <div className="input-group">
                         <label htmlFor="account-password">
@@ -196,8 +150,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                         />
                     </div>
 
-                    {mode === 'create' && (
-                        <ConsentCheckboxes
+                    <ConsentCheckboxes
                             ageConsent={ageConsent}
                             termsConsent={termsConsent}
                             productUpdates={productUpdates}
@@ -208,8 +161,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                             legalModal={legalModal}
                             onOpenLegalModal={setLegalModal}
                             onCloseLegalModal={() => setLegalModal(null)}
-                        />
-                    )}
+                    />
 
                     <AnimatePresence>
                         {error && (
@@ -222,17 +174,6 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                             >
                                 <AlertCircle size={16} />
                                 <span>{error}</span>
-                                {mode === 'create' && showSignInLink && (
-                                    <button
-                                        type="button"
-                                        className="sign-in-link"
-                                        onClick={switchToSignIn}
-                                        data-testid="switch-to-signin"
-                                        aria-label={translation('premium.store.account.sign_in_instead_aria')}
-                                    >
-                                        {translation('premium.store.account.sign_in_instead')}
-                                    </button>
-                                )}
                             </motion.div>
                         )}
                     </AnimatePresence>
@@ -247,9 +188,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                         >
                             {loading
                                 ? <Loader2 className="spinner" />
-                                : mode === 'signin'
-                                    ? translation('premium.store.account.sign_in_btn')
-                                    : translation('premium.store.account.continue_btn')}
+                                : translation('premium.store.account.continue_btn')}
                         </PrimaryButton>
                     </div>
                 </form>

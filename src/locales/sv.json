@@ -507,16 +507,11 @@
           "emails_dont_match": "E-postadresserna matchar inte.",
           "weak_password": "Lösenordet måste vara minst 6 tecken.",
           "already_exists": "E-postadressen är redan registrerad. Vänligen logga in.",
-          "sign_in_failed": "Fel e-postadress eller lösenord. Försök igen.",
           "password_required": "Ange ditt lösenord.",
           "generic": "Något gick fel. Försök igen.",
           "session_timeout": "Kontot skapades men sessionen aktiverades inte i tid. Försök logga in."
         },
-        "sign_in_title": "Logga in",
-        "sign_in_subtitle": "Logga in för att fortsätta med ditt befintliga konto.",
-        "sign_in_btn": "Logga in",
-        "sign_in_instead": "Logga in istället",
-        "sign_in_instead_aria": "Byt till inloggning med befintligt konto"
+
       },
       "success_title": "Premium upplåst!",
       "success_message": "Tack för ditt stöd!",

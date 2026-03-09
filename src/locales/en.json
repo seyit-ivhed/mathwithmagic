@@ -507,16 +507,11 @@
           "emails_dont_match": "Email addresses do not match.",
           "weak_password": "Password must be at least 6 characters.",
           "already_exists": "This email is already registered. Please sign in.",
-          "sign_in_failed": "Incorrect email or password. Please try again.",
           "password_required": "Please enter your password.",
           "generic": "Something went wrong. Please try again.",
           "session_timeout": "Account created but session did not activate in time. Please try signing in."
         },
-        "sign_in_title": "Sign In",
-        "sign_in_subtitle": "Sign in to continue with your existing account.",
-        "sign_in_btn": "Sign In",
-        "sign_in_instead": "Sign in instead",
-        "sign_in_instead_aria": "Switch to sign in with existing account"
+
       },
       "success_title": "Premium Unlocked!",
       "success_message": "Thank you for your support!",
