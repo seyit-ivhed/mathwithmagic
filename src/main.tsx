@@ -1,9 +1,6 @@
 import { initCookieGuard } from './utils/cookie-guard';
 initCookieGuard();
 
-import { migrateLocalStorage } from './utils/storage-migration';
-migrateLocalStorage();
-
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './styles/global.css'
