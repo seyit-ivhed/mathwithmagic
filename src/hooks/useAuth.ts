@@ -93,7 +93,7 @@ export const useAuth = () => {
         if (error) throw error;
     };
 
-    const deleteAccount = async (): Promise<void> => {
+    const deleteAccount = async (password: string): Promise<void> => {
         const { data: { session } } = await supabase.auth.getSession();
         if (!session?.access_token) throw new Error('Not authenticated');
 
@@ -104,6 +104,7 @@ export const useAuth = () => {
                 'Authorization': `Bearer ${session.access_token}`,
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify({ password }),
         });
 
         if (!response.ok) {

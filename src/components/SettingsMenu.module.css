@@ -38,6 +38,30 @@
     color: #fff;
 }
 
+.accountButton {
+    width: 100%;
+    padding: 0.65rem 1rem;
+    background: none;
+    border: 1px solid var(--color-chronicle-accent, #8b6532);
+    border-radius: 8px;
+    color: var(--color-chronicle-accent, #8b6532);
+    font-family: var(--font-body, inherit);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+}
+
+.accountButton:hover {
+    background: rgba(139, 101, 50, 0.1);
+    color: #6b4c2a;
+    border-color: #6b4c2a;
+}
+
 .legalLink {
     background: none;
     border: none;
@@ -65,3 +89,5 @@
     flex-direction: column;
     gap: 0.5rem;
 }
+
+.settingsContainer {}
