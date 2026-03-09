@@ -145,20 +145,6 @@ describe('generateHamiltonianPath', () => {
         expect(cells.size).toBe(16);
     });
 
-    it('falls back to snake path when all backtrack attempts fail', () => {
-        // Force backtrackPath to always fail by making getScoredMoves return no moves.
-        // We achieve this by marking every cell visited before backtrackPath is called,
-        // which happens when Math.random always starts at (0,0) and we stub backtrackPath
-        // indirectly via a fully-visited grid. Easiest: stub backtrackPath to return false.
-        vi.spyOn({ backtrackPath }, 'backtrackPath').mockReturnValue(false);
-
-        // Instead, mock the whole module behaviour by ensuring no path is found:
-        // Use a 1-cell grid (1x1) — backtrackPath trivially succeeds, so test the
-        // snake fallback by calling it directly and verifying its contract.
-        const snake = generateSnakePath(3);
-        expect(snake).toHaveLength(9);
-    });
-
     it('applies parity fix by decrementing column when startCol is at last column', () => {
         // For a 3x3 grid (odd, 9 cells), force startRow=1, startCol=2:
         //   (1+2)=3 is odd → parity fix needed

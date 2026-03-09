@@ -121,8 +121,8 @@ describe('Player Actions Slice', () => {
         });
 
         it('should play attack sound when unit has one', () => {
-            const warrior: EncounterUnit = { id: 'u1', templateId: 'warrior_id', name: 'Warrior', hasActed: false, maxHealth: 100, currentHealth: 100, isDead: false, isPlayer: true, currentSpirit: 0, maxSpirit: 100, spiritGain: 10, damage: 10, attackSound: 'battle/lion' } as unknown as EncounterUnit;
-            const monster: EncounterUnit = { id: 'm1', templateId: 'goblin', name: 'Goblin', currentHealth: 50, maxHealth: 50, isDead: false, isPlayer: false, currentSpirit: 0, maxSpirit: 100, hasActed: false, spiritGain: 10 } as EncounterUnit;
+            const warrior = { id: 'u1', templateId: 'warrior_id', name: 'Warrior', hasActed: false, maxHealth: 100, currentHealth: 100, isDead: false, isPlayer: true, currentSpirit: 0, maxSpirit: 100, spiritGain: 10, damage: 10, attackSound: 'battle/lion' };
+            const monster = { id: 'm1', templateId: 'goblin', name: 'Goblin', currentHealth: 50, maxHealth: 50, isDead: false, isPlayer: false, currentSpirit: 0, maxSpirit: 100, hasActed: false, spiritGain: 10 };
 
             useEncounterStore.setState({ party: [warrior] as EncounterUnit[], monsters: [monster] as EncounterUnit[], endPlayerTurn: vi.fn() });
 

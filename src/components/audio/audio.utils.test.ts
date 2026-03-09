@@ -148,9 +148,7 @@ describe('playSfx', () => {
         const mockPlay = vi.fn().mockRejectedValue(autoplayError);
         const mockAudioInstance = { play: mockPlay, volume: 0 };
 
-        // Use a regular function (not arrow) so it can be called with `new`
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        vi.stubGlobal('Audio', function (this: unknown) { return mockAudioInstance; });
+        vi.stubGlobal('Audio', vi.fn(() => mockAudioInstance));
 
         playSfx('battle/lion');
 
