@@ -10,6 +10,7 @@ export const MarketingPreferencesSettings: React.FC = () => {
     const { user } = useAuth();
 
     const [consent, setConsent] = useState(false);
+    const [saving, setSaving] = useState(false);
     const [saveError, setSaveError] = useState<string | null>(null);
     const [saveSuccess, setSaveSuccess] = useState(false);
 
@@ -40,7 +41,7 @@ export const MarketingPreferencesSettings: React.FC = () => {
             return;
         }
 
-        setConsent(checked);
+        setSaving(true);
         setSaveError(null);
         setSaveSuccess(false);
 
@@ -51,10 +52,11 @@ export const MarketingPreferencesSettings: React.FC = () => {
         if (error) {
             console.error('Failed to save marketing preferences:', error);
             setSaveError(t('marketing_preferences.save_error', 'Something went wrong. Please try again.'));
-            setConsent(!checked);
         } else {
+            setConsent(checked);
             setSaveSuccess(true);
         }
+        setSaving(false);
     };
 
     return (
@@ -68,6 +70,7 @@ export const MarketingPreferencesSettings: React.FC = () => {
                     type="checkbox"
                     checked={consent}
                     onChange={(e) => handleChange(e.target.checked)}
+                    disabled={saving}
                     data-testid="marketing-consent-checkbox"
                 />
                 <span>{t('marketing_preferences.label', 'Notify me about new adventures and game updates. You can unsubscribe at any time.')}</span>
