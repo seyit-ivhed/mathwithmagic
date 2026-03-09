@@ -19,11 +19,11 @@
 .successMessage {
     margin: 0.4rem 0 0 0;
     font-size: 0.85rem;
-    color: var(--color-success, #2e7d32);
+    color: var(--color-success);
 }
 
 .errorMessage {
     margin: 0.4rem 0 0 0;
     font-size: 0.85rem;
-    color: var(--color-error, #d32f2f);
+    color: var(--color-error);
 }

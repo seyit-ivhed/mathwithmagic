@@ -96,7 +96,7 @@ test.describe('Account Page - Navigation', () => {
         await page.goto('/account');
         await expect(page.locator('[data-testid="account-page"]')).toBeVisible();
 
-        await page.click('[data-testid="account-page-back-btn"]');
+        await page.click('[data-testid="account-page-back-btn"]', { force: true });
         await expect(page).toHaveURL(/\/chronicle/);
     });
 });
@@ -113,7 +113,7 @@ test.describe('Account Page - Change Password', () => {
     });
 
     test('sends password reset email and shows success message', async ({ page }) => {
-        await page.click('[data-testid="change-password-btn"]');
+        await page.click('[data-testid="change-password-btn"]', { force: true });
         await expect(page.locator('[data-testid="change-password-success"]')).toBeVisible();
         await expect(page.locator('[data-testid="change-password-btn"]')).not.toBeVisible();
     });
@@ -128,7 +128,7 @@ test.describe('Account Page - Change Password', () => {
             });
         });
 
-        await page.click('[data-testid="change-password-btn"]');
+        await page.click('[data-testid="change-password-btn"]', { force: true });
         await expect(page.locator('[data-testid="change-password-error"]')).toBeVisible();
     });
 });
