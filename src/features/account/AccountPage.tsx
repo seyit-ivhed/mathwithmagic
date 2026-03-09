@@ -12,13 +12,11 @@ import styles from './AccountPage.module.css';
 
 export const AccountPage: React.FC = () => {
     const { t } = useTranslation();
-    const { user } = useAuth();
+    const { isAuthenticated } = useAuth();
     const navigate = useNavigate();
     const [legalModal, setLegalModal] = useState<LegalDocumentType | null>(null);
 
-    const hasAccount = !!user && !(user.is_anonymous ?? true);
-
-    if (!hasAccount) {
+    if (!isAuthenticated) {
         return <Navigate to="/chronicle" replace />;
     }
 

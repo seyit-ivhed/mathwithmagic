@@ -118,7 +118,7 @@ export const useAuth = () => {
     return {
         session,
         user,
-        isAuthenticated: !!session,
+        isAuthenticated: !!user?.email,
         loading,
         signIn,
         refreshSession,

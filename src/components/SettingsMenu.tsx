@@ -13,10 +13,8 @@ import sectionStyles from './settings/SettingsSection.module.css';
 const SettingsMenu: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const { t } = useTranslation();
-    const { user } = useAuth();
+    const { isAuthenticated } = useAuth();
     const navigate = useNavigate();
-
-    const hasAccount = !!user && !(user.is_anonymous ?? true);
 
     const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -49,7 +47,7 @@ const SettingsMenu: React.FC = () => {
 
                 <SoundSettings />
 
-                {hasAccount && (
+                {isAuthenticated && (
                     <div className={sectionStyles.settingsSection}>
                         <button
                             className={styles.accountButton}
