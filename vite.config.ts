@@ -1,6 +1,6 @@
+import fs from 'fs'
 import { defineConfig, createLogger } from 'vite'
 import react from '@vitejs/plugin-react'
-import basicSsl from '@vitejs/plugin-basic-ssl'
 
 const logger = createLogger()
 
@@ -10,10 +10,14 @@ logger.warn = (msg) => {
 }
 
 export default defineConfig({
-  plugins: [react(), basicSsl()],
+  plugins: [react()],
   customLogger: logger,
   server: {
     host: '127.0.0.1',
+    https: {
+      key: fs.readFileSync('./localhost+1-key.pem'),
+      cert: fs.readFileSync('./localhost+1.pem'),
+    },
   },
   build: {
     rollupOptions: {

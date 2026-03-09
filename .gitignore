@@ -42,3 +42,6 @@ supabase/.temp/
 supabase/.branches/_current_branch
 deno.lock
 deno.lock
+
+# Local SSL certificates
+*.pem
