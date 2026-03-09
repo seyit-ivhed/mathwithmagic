@@ -1,0 +1,27 @@
+name: Deploy to production
+
+on:
+  push:
+    branches: [production]
+
+jobs:
+  deploy-production:
+    name: Run migrations and deploy to production
+    runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Run database migrations on production
+        run: supabase db push --project-ref ${{ secrets.PROD_PROJECT_REF }}
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+      # Vercel deploys the frontend automatically via its GitHub integration.
+      # No additional step is needed here.
