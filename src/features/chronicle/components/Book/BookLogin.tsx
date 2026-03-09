@@ -32,7 +32,7 @@ export const BookLogin: React.FC<BookLoginProps> = ({ onBack, onSuccess, onForgo
             onSuccess();
         } catch (err: unknown) {
             console.error('Failed to sign in:', err);
-            setError(err instanceof Error ? err.message : t('login.invalid_credentials'));
+            setError(t('login.invalid_credentials'));
             analyticsService.trackEvent('login_failed');
         } finally {
             setLoading(false);
