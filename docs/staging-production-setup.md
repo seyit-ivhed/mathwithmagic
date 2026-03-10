@@ -36,8 +36,8 @@ separate projects**:
 
 | Project | Suggested name | Notes |
 |---|---|---|
-| Staging | `playtolearn-staging` | Used by the `main` branch |
-| Production | `playtolearn-prod` | Used by the `production` branch only |
+| Staging | `mathwithmagic-staging` | Used by the `main` branch |
+| Production | `mathwithmagic-prod` | Used by the `production` branch only |
 
 Save the **Project Reference ID** for each project (found under
 **Settings → General → Reference ID**). You will need these later.
