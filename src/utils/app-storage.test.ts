@@ -28,10 +28,10 @@ describe('clearAppStorage', () => {
         expect(localStorage.getItem('sb-xyz123-auth-token')).toBeNull();
     });
 
-    it('does not remove non-auth localStorage keys', () => {
+    it('also removes non-auth localStorage keys', () => {
         localStorage.setItem('other-key', 'keep-me');
         clearAppStorage();
-        expect(localStorage.getItem('other-key')).toBe('keep-me');
+        expect(localStorage.getItem('other-key')).toBeNull();
     });
 
     it('removes play_session_id from sessionStorage', () => {
@@ -46,9 +46,9 @@ describe('clearAppStorage', () => {
         expect(sessionStorage.getItem('attribution')).toBeNull();
     });
 
-    it('does not remove non-app sessionStorage keys', () => {
+    it('also removes non-app sessionStorage keys', () => {
         sessionStorage.setItem('unrelated', 'keep-me');
         clearAppStorage();
-        expect(sessionStorage.getItem('unrelated')).toBe('keep-me');
+        expect(sessionStorage.getItem('unrelated')).toBeNull();
     });
 });
