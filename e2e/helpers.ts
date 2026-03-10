@@ -1,4 +1,5 @@
 import type { Page } from '@playwright/test';
+import { expect } from '@playwright/test';
 import { GAME_STORE_KEY } from '../src/stores/storage-keys';
 
 // ---------------------------------------------------------------------------
@@ -298,4 +299,46 @@ export async function mockSupabaseAuthForCheckout(page: Page): Promise<void> {
             route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({}) });
         }
     });
+}
+
+// ---------------------------------------------------------------------------
+// Analytics event helpers
+// ---------------------------------------------------------------------------
+
+interface AnalyticsEvent {
+    session_id: string;
+    event_type: string;
+    payload: Record<string, unknown> | null;
+    attribution: Record<string, string | null> | null;
+}
+
+export async function getAnalyticsEvents(page: Page): Promise<AnalyticsEvent[]> {
+    const result = await page.evaluate(() => window.__analyticsEvents);
+    return result ?? [];
+}
+
+export async function expectEventFired(
+    page: Page,
+    eventType: string,
+    payloadSubset?: Record<string, unknown>,
+): Promise<void> {
+    const events = await getAnalyticsEvents(page);
+    const matching = events.filter(e => e.event_type === eventType);
+    expect(matching.length, `Expected event '${eventType}' to be fired, but got: ${JSON.stringify(events.map(e => e.event_type))}`).toBeGreaterThan(0);
+    if (payloadSubset) {
+        const hasMatch = matching.some(e =>
+            Object.entries(payloadSubset).every(
+                ([k, v]) => e.payload !== null && e.payload[k] === v
+            )
+        );
+        expect(hasMatch, `Expected event '${eventType}' with payload subset ${JSON.stringify(payloadSubset)}, but actual payloads were: ${JSON.stringify(matching.map(e => e.payload))}`).toBe(true);
+    }
+}
+
+export async function expectEventNotFired(
+    page: Page,
+    eventType: string,
+): Promise<void> {
+    const events = await getAnalyticsEvents(page);
+    expect(events.filter(e => e.event_type === eventType).length, `Expected event '${eventType}' NOT to be fired`).toBe(0);
 }

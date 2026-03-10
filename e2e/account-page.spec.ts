@@ -1,5 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
-import { buildAuthenticatedSessionScript } from './helpers';
+import { buildAuthenticatedSessionScript, expectEventFired } from './helpers';
 
 const AUTH_SESSION = {
     access_token: 'test-auth-access-token',
@@ -116,6 +116,7 @@ test.describe('Account Page - Change Password', () => {
         await page.click('[data-testid="change-password-btn"]', { force: true });
         await expect(page.locator('[data-testid="change-password-success"]')).toBeVisible();
         await expect(page.locator('[data-testid="change-password-btn"]')).not.toBeVisible();
+        await expectEventFired(page, 'password_reset_email_sent');
     });
 
     test('shows error message when email sending fails', async ({ page }) => {
@@ -265,5 +266,6 @@ test.describe('Account Page - Delete Account', () => {
         await page.click('[data-testid="delete-account-confirm-btn"]', { force: true });
 
         await expect(page).toHaveURL(/\/chronicle/, { timeout: 10000 });
+        await expectEventFired(page, 'account_deleted');
     });
 });

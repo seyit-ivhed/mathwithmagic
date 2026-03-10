@@ -6,6 +6,7 @@ import {
     mockSupabaseRestApis,
     mockStripe,
     mockPaymentIntent,
+    expectEventFired,
 } from './helpers';
 
 const VALID_EMAIL = 'newuser@example.com';
@@ -16,6 +17,7 @@ test.describe('Account Creation Step', () => {
         await interceptSupabaseAuth(page);
         await page.goto('/checkout.html');
         await expect(page.locator('[data-testid="account-creation-form"]')).toBeVisible();
+        await expectEventFired(page, 'account_creation_viewed');
     });
 
     test('shows validation error for invalid email', async ({ page }) => {
@@ -100,5 +102,6 @@ test.describe('Account Creation Step', () => {
         // authenticated user and CheckoutPage swaps in CheckoutOverlay
         await expect(page.locator('[data-testid="checkout-overlay"]')).toBeVisible({ timeout: 10000 });
         await expect(page.locator('[data-testid="account-creation-form"]')).not.toBeVisible();
+        await expectEventFired(page, 'account_created');
     });
 });
