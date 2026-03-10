@@ -334,11 +334,3 @@ export async function expectEventFired(
         expect(hasMatch, `Expected event '${eventType}' with payload subset ${JSON.stringify(payloadSubset)}, but actual payloads were: ${JSON.stringify(matching.map(e => e.payload))}`).toBe(true);
     }
 }
-
-export async function expectEventNotFired(
-    page: Page,
-    eventType: string,
-): Promise<void> {
-    const events = await getAnalyticsEvents(page);
-    expect(events.filter(e => e.event_type === eventType).length, `Expected event '${eventType}' NOT to be fired`).toBe(0);
-}
