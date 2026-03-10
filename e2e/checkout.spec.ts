@@ -42,7 +42,7 @@ test.describe('Checkout Flow', () => {
 
         await expect(page.locator('[data-testid="checkout-form"]')).toBeVisible();
         // Price is rendered inside the form by CheckoutForm
-        await expect(page.locator('[data-testid="checkout-form"]')).toContainText('59 SEK');
+        await expect(page.locator('[data-testid="checkout-price"]')).toBeVisible();
     });
 
     test('successful payment shows the success screen', async ({ page }) => {

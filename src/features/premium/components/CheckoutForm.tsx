@@ -161,7 +161,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
                 </label>
 
                 <div className="price-display-simple">
-                    {t('premium.store.total_amount', 'Total Amount')}: <span className="price-value">{price}</span>
+                    {t('premium.store.total_amount', 'Total Amount')}: <span className="price-value" data-testid="checkout-price">{price}</span>
                 </div>
                 <PrimaryButton
                     type="submit"
