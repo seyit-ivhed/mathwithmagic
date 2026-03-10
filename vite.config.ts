@@ -9,7 +9,10 @@ logger.warn = (msg) => {
   throw new Error(msg)
 }
 
-const useHttps = !process.env.VITE_NO_HTTPS
+const useHttps =
+  !process.env.VITE_NO_HTTPS &&
+  fs.existsSync('./localhost+1-key.pem') &&
+  fs.existsSync('./localhost+1.pem')
 
 export default defineConfig({
   plugins: [react()],
