@@ -1,12 +1,12 @@
 -- Consolidated Schema for Play to Learn Game
--- Includes: Player Profiles, Game States, Content Packs, Purchase Intents, and Entitlements
+-- Includes: Player Profiles, Game States, Content Packs, Purchase Intents, Entitlements, and Play Events
 
 -- 1. Player Profiles
 CREATE TABLE IF NOT EXISTS public.player_profiles (
     id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
-    device_id UUID,
     created_at TIMESTAMPTZ DEFAULT now(),
-    last_login TIMESTAMPTZ DEFAULT now()
+    last_login TIMESTAMPTZ DEFAULT now(),
+    product_update_consent BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 -- 2. Game States
@@ -57,6 +57,22 @@ CREATE TABLE IF NOT EXISTS public.player_entitlements (
     UNIQUE(player_id, content_pack_id)
 );
 
+-- 7. Play Events (first-party anonymous analytics)
+-- No personal identifiers are stored. session_id is a tab-scoped UUID
+-- persisted in sessionStorage and cleared when the tab closes.
+CREATE TABLE IF NOT EXISTS public.play_events (
+    id          UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+    session_id  TEXT        NOT NULL,
+    event_type  TEXT        NOT NULL,
+    payload     JSONB,
+    attribution JSONB,
+    created_at  TIMESTAMPTZ DEFAULT now()
+);
+
+-- Column comments
+COMMENT ON COLUMN public.player_profiles.product_update_consent
+    IS 'Whether the parent/guardian opted in to receive product update emails. GDPR Art. 6(1)(a) — Consent.';
+
 -- RLS Enablement
 ALTER TABLE public.player_profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.game_states ENABLE ROW LEVEL SECURITY;
@@ -64,6 +80,7 @@ ALTER TABLE public.content_packs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.content_pack_prices ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.purchase_intents ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.player_entitlements ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.play_events ENABLE ROW LEVEL SECURITY;
 
 -- Indices
 CREATE INDEX IF NOT EXISTS idx_purchase_intents_player_pack_status 
@@ -99,4 +116,7 @@ USING (player_id = auth.uid());
 CREATE POLICY "Players can view own purchase intents" ON public.purchase_intents FOR SELECT TO authenticated
 USING (player_id = auth.uid());
 
-
+-- Play Events
+-- Allow anonymous and authenticated users to insert events (fire-and-forget)
+CREATE POLICY "Allow insert for all users" ON public.play_events
+    FOR INSERT TO anon, authenticated WITH CHECK (true);

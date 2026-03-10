@@ -280,7 +280,6 @@ test.describe('Account Page - Delete Account', () => {
         await expect(page.locator('[data-testid="delete-account-confirm-btn"]')).toBeEnabled({ timeout: 10000 });
         await page.fill('[data-testid="delete-account-password-input"]', 'correctpassword');
         await page.click('[data-testid="delete-account-confirm-btn"]', { force: true });
-
         await expectEventFired(page, 'account_deletion_triggered');
         await expect(page).toHaveURL(/\/farewell/, { timeout: 10000 });
     });
