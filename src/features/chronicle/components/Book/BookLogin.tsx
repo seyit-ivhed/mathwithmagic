@@ -41,8 +41,6 @@ export const BookLogin: React.FC<BookLoginProps> = ({ onBack, onSuccess, onForgo
 
     return (
         <div className={styles.loginPageContent}>
-
-
             <header className={styles.pageHeader}>
                 <h2 className={styles.pageTitle}>{t('login.member_access')}</h2>
                 <div className={styles.divider} />
