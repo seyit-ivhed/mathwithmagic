@@ -1,3 +1,4 @@
+import fs from 'fs'
 import { defineConfig, createLogger } from 'vite'
 import react from '@vitejs/plugin-react'
 
@@ -8,11 +9,19 @@ logger.warn = (msg) => {
   throw new Error(msg)
 }
 
+const useHttps = !process.env.VITE_NO_HTTPS
+
 export default defineConfig({
   plugins: [react()],
   customLogger: logger,
   server: {
     host: '127.0.0.1',
+    ...(useHttps && {
+      https: {
+        key: fs.readFileSync('./localhost+1-key.pem'),
+        cert: fs.readFileSync('./localhost+1.pem'),
+      },
+    }),
   },
   build: {
     rollupOptions: {

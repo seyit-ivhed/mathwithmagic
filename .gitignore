@@ -40,5 +40,8 @@ dist-ssr
 .env.production.local
 supabase/.temp/
 supabase/.branches/_current_branch
+supabase/signing_key.json
 deno.lock
-deno.lock
+
+# Local SSL certificates
+*.pem

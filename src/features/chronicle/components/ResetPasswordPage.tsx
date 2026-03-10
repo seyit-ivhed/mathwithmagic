@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../hooks/useAuth';
+import { useAuth } from '../../../context/useAuth';
 import { Lock, Loader2, AlertCircle, CheckCircle } from 'lucide-react';
 import { supabase } from '../../../services/supabase.service';
 import { analyticsService } from '../../../services/analytics.service';

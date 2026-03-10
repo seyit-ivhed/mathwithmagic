@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../../../hooks/useAuth';
+import { useAuth } from '../../../context/useAuth';
 import { AccountCreationStep } from './AccountCreationStep';
 import { CheckoutOverlay } from './CheckoutOverlay';
 import { CheckoutMusic } from './CheckoutMusic';
@@ -17,11 +17,11 @@ export const CheckoutPage: React.FC = () => {
     // We use window.location.href instead of useNavigate to ensure a clean environment context.
 
     const { t } = useTranslation();
-    const { user, loading: authLoading } = useAuth();
+    const { isAuthenticated, loading: authLoading } = useAuth();
     const [showSuccess, setShowSuccess] = useState(false);
     const [legalModal, setLegalModal] = useState<LegalDocumentType | null>(null);
 
-    const isAnonymous = user?.is_anonymous ?? true;
+    const isAnonymous = !isAuthenticated;
     const checkoutViewedFired = useRef(false);
 
     useEffect(() => {

@@ -65,7 +65,7 @@ describe('account-creation.utils', () => {
         it('should handle successful account creation', async () => {
             mockSupabaseClient.auth.getSession
                 .mockResolvedValueOnce({ data: { session: null }, error: null })
-                .mockResolvedValueOnce({ data: { session: { user: { id: '123', is_anonymous: false } } as unknown as Session }, error: null });
+                .mockResolvedValueOnce({ data: { session: { user: { id: '123' } } as unknown as Session }, error: null });
 
             mockSupabaseClient.auth.signUp.mockResolvedValueOnce({
                 data: { user: { id: '123' } as unknown as User, session: { user: { id: '123' } } as unknown as Session },
@@ -90,7 +90,7 @@ describe('account-creation.utils', () => {
             expect(refreshSession).toHaveBeenCalled();
         });
 
-        it('should return session_timeout error when session never becomes non-anonymous', async () => {
+        it('should return session_timeout error when session never becomes available', async () => {
             // Initial check returns no session; all subsequent polling calls also return no session
             mockSupabaseClient.auth.getSession.mockResolvedValue({ data: { session: null }, error: null });
 
@@ -116,9 +116,9 @@ describe('account-creation.utils', () => {
             expect(result.error).toBe('premium.store.account.errors.session_timeout');
         });
 
-        it('should skip creation if user is already permanently authenticated', async () => {
+        it('should skip creation if user is already signed in', async () => {
             mockSupabaseClient.auth.getSession.mockResolvedValueOnce({
-                data: { session: { user: { id: '123', is_anonymous: false } } as unknown as Session },
+                data: { session: { user: { id: '123' } } as unknown as Session },
                 error: null
             });
 
@@ -134,7 +134,7 @@ describe('account-creation.utils', () => {
             expect(mockSupabaseClient.auth.signUp).not.toHaveBeenCalled();
         });
 
-        it('should return emailAlreadyExists error if email already registered', async () => {
+        it('should return already_exists error if email already registered', async () => {
             mockSupabaseClient.auth.getSession.mockResolvedValueOnce({ data: { session: null }, error: null });
 
             mockSupabaseClient.auth.signUp.mockResolvedValueOnce({
@@ -151,11 +151,10 @@ describe('account-creation.utils', () => {
             });
 
             expect(result.success).toBe(false);
-            expect(result.emailAlreadyExists).toBe(true);
             expect(result.error).toBe('premium.store.account.errors.already_exists');
         });
 
-        it('should return emailAlreadyExists error if email already in use', async () => {
+        it('should return already_exists error if email already in use', async () => {
             mockSupabaseClient.auth.getSession.mockResolvedValueOnce({ data: { session: null }, error: null });
 
             mockSupabaseClient.auth.signUp.mockResolvedValueOnce({
@@ -172,13 +171,13 @@ describe('account-creation.utils', () => {
             });
 
             expect(result.success).toBe(false);
-            expect(result.emailAlreadyExists).toBe(true);
+            expect(result.error).toBe('premium.store.account.errors.already_exists');
         });
 
         it('should handle upsert error for player profile gracefully', async () => {
             mockSupabaseClient.auth.getSession
                 .mockResolvedValueOnce({ data: { session: null }, error: null })
-                .mockResolvedValueOnce({ data: { session: { user: { id: '123', is_anonymous: false } } as unknown as Session }, error: null });
+                .mockResolvedValueOnce({ data: { session: { user: { id: '123' } } as unknown as Session }, error: null });
 
             mockSupabaseClient.auth.signUp.mockResolvedValueOnce({
                 data: { user: { id: '123' } as unknown as User, session: null },
@@ -208,7 +207,7 @@ describe('account-creation.utils', () => {
         it('should succeed when signup returns no user id (no userId branch)', async () => {
             mockSupabaseClient.auth.getSession
                 .mockResolvedValueOnce({ data: { session: null }, error: null })
-                .mockResolvedValueOnce({ data: { session: { user: { id: '123', is_anonymous: false } } as unknown as Session }, error: null });
+                .mockResolvedValueOnce({ data: { session: { user: { id: '123' } } as unknown as Session }, error: null });
 
             mockSupabaseClient.auth.signUp.mockResolvedValueOnce({
                 data: { user: null, session: null },
@@ -279,19 +278,19 @@ describe('account-creation.utils', () => {
             vi.useRealTimers();
         });
 
-        it('should return true immediately when session is already non-anonymous', async () => {
+        it('should return true immediately when session already exists', async () => {
             mockClient.auth.getSession.mockResolvedValueOnce({
-                data: { session: { user: { id: '1', is_anonymous: false } } as unknown as Session }
+                data: { session: { user: { id: '1' } } as unknown as Session }
             });
 
             const result = await waitForSession(mockClient as unknown as SupabaseClient);
             expect(result).toBe(true);
         });
 
-        it('should return true after polling when session becomes non-anonymous', async () => {
+        it('should return true after polling when session becomes available', async () => {
             mockClient.auth.getSession
                 .mockResolvedValueOnce({ data: { session: null } })
-                .mockResolvedValueOnce({ data: { session: { user: { id: '1', is_anonymous: false } } as unknown as Session } });
+                .mockResolvedValueOnce({ data: { session: { user: { id: '1' } } as unknown as Session } });
 
             const promise = waitForSession(mockClient as unknown as SupabaseClient);
             await vi.runAllTimersAsync();

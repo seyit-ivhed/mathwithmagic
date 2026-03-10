@@ -36,7 +36,7 @@ Deno.test({
     sanitizeResources: false,
     sanitizeOps: false,
     fn: withMockEnv(async () => {
-        const mockFetch = async (input: string | URL | Request): Promise<Response> => {
+        const mockFetch = async (input: string | URL | Request, init?: RequestInit): Promise<Response> => {
             const url = makeUrl(input);
 
             // Admin delete: return 204 No Content — processed before json() is called
@@ -47,6 +47,21 @@ Deno.test({
             // JWT verification: return user object
             if (url.includes('/auth/v1/user')) {
                 return new Response(JSON.stringify({ id: 'user-123', email: 'test@example.com' }), {
+                    status: 200,
+                    headers: { 'Content-Type': 'application/json' },
+                });
+            }
+
+            // Password re-authentication via signInWithPassword (token endpoint)
+            if (url.includes('/auth/v1/token') && init?.method === 'POST') {
+                return new Response(JSON.stringify({
+                    access_token: 'new-token',
+                    token_type: 'bearer',
+                    expires_in: 3600,
+                    expires_at: Math.floor(Date.now() / 1000) + 3600,
+                    refresh_token: 'refresh-token',
+                    user: { id: 'user-123', email: 'test@example.com' },
+                }), {
                     status: 200,
                     headers: { 'Content-Type': 'application/json' },
                 });
@@ -64,6 +79,7 @@ Deno.test({
                 "Authorization": "Bearer mock-jwt",
                 "Origin": "http://localhost:5173",
             },
+            body: JSON.stringify({ password: "correct-password" }),
         });
 
         const res = await handler(req);
@@ -121,6 +137,7 @@ Deno.test({
                 "Content-Type": "application/json",
                 "Authorization": "Bearer invalid-jwt",
             },
+            body: JSON.stringify({ password: "some-password" }),
         });
 
         const res = await handler(req);
@@ -128,6 +145,74 @@ Deno.test({
 
         assertEquals(res.status, 401);
         assertEquals(data.error, "Unauthorized");
+    }),
+});
+
+Deno.test({
+    name: "delete-account handler - returns 400 when password is missing",
+    sanitizeResources: false,
+    sanitizeOps: false,
+    fn: withMockEnv(async () => {
+        const handler = createHandler();
+
+        const req = new Request("http://localhost/delete-account", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer mock-jwt",
+            },
+            body: JSON.stringify({}),
+        });
+
+        const res = await handler(req);
+        const data = await res.json();
+
+        assertEquals(res.status, 400);
+        assertEquals(data.error, "Password is required");
+    }),
+});
+
+Deno.test({
+    name: "delete-account handler - returns 401 when password is incorrect",
+    sanitizeResources: false,
+    sanitizeOps: false,
+    fn: withMockEnv(async () => {
+        const mockFetch = async (input: string | URL | Request, init?: RequestInit): Promise<Response> => {
+            const url = makeUrl(input);
+
+            if (url.includes('/auth/v1/user')) {
+                return new Response(JSON.stringify({ id: 'user-123', email: 'test@example.com' }), {
+                    status: 200,
+                    headers: { 'Content-Type': 'application/json' },
+                });
+            }
+
+            if (url.includes('/auth/v1/token') && init?.method === 'POST') {
+                return new Response(JSON.stringify({ error: { message: 'Invalid login credentials' } }), {
+                    status: 400,
+                    headers: { 'Content-Type': 'application/json' },
+                });
+            }
+
+            return new Response(JSON.stringify({ error: `Not mocked: ${url}` }), { status: 404 });
+        };
+
+        const handler = createHandler(mockFetch);
+
+        const req = new Request("http://localhost/delete-account", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer mock-jwt",
+            },
+            body: JSON.stringify({ password: "wrong-password" }),
+        });
+
+        const res = await handler(req);
+        const data = await res.json();
+
+        assertEquals(res.status, 401);
+        assertEquals(data.error, "Incorrect password");
     }),
 });
 

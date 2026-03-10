@@ -5,7 +5,8 @@
     "back": "Back",
     "level": "Level",
     "lvl": "Lvl",
-    "back_to_map": "Back to Map"
+    "back_to_map": "Back to Map",
+    "loading": "Loading..."
   },
   "remainder_text": " R ",
   "adventure": {
@@ -506,16 +507,10 @@
           "emails_dont_match": "Email addresses do not match.",
           "weak_password": "Password must be at least 6 characters.",
           "already_exists": "This email is already registered. Please sign in.",
-          "sign_in_failed": "Incorrect email or password. Please try again.",
           "password_required": "Please enter your password.",
           "generic": "Something went wrong. Please try again.",
           "session_timeout": "Account created but session did not activate in time. Please try signing in."
-        },
-        "sign_in_title": "Sign In",
-        "sign_in_subtitle": "Sign in to continue with your existing account.",
-        "sign_in_btn": "Sign In",
-        "sign_in_instead": "Sign in instead",
-        "sign_in_instead_aria": "Switch to sign in with existing account"
+        }
       },
       "success_title": "Premium Unlocked!",
       "success_message": "Thank you for your support!",
@@ -543,7 +538,10 @@
     "password_placeholder": "••••••••",
     "open_journal": "Login",
     "invalid_credentials": "Invalid email or password",
-    "forgot_password": "Forgot your password?"
+    "forgot_password": "Forgot your password?",
+    "success_title": "Welcome Back!",
+    "success_message": "You have successfully signed in. Your adventure awaits!",
+    "success_continue": "Continue Journey"
   },
   "forgot_password": {
     "title": "Recover Password",
@@ -581,6 +579,16 @@
     "music_volume": "Music Volume",
     "sfx_volume": "SFX Volume",
     "voice_volume": "Voice Volume"
+  },
+  "account": {
+    "title": "Account",
+    "manage_account_btn": "Account"
+  },
+  "marketing_preferences": {
+    "section_title": "Notifications",
+    "label": "Notify me about new adventures and game updates. You can unsubscribe at any time.",
+    "save_success": "Preferences saved.",
+    "save_error": "Something went wrong. Please try again."
   },
   "change_password": {
     "title": "Password",
@@ -624,9 +632,23 @@
     "section_title": "Account",
     "button": "Delete my account",
     "warning": "This will permanently delete your account and all associated game data. This action cannot be undone.",
+    "warning_title": "This action is permanent and cannot be undone.",
+    "warning_progress": "All your game progress will be lost forever.",
+    "warning_premium": "Any premium content you have purchased will not be recoverable.",
+    "warning_account": "Your account and login credentials will be permanently removed.",
+    "acknowledge": "I understand the consequences and want to proceed",
     "confirm_button": "Yes, permanently delete my account",
+    "confirm_button_wait": "Wait {{seconds}}s...",
     "cancel_button": "Cancel",
     "success": "Your account has been deleted.",
-    "error_generic": "Something went wrong. Please try again or contact support."
+    "error_generic": "Something went wrong. Please try again or contact support.",
+    "password_label": "Confirm with your password",
+    "password_placeholder": "Your password",
+    "password_required": "Please enter your password to confirm.",
+    "wrong_password": "Incorrect password. Please try again."
+  },
+  "farewell": {
+    "title": "Farewell, Adventurer",
+    "message": "It's sad for you to go, but thanks for the adventure"
   }
 }

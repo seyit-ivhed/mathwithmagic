@@ -133,9 +133,9 @@ export const TermsOfServiceContent: React.FC<TermsOfServiceContentProps> = ({ on
         <p>
             These Terms are governed by the laws of Sweden and applicable EU law. Any disputes shall
             be resolved by the Swedish courts, with the Stockholm District Court as the court of first
-            instance. EU consumers may also use the EU Online Dispute Resolution platform at{' '}
-            <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer">
-                ec.europa.eu/consumers/odr
+            instance. EU consumers may also find relevant dispute resolution bodies at{' '}
+            <a href="https://consumer-redress.ec.europa.eu/dispute-resolution-bodies_en" target="_blank" rel="noopener noreferrer">
+                consumer-redress.ec.europa.eu/dispute-resolution-bodies
             </a>.
         </p>
         <p>

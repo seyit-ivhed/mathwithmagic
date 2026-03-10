@@ -1,0 +1,29 @@
+.consentLabel {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+    color: var(--color-chronicle-text-dark, #2c1e11);
+    cursor: pointer;
+    line-height: 1.5;
+}
+
+.consentLabel input[type="checkbox"] {
+    margin-top: 0.1rem;
+    flex-shrink: 0;
+    cursor: pointer;
+    width: 1rem;
+    height: 1rem;
+}
+
+.successMessage {
+    margin: 0.4rem 0 0 0;
+    font-size: 0.85rem;
+    color: var(--color-success);
+}
+
+.errorMessage {
+    margin: 0.4rem 0 0 0;
+    font-size: 0.85rem;
+    color: var(--color-error);
+}

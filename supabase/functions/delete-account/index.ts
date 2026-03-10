@@ -30,6 +30,15 @@ export const createHandler = (fetchImpl?: typeof globalThis.fetch) => async (req
             )
         }
 
+        const body = await req.json().catch(() => ({})) as { password?: string }
+        const password = body.password
+        if (!password) {
+            return new Response(
+                JSON.stringify({ error: 'Password is required' }),
+                { status: 400, headers: { ...headers, 'Content-Type': 'application/json' } }
+            )
+        }
+
         const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? ''
         const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
         const _fetch = fetchImpl ?? globalThis.fetch
@@ -48,6 +57,28 @@ export const createHandler = (fetchImpl?: typeof globalThis.fetch) => async (req
             console.error('Auth verification failed:', authError?.message || 'No user returned')
             return new Response(
                 JSON.stringify({ error: 'Unauthorized' }),
+                { status: 401, headers: { ...headers, 'Content-Type': 'application/json' } }
+            )
+        }
+
+        if (!user.email) {
+            console.error('User email not found for re-authentication')
+            return new Response(
+                JSON.stringify({ error: 'Unauthorized' }),
+                { status: 401, headers: { ...headers, 'Content-Type': 'application/json' } }
+            )
+        }
+
+        // Re-authenticate to confirm the person holding the device knows the password.
+        // This protects against accidental or unauthorized deletion.
+        const { error: signInError } = await supabaseAdmin.auth.signInWithPassword({
+            email: user.email,
+            password,
+        })
+        if (signInError) {
+            console.error('Re-authentication failed:', signInError.message)
+            return new Response(
+                JSON.stringify({ error: 'Incorrect password' }),
                 { status: 401, headers: { ...headers, 'Content-Type': 'application/json' } }
             )
         }

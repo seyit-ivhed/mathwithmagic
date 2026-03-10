@@ -8,7 +8,7 @@ export async function waitForSession(client: SupabaseClient): Promise<boolean> {
     return pollUntil(
         async () => {
             const { data: { session } } = await client.auth.getSession();
-            return !!(session?.user && !session.user.is_anonymous);
+            return !!session?.user;
         },
         { intervalMs: POLL_INTERVAL_MS, timeoutMs: POLL_TIMEOUT_MS }
     );
@@ -17,7 +17,6 @@ export async function waitForSession(client: SupabaseClient): Promise<boolean> {
 interface AccountConversionResult {
     success: boolean;
     error?: string;
-    emailAlreadyExists?: boolean;
 }
 
 interface AccountConversionParams {
@@ -62,7 +61,7 @@ export const performAccountConversion = async ({
         // 1. Check if the user is already permanently authenticated
         const { data: { session: currentSession } } = await supabaseClient.auth.getSession();
 
-        if (currentSession?.user && !currentSession.user.is_anonymous) {
+        if (currentSession?.user) {
             return { success: true };
         }
 
@@ -78,7 +77,6 @@ export const performAccountConversion = async ({
                 signUpError.status === 422) {
                 return {
                     success: false,
-                    emailAlreadyExists: true,
                     error: translation('premium.store.account.errors.already_exists', { defaultValue: 'This email is already registered. Please sign in with your existing account.' })
                 };
             }

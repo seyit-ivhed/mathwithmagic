@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../../../../hooks/useAuth';
+import { useAuth } from '../../../../context/useAuth';
 import { Mail, Lock, ChevronLeft, Loader2, AlertCircle } from 'lucide-react';
 import styles from '../../ChronicleBook.module.css';
 import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
@@ -32,7 +32,7 @@ export const BookLogin: React.FC<BookLoginProps> = ({ onBack, onSuccess, onForgo
             onSuccess();
         } catch (err: unknown) {
             console.error('Failed to sign in:', err);
-            setError(err instanceof Error ? err.message : t('login.invalid_credentials'));
+            setError(t('login.invalid_credentials'));
             analyticsService.trackEvent('login_failed');
         } finally {
             setLoading(false);

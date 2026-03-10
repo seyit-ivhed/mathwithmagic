@@ -24,43 +24,41 @@ through space-themed missions and challenges.
    cd mathwithmagic
    ```
 
-2. **Install Frontend Dependencies:**
+2. **Install Dependencies:**
    ```bash
    npm install
    ```
 
-3. **Install Backend Dependencies:** Navigate to the server directory and
-   install dependencies:
-   ```bash
-   cd server
-   npm install
-   cd ..
-   ```
-
-4. **Set up environment files:** Copy the example templates and fill in your values:
+3. **Set up environment files:** Copy the example templates and fill in your values:
    ```bash
    cp .env.example .env                                  # Production Supabase + Stripe keys
    cp .env.local.example .env.local                      # Local Supabase keys (from `supabase status`)
    cp supabase/functions/.env.example supabase/functions/.env  # Stripe secret keys for Edge Functions
    ```
 
+## Local HTTPS Setup
+
+The dev server runs over HTTPS. You need locally-trusted SSL certificates:
+
+1. **Install mkcert:**
+   ```bash
+   brew install mkcert
+   mkcert -install
+   ```
+
+2. **Generate certificates** (from the project root):
+   ```bash
+   mkcert localhost 127.0.0.1
+   ```
+
+   This creates `localhost+1.pem` and `localhost+1-key.pem` in the project root (git-ignored).
+
 ## Running the Project
 
 To run the full application, you will need to start both the client (frontend)
 and the server (backend) in separate terminal instances.
 
-### 1. Start the Server (Backend)
-
-Open a terminal and run:
-
-```bash
-cd server
-npm run dev
-```
-
-This will start the backend server in watch mode using `tsx`.
-
-### 2. Start the Client (Frontend)
+### 1. Start the Client (Frontend)
 
 Open a new terminal window (from the root directory) and run:
 
@@ -69,7 +67,7 @@ npm run dev
 ```
 
 This will start the Vite development server. Open your browser and navigate to
-the URL shown in the terminal (usually `http://localhost:5173`).
+the URL shown in the terminal (usually `https://127.0.0.1:5173`).
 
 ## Backend Setup (Supabase)
 
@@ -79,7 +77,18 @@ The project uses Supabase for authentication, database, and edge functions.
 
 We use a local Supabase instance run via Docker.
 
-**1. Manage Local Secrets:** To use features like Stripe payments locally, you
+**1. Generate a signing key (first-time only):** The local Supabase instance
+uses a pinned signing key so that API keys stay stable across restarts. Generate
+one before your first `supabase start`:
+
+```bash
+npx supabase gen signing-key
+```
+
+This file is git-ignored. Without it, keys regenerate on every restart and your
+`.env.local` will go out of sync.
+
+**2. Manage Local Secrets:** To use features like Stripe payments locally, you
 must set your API keys. If you haven't already done so in the Installation
 step, copy the template and fill in the values:
 
@@ -95,7 +104,7 @@ STRIPE_WEBHOOK_SECRET=whsec_...
 
 Restart services to load the keys: `npm run deploy-supabase`
 
-**2. View Edge Function Logs:** Supabase Edge Functions run effectively in a
+**3. View Edge Function Logs:** Supabase Edge Functions run effectively in a
 Docker container locally. To view real-time logs (including `console.log` from
 your functions):
 

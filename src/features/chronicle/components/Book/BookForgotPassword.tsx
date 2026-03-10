@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../../../../hooks/useAuth';
+import { useAuth } from '../../../../context/useAuth';
 import { Mail, ChevronLeft, Loader2, AlertCircle, CheckCircle } from 'lucide-react';
 import styles from '../../ChronicleBook.module.css';
 import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
