@@ -37,8 +37,8 @@ export const DeleteAccountSettings: React.FC = () => {
         setError(null);
         setLoading(true);
         try {
+            await analyticsService.trackEvent('account_deletion_triggered');
             await deleteAccount(password);
-            analyticsService.trackEvent('account_deleted');
             clearAppStorage();
             window.location.href = '/farewell';
         } catch (err: unknown) {

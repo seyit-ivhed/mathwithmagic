@@ -60,6 +60,15 @@ If the URL contains `utm_source` on load, `{ source, campaign, medium }` is capt
 
 ---
 
+### Account Management
+
+| Event | Payload | Where fired | Description |
+|---|---|---|---|
+| `account_deletion_triggered` | — | `DeleteAccountSettings` | Player confirmed account deletion; fired before the server-side delete call so the session is still valid. |
+| `account_delete_failed` | — | `DeleteAccountSettings` | Server-side account deletion failed (wrong password or other error). |
+
+---
+
 ### Difficulty Selection
 
 | Event | Payload | Where fired | Description |
