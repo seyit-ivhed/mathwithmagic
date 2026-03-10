@@ -17,7 +17,6 @@ export const BookLogin: React.FC<BookLoginProps> = ({ onBack, onSuccess, onForgo
     const { t } = useTranslation();
     const { signIn } = useAuth();
 
-    // Login Form State
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
