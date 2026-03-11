@@ -63,7 +63,6 @@
 }
 
 .cover .pageBack {
-    background: #3e3020;
     /* Inside of the leather cover */
     border: 1px solid #2c2216;
 }
@@ -75,8 +74,6 @@
 
 /* Cover Styling */
 .cover {
-    color: #d4af37;
-    /* Gold */
     border-radius: 4px 14px 14px 4px;
 }
 
