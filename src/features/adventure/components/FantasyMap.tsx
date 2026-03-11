@@ -1,4 +1,4 @@
-import { useRef, useLayoutEffect } from 'react';
+import { useRef, useLayoutEffect, useCallback } from 'react';
 import { MapPathSVG } from './MapPathSVG';
 import { MapNode } from './MapNode';
 import type { Adventure, Encounter } from '../../../types/adventure.types';
@@ -28,38 +28,50 @@ export const FantasyMap: React.FC<FantasyMapProps> = ({ adventure, currentNode, 
 
     const lastNodeIndex = adventure.encounters.length;
 
-    useLayoutEffect(() => {
-        // On first render: instantly jump to end node, then smooth scroll to current node
-        if (!hasAnimatedRef.current && endNodeRef.current) {
-            hasAnimatedRef.current = true;
+    const startScrollAnimation = useCallback(() => {
+        if (!endNodeRef.current) return;
 
-            // Instantly scroll to the end (last) node
-            endNodeRef.current.scrollIntoView({
-                behavior: 'instant',
-                block: 'center'
-            });
+        // Instantly scroll to the end (last) node
+        endNodeRef.current.scrollIntoView({
+            behavior: 'instant',
+            block: 'center'
+        });
 
-            // After a brief pause, smooth scroll to the current/focal node
-            const timer = setTimeout(() => {
-                if (currentNodeRef.current) {
-                    currentNodeRef.current.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
-                }
-            }, 400);
-
-            return () => clearTimeout(timer);
-        }
-
-        // On subsequent currentNode changes (e.g. navigating back), scroll directly
-        if (hasAnimatedRef.current && currentNodeRef.current) {
-            currentNodeRef.current.scrollIntoView({
+        // After a brief pause, smooth scroll to the current/focal node
+        setTimeout(() => {
+            currentNodeRef.current?.scrollIntoView({
                 behavior: 'smooth',
                 block: 'center'
             });
+        }, 400);
+    }, []);
+
+    useLayoutEffect(() => {
+        if (!hasAnimatedRef.current) {
+            // Wait for the map image to load so the container has its full height
+            const img = mapImageRef.current;
+            if (img?.complete) {
+                hasAnimatedRef.current = true;
+                startScrollAnimation();
+            } else if (img) {
+                const onLoad = () => {
+                    if (!hasAnimatedRef.current) {
+                        hasAnimatedRef.current = true;
+                        startScrollAnimation();
+                    }
+                };
+                img.addEventListener('load', onLoad);
+                return () => img.removeEventListener('load', onLoad);
+            }
+            return;
         }
-    }, [currentNode, lastNodeIndex]);
+
+        // On subsequent currentNode changes (e.g. navigating back), scroll directly
+        currentNodeRef.current?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        });
+    }, [currentNode, lastNodeIndex, startScrollAnimation]);
 
     const { encounters } = adventure;
     const nodes = getAdventureNodes(adventure.id);
