@@ -51,9 +51,6 @@ jobs:
         with:
           version: latest
 
-      - name: Generate signing key for CLI
-        run: supabase gen signing-key --algorithm ES256 -o supabase/signing_key.json
-
       - name: Run database migrations on staging
         run: |
           ENCODED_PASSWORD=$(python3 -c "import urllib.parse, os; print(urllib.parse.quote(os.environ['DB_PASSWORD'], safe=''))")
