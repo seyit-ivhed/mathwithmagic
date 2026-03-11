@@ -150,8 +150,8 @@ toggle to scope each value correctly.
 
 ### 2.4 (Optional) Add a custom domain
 
-Under **Settings → Domains**, add your production domain and follow the DNS
-instructions Vercel provides.
+In the project dashboard, go to the **Domains** tab (top-level navigation), add
+your production domain, and follow the DNS instructions Vercel provides.
 
 ---
 
