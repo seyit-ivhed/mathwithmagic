@@ -233,6 +233,12 @@ In each project's dashboard go to **Authentication → URL Configuration**:
 Set **"Anonymous sign-ins"** to **disabled** (already reflected in
 `supabase/config.toml` for local dev; apply the same in the dashboard).
 
+In each project's dashboard go to **Authentication → Providers → Email**:
+
+- Set **"Confirm email"** to **disabled** for both the staging and production
+  projects. This allows users to sign in immediately without clicking a
+  confirmation link.
+
 ---
 
 ## 4. Stripe Setup
