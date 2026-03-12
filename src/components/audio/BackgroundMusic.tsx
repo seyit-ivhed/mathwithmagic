@@ -16,7 +16,10 @@ const MUSIC_FILE_KEYS = Object.keys(musicFiles);
 const resolveMusicUrl = async (filename: string): Promise<string> => {
     const key = `../../assets/music/${filename}`;
     const loader = musicFiles[key];
-    if (!loader) return '';
+    if (!loader) {
+        console.error(`Music file not found: ${filename}`);
+        return '';
+    }
     return await loader();
 };
 
@@ -74,6 +77,8 @@ export const BackgroundMusic = () => {
             audioRef.current.play().catch(e => {
                 console.info("Autoplay blocked, waiting for user interaction.", e);
             });
+        }).catch(e => {
+            console.error("Failed to load music track:", e);
         });
 
         return () => { cancelled = true; };
