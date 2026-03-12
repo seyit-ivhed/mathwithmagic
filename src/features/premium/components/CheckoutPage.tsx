@@ -20,6 +20,7 @@ export const CheckoutPage: React.FC = () => {
     const { isAuthenticated, loading: authLoading } = useAuth();
     const [showSuccess, setShowSuccess] = useState(false);
     const [legalModal, setLegalModal] = useState<LegalDocumentType | null>(null);
+    const [checkoutKey, setCheckoutKey] = useState(0);
 
     const isAnonymous = !isAuthenticated;
     const checkoutViewedFired = useRef(false);
@@ -37,6 +38,12 @@ export const CheckoutPage: React.FC = () => {
 
     const handleSuccess = () => {
         setShowSuccess(true);
+    };
+
+    const handleRestart = () => {
+        // Remount CheckoutOverlay to re-run create-payment-intent,
+        // which will detect the existing successful Stripe payment and self-heal.
+        setCheckoutKey(prev => prev + 1);
     };
 
     if (authLoading) {
@@ -93,9 +100,11 @@ export const CheckoutPage: React.FC = () => {
                         <div className="premium-checkout">
 
                             <CheckoutOverlay
+                                key={checkoutKey}
                                 contentPackId="premium_base"
                                 onSuccess={handleSuccess}
                                 onCancel={handleBackToGame}
+                                onRestart={handleRestart}
                                 price={t('premium.store.price', '59 SEK')}
                             />
                         </div>

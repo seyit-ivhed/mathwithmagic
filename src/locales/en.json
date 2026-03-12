@@ -518,7 +518,9 @@
       "success_message": "Thank you for your support!",
       "processing_payment": "Securing your adventure...",
       "verifying_access": "Verifying your new content...",
-      "verification_timeout": "Payment succeeded, but we are still processing your access. It will appear in your account shortly.",
+      "verification_timeout": "Payment succeeded, but verification is taking longer than expected. Please try reloading the page.",
+      "reload_page": "Reload Page",
+      "restart_checkout": "Restart Checkout",
       "total_amount": "Total Amount",
       "payment_failed": "Payment failed. Please try again."
     }

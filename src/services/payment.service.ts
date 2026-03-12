@@ -40,4 +40,24 @@ export class PaymentService {
 
         return data;
     }
+
+    /**
+     * Verify a payment server-side by checking Stripe directly.
+     * Used as a fallback when the webhook has not yet processed a successful payment.
+     * If Stripe confirms the payment succeeded, the server grants the entitlement immediately.
+     * @param contentPackId The ID of the content pack to verify (e.g., 'premium_base')
+     * @returns verified: true if entitlement was granted, false with status if still pending.
+     */
+    static async verifyPayment(contentPackId: string): Promise<{ verified: boolean; status?: string }> {
+        const { data, error } = await supabase.functions.invoke('verify-payment', {
+            body: { contentPackId },
+        });
+
+        if (error) {
+            console.error('Error invoking verify-payment:', error);
+            throw error;
+        }
+
+        return data;
+    }
 }

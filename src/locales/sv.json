@@ -518,7 +518,9 @@
       "success_message": "Tack för ditt stöd!",
       "processing_payment": "Säkrar ditt äventyr...",
       "verifying_access": "Verifierar ditt nya innehåll...",
-      "verification_timeout": "Betalningen lyckades, men vi behandlar fortfarande din åtkomst. Den kommer att dyka upp på ditt konto inom kort.",
+      "verification_timeout": "Betalningen lyckades, men verifieringen tar längre tid än väntat. Försök att ladda om sidan.",
+      "reload_page": "Ladda om sidan",
+      "restart_checkout": "Starta om kassan",
       "total_amount": "Totalt belopp",
       "payment_failed": "Betalningen misslyckades. Försök igen."
     }
