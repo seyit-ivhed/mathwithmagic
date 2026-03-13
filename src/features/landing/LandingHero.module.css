@@ -73,9 +73,13 @@
 }
 
 .ctaNote {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.4);
-    margin: 0;
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0.5rem 0 0;
+    padding: 0.5rem 1.4rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50px;
+    letter-spacing: 0.03em;
 }
 
 .collagePane {
