@@ -36,5 +36,14 @@ test.describe('Onboarding Flow', () => {
     test('root path shows landing page for unauthenticated users', async ({ page }) => {
         await page.goto('/');
         await expect(page.locator('[data-testid="landing-play-now-btn"]')).toBeVisible();
+        await expectEventFired(page, 'landing_viewed');
+    });
+
+    test('landing page CTA navigates to chronicle and fires tracking event', async ({ page }) => {
+        await page.goto('/');
+        await expect(page.locator('[data-testid="landing-play-now-btn"]')).toBeVisible();
+        await page.click('[data-testid="landing-play-now-btn"]', { force: true });
+        await expect(page).toHaveURL(/\/chronicle/);
+        await expectEventFired(page, 'landing_cta_clicked');
     });
 });
