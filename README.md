@@ -31,8 +31,7 @@ through space-themed missions and challenges.
 
 3. **Set up environment files:** Copy the example templates and fill in your values:
    ```bash
-   cp .env.example .env                                  # Production Supabase + Stripe keys
-   cp .env.local.example .env.local                      # Local Supabase keys (from `supabase status`)
+   cp .env.local.example .env.local                      # Local Supabase + Stripe keys (from `supabase status`)
    cp supabase/functions/.env.example supabase/functions/.env  # Stripe secret keys for Edge Functions
    ```
 
