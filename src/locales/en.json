@@ -549,7 +549,8 @@
     "footer_contact": "hello@mathwithmagic.com",
     "footer_refund_policy": "Refund Policy",
     "footer_cancellation_policy": "Cancellation Policy",
-    "footer_accepted_payments": "Accepted payments"
+    "footer_accepted_payments": "Accepted payments",
+    "footer_legal_nav_label": "Legal"
   },
   "login": {
     "member_access": "Login",

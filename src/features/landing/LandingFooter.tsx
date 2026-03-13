@@ -51,7 +51,7 @@ export const LandingFooter: React.FC = () => {
                 </div>
             </div>
 
-            <nav className="landing-footer-bottom" aria-label="Legal links">
+            <nav className="landing-footer-bottom" aria-label={t('landing.footer_legal_nav_label', 'Legal')}>
                 {LEGAL_LINKS.map((link, index) => (
                     <React.Fragment key={link.to + link.labelKey}>
                         {index > 0 && (

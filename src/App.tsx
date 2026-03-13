@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AdventurePage from './features/adventure/AdventurePage';
 import { ChronicleBook } from './features/chronicle/ChronicleBook';
 import { ResetPasswordPage } from './features/chronicle/components/ResetPasswordPage';
@@ -15,7 +15,6 @@ import { AccountPage } from './features/account/AccountPage';
 import { FarewellPage } from './features/farewell/FarewellPage';
 import { PrivacyPage } from './features/legal/PrivacyPage';
 import { TermsPage } from './features/legal/TermsPage';
-import { Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 
 function AppContent() {
