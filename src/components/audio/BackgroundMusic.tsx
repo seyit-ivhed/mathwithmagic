@@ -6,17 +6,21 @@ import { getRandomSuccessTrack, getTargetMusicTrack } from './audio.utils';
 import { useEncounterStore } from '../../stores/encounter/store';
 import { EncounterPhase } from '../../types/encounter.types';
 
-const musicFiles = import.meta.glob('../../assets/music/**/*.mp3', {
-    eager: true,
+const musicFiles = import.meta.glob<string>('../../assets/music/**/*.mp3', {
     query: '?url',
     import: 'default'
-}) as Record<string, string>;
+});
 
 const MUSIC_FILE_KEYS = Object.keys(musicFiles);
 
-const getMusicUrl = (filename: string) => {
+const resolveMusicUrl = async (filename: string): Promise<string> => {
     const key = `../../assets/music/${filename}`;
-    return musicFiles[key] || '';
+    const loader = musicFiles[key];
+    if (!loader) {
+        console.error(`Music file not found: ${filename}`);
+        return '';
+    }
+    return await loader();
 };
 
 export const BackgroundMusic = () => {
@@ -51,21 +55,33 @@ export const BackgroundMusic = () => {
         }
 
         // Only act if the track actually changes
-        if (targetFilename !== currentTrackRef.current) {
-            currentTrackRef.current = targetFilename;
-
-            if (targetFilename) {
-                const url = getMusicUrl(targetFilename);
-                audioRef.current.src = url;
-
-                audioRef.current.play().catch(e => {
-                    console.info("Autoplay blocked, waiting for user interaction.", e);
-                });
-            } else {
-                audioRef.current.pause();
-                audioRef.current.src = '';
-            }
+        if (targetFilename === currentTrackRef.current) {
+            return;
         }
+
+        currentTrackRef.current = targetFilename;
+
+        if (!targetFilename) {
+            audioRef.current.pause();
+            audioRef.current.src = '';
+            return;
+        }
+
+        let cancelled = false;
+
+        resolveMusicUrl(targetFilename).then(url => {
+            if (cancelled || !audioRef.current || !url) {
+                return;
+            }
+            audioRef.current.src = url;
+            audioRef.current.play().catch(e => {
+                console.info("Autoplay blocked, waiting for user interaction.", e);
+            });
+        }).catch(e => {
+            console.error("Failed to load music track:", e);
+        });
+
+        return () => { cancelled = true; };
     }, [targetFilename]);
 
     // Volume control effect
