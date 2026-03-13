@@ -14,9 +14,11 @@ import { RootRedirect } from './components/RootRedirect';
 import { AccountPage } from './features/account/AccountPage';
 import { FarewellPage } from './features/farewell/FarewellPage';
 import { AuthProvider } from './context/AuthContext';
+import { useDisableContextMenu } from './hooks/useDisableContextMenu';
 
 function AppContent() {
   const { isInitializing, error, retry } = useInitializeGame();
+  useDisableContextMenu();
 
   if (isInitializing || error) {
     return <LoadingScreen error={error} onRetry={retry} />;

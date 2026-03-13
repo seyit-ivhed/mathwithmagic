@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useTranslation } from 'react-i18next';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
+import { PaymentService } from '../../../services/payment.service';
 import { supabase } from '../../../services/supabase.service';
 import { pollUntil } from '../../../utils/poll-until';
 import { analyticsService } from '../../../services/analytics.service';
@@ -11,10 +12,11 @@ interface CheckoutFormProps {
     contentPackId: string;
     onSuccess: () => void;
     onCancel: () => void;
+    onRestart: () => void;
     price: string;
 }
 
-export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuccess, onCancel, price }) => {
+export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuccess, onCancel, onRestart, price }) => {
     const { t } = useTranslation();
     const stripe = useStripe();
     const elements = useElements();
@@ -41,6 +43,16 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
             },
             { intervalMs: 2000, timeoutMs: 30000 }
         );
+    };
+
+    const verifyPaymentServerSide = async (): Promise<boolean> => {
+        try {
+            const result = await PaymentService.verifyPayment(contentPackId);
+            return result.verified;
+        } catch (err) {
+            console.error('Server-side payment verification failed:', err);
+            return false;
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -87,12 +99,24 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
                         });
                         onSuccess();
                     } else {
+                        // Webhook timed out — proactively check Stripe server-side
                         analyticsService.trackEvent('payment_verification_timeout');
-                        console.warn('Verification timed out, but payment succeeded.');
-                        setErrorMessage(t('premium.store.verification_timeout', 'Payment succeeded, but we are still processing your access. It will appear in your account shortly.'));
-                        setIsProcessing(false);
-                        setIsVerifying(false);
-                        setPaymentSucceeded(true);
+                        console.warn('Polling timed out. Checking Stripe server-side...');
+
+                        const serverVerified = await verifyPaymentServerSide();
+                        if (serverVerified) {
+                            analyticsService.trackEvent('payment_succeeded', {
+                                content_pack_id: contentPackId,
+                                recovery: 'server_side_verify',
+                            });
+                            onSuccess();
+                        } else {
+                            // Server-side check also could not confirm — show fallback UI
+                            setErrorMessage(t('premium.store.verification_timeout'));
+                            setIsProcessing(false);
+                            setIsVerifying(false);
+                            setPaymentSucceeded(true);
+                        }
                     }
                 } else {
                     console.warn('Payment intent status is not succeeded:', paymentIntent.status);
@@ -142,46 +166,68 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
 
             {errorMessage && <div className="payment-error" data-testid="payment-error">{errorMessage}</div>}
 
-            <div className="checkout-actions">
-                <p className="stripe-disclosure">
-                    {t('checkout.stripe_disclosure', 'Payment is processed securely by Stripe. Outlean AB does not store your payment details.')}
-                </p>
-
-                <label className="withdrawal-waiver" data-testid="withdrawal-waiver-label">
-                    <input
-                        type="checkbox"
-                        checked={withdrawalConsent}
-                        onChange={(e) => setWithdrawalConsent(e.target.checked)}
-                        disabled={isProcessing}
-                        data-testid="withdrawal-consent-checkbox"
-                    />
-                    <span>
-                        {t('checkout.withdrawal_waiver', 'I understand that by accessing the purchased content immediately, I waive my 14-day right of withdrawal under EU consumer law.')}
-                    </span>
-                </label>
-
-                <div className="price-display-simple">
-                    {t('premium.store.total_amount', 'Total Amount')}: <span className="price-value" data-testid="checkout-price">{price}</span>
+            {paymentSucceeded ? (
+                <div className="checkout-actions" data-testid="verification-timeout-actions">
+                    <PrimaryButton
+                        type="button"
+                        variant="gold"
+                        onClick={() => window.location.reload()}
+                        style={{ width: '100%' }}
+                        data-testid="reload-page-button"
+                    >
+                        {t('premium.store.reload_page', 'Reload Page')}
+                    </PrimaryButton>
+                    <button
+                        type="button"
+                        className="cancel-button-link"
+                        onClick={onRestart}
+                        data-testid="restart-checkout-button"
+                    >
+                        {t('premium.store.restart_checkout', 'Restart Checkout')}
+                    </button>
                 </div>
-                <PrimaryButton
-                    type="submit"
-                    variant="gold"
-                    radiate={true}
-                    disabled={isProcessing || !stripe || !elements || paymentSucceeded || !withdrawalConsent}
-                    style={{ width: '100%' }}
-                    data-testid="checkout-submit"
-                >
-                    {isProcessing ? t('common.processing', 'Processing...') : t('premium.store.buy_now')}
-                </PrimaryButton>
-                <button
-                    type="button"
-                    className="cancel-button-link"
-                    onClick={onCancel}
-                    disabled={isProcessing}
-                >
-                    {t('common.cancel', 'Cancel')}
-                </button>
-            </div>
+            ) : (
+                <div className="checkout-actions">
+                    <p className="stripe-disclosure">
+                        {t('checkout.stripe_disclosure', 'Payment is processed securely by Stripe. Outlean AB does not store your payment details.')}
+                    </p>
+
+                    <label className="withdrawal-waiver" data-testid="withdrawal-waiver-label">
+                        <input
+                            type="checkbox"
+                            checked={withdrawalConsent}
+                            onChange={(e) => setWithdrawalConsent(e.target.checked)}
+                            disabled={isProcessing}
+                            data-testid="withdrawal-consent-checkbox"
+                        />
+                        <span>
+                            {t('checkout.withdrawal_waiver', 'I understand that by accessing the purchased content immediately, I waive my 14-day right of withdrawal under EU consumer law.')}
+                        </span>
+                    </label>
+
+                    <div className="price-display-simple">
+                        {t('premium.store.total_amount', 'Total Amount')}: <span className="price-value" data-testid="checkout-price">{price}</span>
+                    </div>
+                    <PrimaryButton
+                        type="submit"
+                        variant="gold"
+                        radiate={true}
+                        disabled={isProcessing || !stripe || !elements || !withdrawalConsent}
+                        style={{ width: '100%' }}
+                        data-testid="checkout-submit"
+                    >
+                        {isProcessing ? t('common.processing', 'Processing...') : t('premium.store.buy_now')}
+                    </PrimaryButton>
+                    <button
+                        type="button"
+                        className="cancel-button-link"
+                        onClick={onCancel}
+                        disabled={isProcessing}
+                    >
+                        {t('common.cancel', 'Cancel')}
+                    </button>
+                </div>
+            )}
         </form>
     );
 };

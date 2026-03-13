@@ -9,6 +9,7 @@ interface CheckoutOverlayProps {
     contentPackId: string;
     onSuccess: () => void;
     onCancel: () => void;
+    onRestart: () => void;
     price: string;
 }
 
@@ -16,6 +17,7 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
     contentPackId,
     onSuccess,
     onCancel,
+    onRestart,
     price
 }) => {
     const { t } = useTranslation();
@@ -131,7 +133,7 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
         <div className="checkout-overlay-container" data-testid="checkout-overlay">
             <FormCloseButton onClick={onCancel} />
             <Elements key={clientSecret} stripe={stripePromise} options={options}>
-                <CheckoutForm contentPackId={contentPackId} onSuccess={onSuccess} onCancel={onCancel} price={price} />
+                <CheckoutForm contentPackId={contentPackId} onSuccess={onSuccess} onCancel={onCancel} onRestart={onRestart} price={price} />
             </Elements>
         </div>
     );
