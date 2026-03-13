@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import styles from './LandingFooter.module.css';
 
 const PAYMENT_BADGES = ['Visa', 'Mastercard', 'Amex'] as const;
 
@@ -15,35 +16,35 @@ export const LandingFooter: React.FC = () => {
     const { t } = useTranslation();
 
     return (
-        <footer className="landing-footer">
-            <div className="landing-footer-top">
-                <div className="landing-footer-brand">
-                    <p className="landing-footer-brand-name">
+        <footer className={styles.footer}>
+            <div className={styles.footerTop}>
+                <div className={styles.footerBrand}>
+                    <p className={styles.footerBrandName}>
                         {t('landing.footer_company', 'Outlean AB')}
                     </p>
-                    <p className="landing-footer-tagline">
+                    <p className={styles.footerTagline}>
                         {t('landing.footer_address', 'Sweden')}
                     </p>
-                    <p className="landing-footer-tagline">
+                    <p className={styles.footerTagline}>
                         {t('landing.footer_tagline', 'Making math magical for kids ages 6–8.')}
                     </p>
                 </div>
 
-                <div className="landing-footer-contact">
-                    <span className="landing-footer-contact-item">
+                <div className={styles.footerContact}>
+                    <span className={styles.footerContactItem}>
                         <a href="mailto:hello@mathwithmagic.com">
                             {t('landing.footer_contact', 'hello@mathwithmagic.com')}
                         </a>
                     </span>
                 </div>
 
-                <div className="landing-footer-payments">
-                    <span className="landing-footer-payments-label">
+                <div className={styles.footerPayments}>
+                    <span className={styles.footerPaymentsLabel}>
                         {t('landing.footer_accepted_payments', 'Accepted payments')}
                     </span>
-                    <div className="landing-footer-payment-badges">
+                    <div className={styles.footerPaymentBadges}>
                         {PAYMENT_BADGES.map((badge) => (
-                            <span key={badge} className="landing-footer-payment-badge">
+                            <span key={badge} className={styles.footerPaymentBadge}>
                                 {badge}
                             </span>
                         ))}
@@ -51,15 +52,15 @@ export const LandingFooter: React.FC = () => {
                 </div>
             </div>
 
-            <nav className="landing-footer-bottom" aria-label={t('landing.footer_legal_nav_label', 'Legal')}>
+            <nav className={styles.footerBottom} aria-label={t('landing.footer_legal_nav_label', 'Legal')}>
                 {LEGAL_LINKS.map((link, index) => (
                     <React.Fragment key={link.to + link.labelKey}>
                         {index > 0 && (
-                            <span className="landing-footer-sep" aria-hidden="true">|</span>
+                            <span className={styles.footerSep} aria-hidden="true">|</span>
                         )}
                         <Link
                             to={link.to}
-                            className="landing-footer-legal-link"
+                            className={styles.footerLegalLink}
                         >
                             {t(link.labelKey, link.labelDefault)}
                         </Link>

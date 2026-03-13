@@ -2,10 +2,10 @@ import React from 'react';
 import { LandingHero } from './LandingHero';
 import { LandingFeatures } from './LandingFeatures';
 import { LandingFooter } from './LandingFooter';
-import './LandingPage.css';
+import styles from './LandingPage.module.css';
 
 export const LandingPage: React.FC = () => (
-    <div className="landing-page">
+    <div className={styles.landingPage}>
         <LandingHero />
         <LandingFeatures />
         <LandingFooter />

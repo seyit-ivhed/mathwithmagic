@@ -5,7 +5,7 @@ import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import { supabase } from '../../../services/supabase.service';
 import { pollUntil } from '../../../utils/poll-until';
 import { analyticsService } from '../../../services/analytics.service';
-import './Premium.css';
+import styles from './CheckoutForm.module.css';
 
 interface CheckoutFormProps {
     contentPackId: string;
@@ -112,11 +112,11 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
     };
 
     return (
-        <form onSubmit={handleSubmit} className="checkout-form" data-testid="checkout-form">
+        <form onSubmit={handleSubmit} className={styles.checkoutForm} data-testid="checkout-form">
             {isProcessing && (
-                <div className="processing-overlay">
-                    <div className="spinner"></div>
-                    <div className="processing-text">
+                <div className={styles.processingOverlay}>
+                    <div className={styles.spinner}></div>
+                    <div className={styles.processingText}>
                         {isVerifying
                             ? t('premium.store.verifying_access', 'Verifying your new content...')
                             : t('premium.store.processing_payment', 'Securing your adventure...')}
@@ -140,14 +140,14 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
                 }
             }} />
 
-            {errorMessage && <div className="payment-error" data-testid="payment-error">{errorMessage}</div>}
+            {errorMessage && <div className={styles.paymentError} data-testid="payment-error">{errorMessage}</div>}
 
-            <div className="checkout-actions">
-                <p className="stripe-disclosure">
+            <div className={styles.checkoutActions}>
+                <p className={styles.stripeDisclosure}>
                     {t('checkout.stripe_disclosure', 'Payment is processed securely by Stripe. Outlean AB does not store your payment details.')}
                 </p>
 
-                <label className="withdrawal-waiver" data-testid="withdrawal-waiver-label">
+                <label className={styles.withdrawalWaiver} data-testid="withdrawal-waiver-label">
                     <input
                         type="checkbox"
                         checked={withdrawalConsent}
@@ -160,8 +160,8 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
                     </span>
                 </label>
 
-                <div className="price-display-simple">
-                    {t('premium.store.total_amount', 'Total Amount')}: <span className="price-value" data-testid="checkout-price">{price}</span>
+                <div className={styles.priceDisplaySimple}>
+                    {t('premium.store.total_amount', 'Total Amount')}: <span className={styles.priceValue} data-testid="checkout-price">{price}</span>
                 </div>
                 <PrimaryButton
                     type="submit"
@@ -175,7 +175,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
                 </PrimaryButton>
                 <button
                     type="button"
-                    className="cancel-button-link"
+                    className={styles.cancelButtonLink}
                     onClick={onCancel}
                     disabled={isProcessing}
                 >

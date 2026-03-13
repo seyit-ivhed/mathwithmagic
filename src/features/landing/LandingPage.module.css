@@ -1,0 +1,19 @@
+.landingPage {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: #0f051a;
+    background: radial-gradient(circle at 60% 30%, #1a0b2e 0%, #050208 70%);
+    color: var(--color-text-primary);
+    overflow-x: hidden;
+    animation: landingFadeIn 0.6s ease-out;
+}
+
+@keyframes landingFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

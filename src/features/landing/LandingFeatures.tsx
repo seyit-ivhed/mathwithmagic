@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Map, Users, Puzzle, BookOpen } from 'lucide-react';
+import styles from './LandingFeatures.module.css';
 
 const FEATURES = [
     {
@@ -37,20 +38,20 @@ export const LandingFeatures: React.FC = () => {
     const { t } = useTranslation();
 
     return (
-        <section className="landing-features">
-            <h2 className="landing-features-heading">
+        <section className={styles.features}>
+            <h2 className={styles.featuresHeading}>
                 {t('landing.features_heading', 'Why Math with Magic?')}
             </h2>
-            <div className="landing-features-grid">
+            <div className={styles.featuresGrid}>
                 {FEATURES.map((feature) => (
-                    <div key={feature.titleKey} className="landing-feature-card">
-                        <span className="landing-feature-icon" aria-hidden="true">
+                    <div key={feature.titleKey} className={styles.featureCard}>
+                        <span className={styles.featureIcon} aria-hidden="true">
                             {feature.icon}
                         </span>
-                        <p className="landing-feature-title">
+                        <p className={styles.featureTitle}>
                             {t(feature.titleKey, feature.titleDefault)}
                         </p>
-                        <p className="landing-feature-desc">
+                        <p className={styles.featureDesc}>
                             {t(feature.descKey, feature.descDefault)}
                         </p>
                     </div>

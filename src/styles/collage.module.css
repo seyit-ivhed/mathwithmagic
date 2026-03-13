@@ -1,0 +1,135 @@
+.collageItem {
+    position: absolute;
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.collageItem:hover {
+    z-index: 100 !important;
+    transform: scale(1.1) rotate(0deg) !important;
+    border-color: var(--color-brand-accent);
+}
+
+.advCard1 {
+    top: 10%;
+    right: 40%;
+    transform: rotate(-10deg);
+    width: 180px;
+    z-index: 10;
+}
+
+.advCard2 {
+    top: 15%;
+    right: 25%;
+    transform: rotate(5deg);
+    width: 180px;
+    z-index: 11;
+}
+
+.advCard3 {
+    top: 25%;
+    right: 45%;
+    transform: rotate(-5deg);
+    width: 180px;
+    z-index: 12;
+}
+
+.advCard4 {
+    top: 35%;
+    right: 20%;
+    transform: rotate(10deg);
+    width: 180px;
+    z-index: 13;
+}
+
+.advCard5 {
+    top: 5%;
+    right: 10%;
+    transform: rotate(-15deg);
+    width: 180px;
+    z-index: 9;
+}
+
+.compCard1 {
+    bottom: 10%;
+    right: 35%;
+    transform: rotate(-5deg);
+    width: 220px;
+    z-index: 30;
+    border: 3px solid var(--color-brand-accent);
+}
+
+.compCard2 {
+    bottom: 15%;
+    right: 10%;
+    transform: rotate(10deg);
+    width: 220px;
+    z-index: 31;
+    border: 3px solid var(--color-brand-accent);
+}
+
+.oppCard1 {
+    top: 50%;
+    right: 5%;
+    transform: rotate(-3deg);
+    width: 240px;
+    z-index: 15;
+}
+
+.oppCard2 {
+    top: 5%;
+    right: 35%;
+    transform: rotate(12deg);
+    width: 200px;
+    z-index: 8;
+    filter: grayscale(50%);
+}
+
+.puzCard1 {
+    top: 35%;
+    right: 35%;
+    transform: rotate(15deg);
+    width: 200px;
+    z-index: 25;
+}
+
+.puzCard2 {
+    bottom: 35%;
+    right: 5%;
+    transform: rotate(-10deg);
+    width: 200px;
+    z-index: 26;
+}
+
+.evolutionGlow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 165, 2, 0.15) 0%, transparent 70%);
+    z-index: 1;
+    pointer-events: none;
+    animation: pulseGlow 4s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+}
+
+.collagePane {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    perspective: 1000px;
+}
