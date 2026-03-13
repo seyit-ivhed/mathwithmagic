@@ -33,9 +33,8 @@ test.describe('Onboarding Flow', () => {
         await expectEventFired(page, 'initial_difficulty_selected', { difficulty: 1 });
     });
 
-    test('root path redirects to chronicle', async ({ page }) => {
+    test('root path shows landing page for unauthenticated users', async ({ page }) => {
         await page.goto('/');
-        await expect(page).toHaveURL(/\/chronicle/);
-        await expectEventFired(page, 'session_started');
+        await expect(page.locator('[data-testid="landing-play-now-btn"]')).toBeVisible();
     });
 });
