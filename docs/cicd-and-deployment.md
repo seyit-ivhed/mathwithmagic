@@ -84,8 +84,8 @@ jobs:
   deploy-staging:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -110,7 +110,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production   # optional: add required reviewers in GitHub settings
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: supabase db push --project-ref ${{ secrets.PROD_PROJECT_REF }}
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}

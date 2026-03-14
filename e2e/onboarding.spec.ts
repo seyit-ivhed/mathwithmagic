@@ -33,9 +33,17 @@ test.describe('Onboarding Flow', () => {
         await expectEventFired(page, 'initial_difficulty_selected', { difficulty: 1 });
     });
 
-    test('root path redirects to chronicle', async ({ page }) => {
+    test('root path shows landing page for unauthenticated users', async ({ page }) => {
         await page.goto('/');
+        await expect(page.locator('[data-testid="landing-play-now-btn"]')).toBeVisible();
+        await expectEventFired(page, 'landing_viewed');
+    });
+
+    test('landing page CTA navigates to chronicle and fires tracking event', async ({ page }) => {
+        await page.goto('/');
+        await expect(page.locator('[data-testid="landing-play-now-btn"]')).toBeVisible();
+        await page.click('[data-testid="landing-play-now-btn"]', { force: true });
         await expect(page).toHaveURL(/\/chronicle/);
-        await expectEventFired(page, 'session_started');
+        await expectEventFired(page, 'landing_cta_clicked');
     });
 });

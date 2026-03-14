@@ -12,6 +12,7 @@ import { PersistenceService } from '../../../services/persistence.service';
 import { useGameStore } from '../../../stores/game/store';
 import { ConsentCheckboxes } from './ConsentCheckboxes';
 import type { LegalDocumentType } from '../../legal/LegalModal';
+import styles from './AccountCreationStep.module.css';
 
 interface AccountCreationStepProps {
     onSuccess: () => void;
@@ -81,24 +82,24 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
 
     return (
         <motion.div
-            className="account-step"
+            className={styles.accountStep}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.05 }}
         >
-                <div className="account-icon">
+                <div className={styles.accountIcon}>
                     <ShieldCheck size={48} />
                 </div>
 
-                <h3 className="account-title">
+                <h3 className={styles.accountTitle}>
                     {translation('premium.store.account.title')}
                 </h3>
-                <p className="account-subtitle">
+                <p className={styles.accountSubtitle}>
                     {translation('premium.store.account.subtitle')}
                 </p>
 
-                <form onSubmit={handleSubmit} className="account-form" data-testid="account-creation-form" noValidate>
-                    <div className="input-group">
+                <form onSubmit={handleSubmit} className={styles.accountForm} data-testid="account-creation-form" noValidate>
+                    <div className={styles.inputGroup}>
                         <label htmlFor="account-email">
                             <Mail size={16} />
                             {translation('premium.store.account.email_label')}
@@ -115,7 +116,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                         />
                     </div>
 
-                    <div className="input-group">
+                    <div className={styles.inputGroup}>
                         <label htmlFor="account-confirm-email">
                             <Mail size={16} />
                             {translation('premium.store.account.confirm_email_label')}
@@ -132,7 +133,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                         />
                     </div>
 
-                    <div className="input-group">
+                    <div className={styles.inputGroup}>
                         <label htmlFor="account-password">
                             <Lock size={16} />
                             {translation('premium.store.account.password_label')}
@@ -164,7 +165,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                     <AnimatePresence>
                         {error && (
                             <motion.div
-                                className="form-error"
+                                className={styles.formError}
                                 initial={{ opacity: 0, height: 0 }}
                                 animate={{ opacity: 1, height: 'auto' }}
                                 exit={{ opacity: 0, height: 0 }}
@@ -176,7 +177,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                         )}
                     </AnimatePresence>
 
-                    <div className="account-actions single-action">
+                    <div className={styles.singleAction}>
                         <PrimaryButton
                             type="submit"
                             variant="gold"
@@ -185,7 +186,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                             data-testid="account-creation-submit"
                         >
                             {loading
-                                ? <Loader2 className="spinner" />
+                                ? <Loader2 className={styles.spinner} />
                                 : translation('premium.store.account.continue_btn')}
                         </PrimaryButton>
                     </div>

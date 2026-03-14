@@ -1,0 +1,175 @@
+.container {
+    min-height: 100vh;
+    height: 100%;
+    background: var(--color-bg-mystic-dark);
+    position: fixed;
+    inset: 0;
+    overflow-y: auto;
+    color: var(--color-text-primary);
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.closeButton {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    z-index: 10010;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    border: 1px solid var(--color-brand-accent);
+    color: var(--color-brand-accent);
+    cursor: pointer;
+    transition: all 0.3s;
+    backdrop-filter: blur(5px);
+}
+
+.closeButton:hover {
+    transform: rotate(90deg) scale(1.1);
+    background: var(--color-brand-accent);
+    color: #0c0414;
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 4rem;
+    text-align: center;
+    min-height: 100vh;
+    background: #000000;
+}
+
+.loading p {
+    font-family: var(--font-display);
+    color: var(--color-brand-accent);
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+div.spinner {
+    width: 64px;
+    height: 64px;
+    border: 5px solid rgba(255, 215, 0, 0.1);
+    border-top-color: var(--color-brand-accent);
+    border-radius: 50%;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.successScreen {
+    text-align: center;
+    max-width: 600px;
+    animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.successIconContainer {
+    color: #2ed573;
+    margin-bottom: 2rem;
+    filter: drop-shadow(0 0 20px rgba(46, 213, 115, 0.3));
+}
+
+.successTitle {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    color: var(--color-text-primary);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.successDescription {
+    font-size: 1.2rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.accountCreationContainer {
+    width: 100%;
+    max-width: 625px;
+    margin: 0 auto;
+}
+
+.premiumCheckout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.legalFooter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    margin-top: auto;
+}
+
+.legalLink {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 0.75rem;
+    font-family: var(--font-body, inherit);
+    cursor: pointer;
+    padding: 0.2rem 0.3rem;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-color: transparent;
+    transition: color 0.2s, text-decoration-color 0.2s;
+}
+
+.legalLink:hover {
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration-color: rgba(255, 255, 255, 0.35);
+}
+
+.legalSep {
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 0.75rem;
+    pointer-events: none;
+}

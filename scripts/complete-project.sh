@@ -71,11 +71,15 @@ fi
 
 echo -e "${GREEN}Successfully merged main into $CURRENT_BRANCH.${NC}\n"
 
+# Save the commit before the merge so we can roll back if tests fail
+PRE_MERGE_SHA=$(git rev-parse HEAD)
+
 # Run unit tests with coverage (enforces 90% statements/branches/functions/lines per file)
 echo -e "${YELLOW}Running unit tests with coverage...${NC}"
 npm run test:coverage -- --run
 if [ $? -ne 0 ]; then
-    echo -e "${RED}Unit tests or coverage thresholds failed. Please fix before merging to main.${NC}"
+    echo -e "${RED}Unit tests or coverage thresholds failed. Rolling back merge from main...${NC}"
+    git reset --hard "$PRE_MERGE_SHA"
     exit 1
 fi
 
@@ -86,7 +90,8 @@ echo -e "${YELLOW}Running Edge Function tests (Deno)...${NC}"
 if command -v deno &> /dev/null; then
     deno test --allow-all supabase/functions/
     if [ $? -ne 0 ]; then
-        echo -e "${RED}Edge Function tests failed. Please fix them before proceeding.${NC}"
+        echo -e "${RED}Edge Function tests failed. Rolling back merge from main...${NC}"
+        git reset --hard "$PRE_MERGE_SHA"
         exit 1
     fi
     echo -e "${GREEN}Edge Function tests passed.${NC}\n"
@@ -109,7 +114,7 @@ echo -e "${GREEN}Successfully pushed changes.${NC}\n"
 echo -e "${YELLOW}Switching to main branch...${NC}"
 git checkout main
 if [ $? -ne 0 ]; then
-    echo -e "${RED}Failed to checkout main branch.${NC}"
+    echo -e "${RED}Failed to checkout main branch. Staying on $CURRENT_BRANCH.${NC}"
     exit 1
 fi
 
@@ -171,7 +176,8 @@ echo -e "${GREEN}E2E tests passed on main.${NC}\n"
 echo -e "${YELLOW}Pushing main to origin...${NC}"
 git push origin main
 if [ $? -ne 0 ]; then
-    echo -e "${RED}Failed to push main to origin.${NC}"
+    echo -e "${RED}Failed to push main to origin. Switching back to $CURRENT_BRANCH...${NC}"
+    git checkout "$CURRENT_BRANCH"
     exit 1
 fi
 
@@ -187,8 +193,7 @@ fi
 
 git push origin --delete "$CURRENT_BRANCH"
 if [ $? -ne 0 ]; then
-    echo -e "${RED}Failed to delete remote branch $CURRENT_BRANCH.${NC}"
-    exit 1
+    echo -e "${YELLOW}Failed to delete remote branch $CURRENT_BRANCH. You may need to delete it manually.${NC}"
 fi
 
 echo -e "${GREEN}Successfully deleted branch $CURRENT_BRANCH locally and remotely.${NC}\n"
