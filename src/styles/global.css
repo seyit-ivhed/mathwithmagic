@@ -8,6 +8,12 @@
   --color-bg-tertiary: #0000005a;
   /* Transparent Black */
   --color-bg-overlay: rgba(0, 0, 0, 0.85);
+  --color-bg-deep: #050208;
+  /* Near-Black */
+  --color-bg-mystic: #1a0b2e;
+  /* Deep Indigo */
+  --color-bg-mystic-dark: #0f051a;
+  /* Dark Purple */
   --color-battleground-bg: var(--color-chronicle-bg);
 
   /* Primary Brand Colors */

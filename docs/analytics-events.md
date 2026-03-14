@@ -28,6 +28,15 @@ If the URL contains `utm_source` on load, `{ source, campaign, medium }` is capt
 
 ## Events
 
+### Landing Page
+
+| Event | Payload | Where fired | Description |
+|---|---|---|---|
+| `landing_viewed` | — | `LandingPage` | Landing page mounts. |
+| `landing_cta_clicked` | — | `LandingHero` | Player clicks the "Start Your Adventure" CTA button. |
+
+---
+
 ### Session
 
 | Event | Payload | Where fired | Description |

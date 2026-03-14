@@ -1,0 +1,87 @@
+.legalPageWrapper {
+    position: fixed;
+    inset: 0;
+    background: var(--color-bg-deep);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    color: var(--color-text-primary);
+    animation: legalFadeIn 0.5s ease-out;
+    overflow-y: auto;
+}
+
+@keyframes legalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.legalPageHeader {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    background: rgba(5, 2, 8, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.legalPageNav {
+    max-width: 820px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 2rem;
+    box-sizing: border-box;
+}
+
+.legalPageBackLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+    padding: 0.4rem 0;
+}
+
+.legalPageBackLink:hover {
+    color: var(--color-brand-accent);
+}
+
+.legalPageContent {
+    max-width: 820px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2rem 2rem 3rem;
+    box-sizing: border-box;
+}
+
+.legalScrollArea {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 3rem 2.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+    line-height: 1.75;
+}
+
+@media (max-width: 600px) {
+    .legalPageNav {
+        padding: 0.8rem 1rem;
+    }
+
+    .legalPageContent {
+        padding: 1.5rem 1rem;
+    }
+
+    .legalScrollArea {
+        padding: 1.5rem 1.2rem;
+    }
+}

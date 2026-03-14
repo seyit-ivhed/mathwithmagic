@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { LegalModal, type LegalDocumentType } from '../../legal/LegalModal';
+import styles from './ConsentCheckboxes.module.css';
 
 interface ConsentCheckboxesProps {
     ageConsent: boolean;
@@ -31,8 +32,8 @@ export const ConsentCheckboxes: React.FC<ConsentCheckboxesProps> = ({
 
     return (
         <>
-            <div className="consent-checkboxes">
-                <label className="consent-label" data-testid="age-consent-label">
+            <div className={styles.consentCheckboxes}>
+                <label className={styles.consentLabel} data-testid="age-consent-label">
                     <input
                         type="checkbox"
                         checked={ageConsent}
@@ -43,7 +44,7 @@ export const ConsentCheckboxes: React.FC<ConsentCheckboxesProps> = ({
                     <span>{t('account_creation.age_consent', 'I am 18 years or older and I am creating this account as a parent or guardian for my child.')}</span>
                 </label>
 
-                <label className="consent-label" data-testid="terms-consent-label">
+                <label className={styles.consentLabel} data-testid="terms-consent-label">
                     <input
                         type="checkbox"
                         checked={termsConsent}
@@ -55,7 +56,7 @@ export const ConsentCheckboxes: React.FC<ConsentCheckboxesProps> = ({
                         {t('account_creation.terms_consent_prefix', 'I agree to the')}{' '}
                         <button
                             type="button"
-                            className="consent-link"
+                            className={styles.consentLink}
                             onClick={() => onOpenLegalModal('terms')}
                             data-testid="terms-link"
                         >
@@ -64,7 +65,7 @@ export const ConsentCheckboxes: React.FC<ConsentCheckboxesProps> = ({
                         {' '}{t('account_creation.terms_consent_and', 'and')}{' '}
                         <button
                             type="button"
-                            className="consent-link"
+                            className={styles.consentLink}
                             onClick={() => onOpenLegalModal('privacy')}
                             data-testid="privacy-link"
                         >
@@ -73,7 +74,7 @@ export const ConsentCheckboxes: React.FC<ConsentCheckboxesProps> = ({
                     </span>
                 </label>
 
-                <label className="consent-label consent-label--optional" data-testid="product-updates-label">
+                <label className={`${styles.consentLabel} ${styles.consentLabelOptional}`} data-testid="product-updates-label">
                     <input
                         type="checkbox"
                         checked={productUpdates}

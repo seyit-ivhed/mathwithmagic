@@ -81,7 +81,10 @@ export const BackgroundMusic = () => {
             console.error("Failed to load music track:", e);
         });
 
-        return () => { cancelled = true; };
+        return () => {
+            cancelled = true;
+            currentTrackRef.current = null;
+        };
     }, [targetFilename]);
 
     // Volume control effect
