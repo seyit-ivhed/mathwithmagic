@@ -81,6 +81,8 @@ Parent/Guardian
     │
     ├── Payment ──────────► Stripe (payment processing) ── card data never touches our servers
     │
+    ├── Emails ───────────► Resend (email delivery) ── transactional (password recovery) + opt-in product updates
+    │
     └── Game session ──────► Anonymous session ID in Supabase play_events
                              (cannot be linked back to account)
 ```
@@ -273,7 +275,8 @@ When drafting the Privacy Policy, include all of the following:
 ### Third-Party Processors
 - [ ] Supabase — authentication and database hosting (EU region; link to Supabase privacy policy)
 - [ ] Stripe — payment processing (link to Stripe privacy policy)
-- [ ] Neither processor sells or re-shares data
+- [ ] Resend — email delivery for transactional and product update emails (link to Resend privacy policy)
+- [ ] No processor sells or re-shares data
 
 ### Data Retention
 - [ ] Account data retained until account deletion
@@ -346,6 +349,7 @@ GDPR Article 28 requires a written DPA with every data processor. These are self
 |---|---|---|
 | **Supabase** | Supabase dashboard → Settings → Legal / [supabase.com/legal/dpa](https://supabase.com/legal/dpa) | Not yet signed |
 | **Stripe** | Stripe dashboard → Settings → Legal → Data Processing Agreement | Not yet signed |
+| **Resend** | [resend.com/legal/dpa](https://resend.com/legal/dpa) | Not yet signed |
 
 Both DPAs are click-through — no lawyer required. Sign both before launching.
 
@@ -396,14 +400,5 @@ When a parent deletes their account, **all associated data must be deleted**:
 | 1 | Verify Supabase region is EU | Action required | Check Supabase dashboard |
 | 2 | Sign Supabase DPA | Action required | Manual action in Supabase dashboard |
 | 3 | Sign Stripe DPA | Action required | Manual action in Stripe dashboard |
-| 4 | Draft and publish Privacy Policy | Ready to implement | — |
-| 5 | Draft and publish Terms of Service | Ready to implement | — |
-| 6 | Draft Refund Policy (section in ToS) | Ready to implement | — |
-| 7 | Update account creation modal with consent checkboxes | Ready to implement | — |
-| 8 | Add legal page links to Chronicles footer | Ready to implement | — |
-| 9 | Add legal page links to account creation + settings | Ready to implement | — |
-| 10 | Implement account deletion flow (full cascade) | Ready to implement | — |
-| 11 | Add EU withdrawal waiver checkbox at checkout | Ready to implement | — |
-| 12 | Create internal RoPA document | ✅ Done — see [`docs/ropa.md`](ropa.md) | — |
-| 13 | Optional: lightweight DPIA (children's app) | Recommended | No blocker — internal document |
-| 14 | Optional: lawyer review of final documents | Recommended | Drafts must exist first |
+| 4 | Sign Resend DPA | Action required | See [resend.com/legal/dpa](https://resend.com/legal/dpa) |
+

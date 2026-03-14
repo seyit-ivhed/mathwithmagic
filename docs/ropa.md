@@ -38,7 +38,7 @@ No Data Protection Officer (DPO) has been appointed.
 | **Lawful basis** | Art. 6(1)(b) — Contract (necessary to provide the account service) |
 | **Data subjects** | Parents/guardians of children ages 6–8 |
 | **Personal data** | Email address, hashed password, Supabase session token |
-| **Recipients** | Supabase (authentication and database hosting) |
+| **Recipients** | Supabase (authentication and database hosting), Resend (password recovery emails) |
 | **International transfers** | Supabase is US-headquartered; data hosted in an EU region to avoid cross-border transfer. If a non-EU region is used, the transfer relies on Supabase's Standard Contractual Clauses (SCCs). |
 | **Retention** | Until the account is deleted |
 
@@ -63,12 +63,12 @@ No Data Protection Officer (DPO) has been appointed.
 | Field | Details |
 |---|---|
 | **Purpose** | Understand how the game is played in order to improve the product |
-| **Lawful basis** | Art. 6(1)(f) — Legitimate interest (session IDs cannot be linked to any individual; minimal privacy impact) |
+| **GDPR applicability** | Session IDs are anonymous, tab-scoped, and cannot be linked to any individual. This data does not constitute personal data under GDPR, so no lawful basis is required. Included in this RoPA for completeness. |
 | **Data subjects** | Anonymous game sessions (tab-scoped, not linked to any account or person) |
-| **Personal data** | Anonymous session ID only — not personal data under GDPR (no re-identification possible) |
+| **Personal data** | None — anonymous session ID only (no re-identification possible) |
 | **Recipients** | Supabase (database hosting) |
 | **International transfers** | Same as §1 above |
-| **Retention** | Indefinitely — session IDs are not personal data and cannot be linked to any individual |
+| **Retention** | Indefinitely — not personal data |
 
 ---
 
@@ -94,7 +94,7 @@ No Data Protection Officer (DPO) has been appointed.
 | **Lawful basis** | Art. 6(1)(a) — Consent (explicit opt-in checkbox at account creation; withdrawable at any time from account settings) |
 | **Data subjects** | Parents/guardians who have opted in |
 | **Personal data** | Email address |
-| **Recipients** | Supabase (stores the consent flag and email address) |
+| **Recipients** | Supabase (stores the consent flag and email address), Resend (email delivery) |
 | **International transfers** | Same as §1 above |
 | **Retention** | Until the account is deleted or consent is withdrawn |
 
@@ -118,8 +118,9 @@ The following categories of data are explicitly not collected:
 |---|---|---|---|---|
 | **Supabase** | Authentication and database hosting | US-headquartered; data in EU region | EU region avoids transfer; SCCs available if needed | Must be signed in Supabase dashboard |
 | **Stripe** | Payment processing | US-headquartered | EU–US Data Privacy Framework (DPF) adequacy decision | Must be signed in Stripe dashboard |
+| **Resend** | Email delivery (transactional and product update emails) | US-headquartered | EU–US Data Privacy Framework (DPF) adequacy decision | Must be signed — see [resend.com/legal/dpa](https://resend.com/legal/dpa) |
 
-See `docs/legal.md §11` for DPA signing instructions.
+See [`docs/legal.md §11`](legal.md#11-data-processing-agreements-dpas) for DPA signing instructions.
 
 ---
 
@@ -133,6 +134,22 @@ See `docs/legal.md §11` for DPA signing instructions.
 | Anonymous analytics (session IDs) | Indefinitely — not personal data |
 | Payment records | Held by Stripe under their own retention policy; not stored by Outlean AB |
 | Product update consent flag | Until account deletion or withdrawal of consent |
+
+---
+
+## Technical and organisational security measures
+
+As required by Article 30(1)(g), the following measures are in place (ref. Article 32):
+
+| Measure | Details |
+|---|---|
+| **Encryption in transit** | All data transmitted over HTTPS/TLS |
+| **Encryption at rest** | Supabase encrypts stored data at rest |
+| **Password hashing** | Passwords hashed by Supabase Auth (bcrypt) — plaintext passwords are never stored |
+| **Session management** | Session tokens stored in browser `sessionStorage` only; cleared when the tab is closed |
+| **Access control** | Supabase Row Level Security (RLS) ensures users can only access their own data |
+| **Payment isolation** | Card data entered directly into Stripe's hosted form; never touches Outlean AB servers |
+| **No child data** | Children play without accounts, eliminating risk of child data exposure |
 
 ---
 
