@@ -39,7 +39,7 @@ describe('useChronicleData', () => {
             // Mock returning player state - has encounter results
             vi.mocked(useGameStore).mockReturnValue({
                 encounterResults: {
-                    '1_1': { stars: 3, difficulty: 1, completedAt: Date.now() },
+                    '1_1': { stars: 3 },
                 },
                 adventureStatuses: {
                     '1': AdventureStatus.COMPLETED,
@@ -57,7 +57,7 @@ describe('useChronicleData', () => {
             // Mock returning player state
             vi.mocked(useGameStore).mockReturnValue({
                 encounterResults: {
-                    '1_1': { stars: 3, difficulty: 1, completedAt: Date.now() },
+                    '1_1': { stars: 3 },
                 },
                 adventureStatuses: {
                     '1': AdventureStatus.COMPLETED,
@@ -79,7 +79,7 @@ describe('useChronicleData', () => {
 
             vi.mocked(useGameStore).mockReturnValue({
                 encounterResults: {
-                    '1_1': { stars: 3, difficulty: 1, completedAt: Date.now() },
+                    '1_1': { stars: 3 },
                 },
                 adventureStatuses: {},
             } as ReturnType<typeof useGameStore>);

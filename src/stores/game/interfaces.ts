@@ -2,8 +2,6 @@ import { AdventureStatus, type AdventureId, type Encounter } from '../../types/a
 
 export interface EncounterResult {
     stars: number;
-    difficulty: number;
-    completedAt: number;
 }
 
 export interface EncounterWithStatus extends Encounter {

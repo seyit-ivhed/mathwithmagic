@@ -7,7 +7,6 @@ const LEGAL_LINKS = [
     { labelKey: 'legal.privacy_policy', labelDefault: 'Privacy Policy', to: '/privacy' },
     { labelKey: 'legal.terms_of_service', labelDefault: 'Terms of Service', to: '/terms' },
     { labelKey: 'landing.footer_refund_policy', labelDefault: 'Refund Policy', to: '/terms' },
-    { labelKey: 'landing.footer_cancellation_policy', labelDefault: 'Cancellation Policy', to: '/terms' },
 ] as const;
 
 export const LandingFooter: React.FC = () => {

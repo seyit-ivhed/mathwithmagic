@@ -33,15 +33,10 @@ export const createDebugSlice: StateCreator<GameStore, [], [], DebugSlice> = (se
     debugSetEncounterStars: (adventureId, nodeIndex, stars) => {
         const { encounterResults } = get();
         const key = `${adventureId}_${nodeIndex}`;
-        const existing = encounterResults[key];
         set({
             encounterResults: {
                 ...encounterResults,
-                [key]: {
-                    stars,
-                    difficulty: existing?.difficulty ?? 1,
-                    completedAt: existing?.completedAt ?? Date.now()
-                }
+                [key]: { stars }
             }
         });
     },
@@ -51,18 +46,12 @@ export const createDebugSlice: StateCreator<GameStore, [], [], DebugSlice> = (se
         if (!adventure) return;
 
         const { encounterResults } = get();
-        const now = Date.now();
         const updates: typeof encounterResults = {};
 
         adventure.encounters.forEach((encounter, index) => {
             if (encounter.type === EncounterType.ENDING) return;
             const key = `${adventureId}_${index + 1}`;
-            const existing = encounterResults[key];
-            updates[key] = {
-                stars,
-                difficulty: existing?.difficulty ?? 1,
-                completedAt: existing?.completedAt ?? now,
-            };
+            updates[key] = { stars };
         });
 
         set({ encounterResults: { ...encounterResults, ...updates } });

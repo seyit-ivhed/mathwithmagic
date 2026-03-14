@@ -8,13 +8,7 @@ const ADVENTURE_STATUS_RANK: Record<AdventureStatus, number> = {
 };
 
 function mergeEncounterResult(a: EncounterResult, b: EncounterResult): EncounterResult {
-    if (a.stars > b.stars) {
-        return a;
-    }
-    if (b.stars > a.stars) {
-        return b;
-    }
-    return a.completedAt >= b.completedAt ? a : b;
+    return a.stars >= b.stars ? a : b;
 }
 
 /** Merges two game states so that player progress never regresses. */
