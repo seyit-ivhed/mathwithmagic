@@ -74,7 +74,7 @@ describe('navigation.utils', () => {
     });
 
     describe('getFocalNodeIndex', () => {
-        const mockEncounterResult = { stars: 3, difficulty: 1, completedAt: 123 };
+        const mockEncounterResult = { stars: 3 };
 
         it('should return 1 if no encounters are completed for the adventure', () => {
             const encounterResults = {

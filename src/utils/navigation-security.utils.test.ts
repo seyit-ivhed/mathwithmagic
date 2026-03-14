@@ -100,8 +100,8 @@ describe('navigation-security.utils', () => {
             isPremiumUnlocked: mockIsPremiumUnlocked,
             isProgressionUnlocked: mockIsProgressionUnlocked,
             encounterResults: {
-                '1_1': { stars: 3, difficulty: 1, completedAt: 123 },
-                '1_2': { stars: 3, difficulty: 1, completedAt: 124 }
+                '1_1': { stars: 3 },
+                '1_2': { stars: 3 }
             }
         });
         expect(result.allowed).toBe(true);
@@ -114,7 +114,7 @@ describe('navigation-security.utils', () => {
             isPremiumUnlocked: mockIsPremiumUnlocked,
             isProgressionUnlocked: mockIsProgressionUnlocked,
             encounterResults: {
-                '1_1': { stars: 0, difficulty: 1, completedAt: 123 }
+                '1_1': { stars: 0 }
             }
         });
         expect(result.allowed).toBe(false);
