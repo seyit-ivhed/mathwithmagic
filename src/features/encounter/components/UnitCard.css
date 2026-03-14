@@ -116,3 +116,33 @@
 .ultimate-ready-glow {
     box-shadow: 0 0 20px rgba(245, 158, 11, 0.4), 0 0 40px rgba(245, 158, 11, 0.2);
 }
+
+/* Stats Row (HP + ATK icons) */
+.unit-stats-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 8px;
+    margin-bottom: 4px;
+}
+
+.unit-stat-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.unit-stat-hp-icon {
+    color: #ef4444;
+    filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.5));
+}
+
+.unit-stat-atk-icon {
+    color: #ffd700;
+    filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.5));
+}

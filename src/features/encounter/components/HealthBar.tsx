@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import './HealthBar.css';
 
 
@@ -9,7 +8,6 @@ interface HealthBarProps {
 }
 
 export const HealthBar = ({ currentHealth, maxHealth, isMonster }: HealthBarProps) => {
-    const { t } = useTranslation();
     const healthPercent = (currentHealth / maxHealth) * 100;
 
     return (
@@ -19,7 +17,7 @@ export const HealthBar = ({ currentHealth, maxHealth, isMonster }: HealthBarProp
                 style={{ width: `${healthPercent}%` }}
             />
             <div className="health-text">
-                <span style={{ marginRight: '0.25rem' }}>{t('combat.unit_card.hp', 'HP')}</span> {currentHealth} / {maxHealth}
+                {currentHealth}
             </div>
         </div>
     );
