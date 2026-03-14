@@ -1,6 +1,7 @@
 import fs from 'fs'
 import { defineConfig, createLogger } from 'vite'
 import react from '@vitejs/plugin-react'
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 
 const logger = createLogger()
 
@@ -15,7 +16,15 @@ const useHttps =
   fs.existsSync('./localhost+1.pem')
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    ViteImageOptimizer({
+      jpg: { quality: 80 },
+      jpeg: { quality: 80 },
+      png: { quality: 80 },
+      webp: { quality: 75 },
+    }),
+  ],
   customLogger: logger,
   server: {
     host: '127.0.0.1',
