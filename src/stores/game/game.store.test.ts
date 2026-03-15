@@ -86,8 +86,8 @@ describe('useGameStore', () => {
         it('should return the correct count after completing encounters', () => {
             useGameStore.setState({
                 encounterResults: {
-                    '1_1': { stars: 3, difficulty: 1, completedAt: 100 },
-                    '1_2': { stars: 2, difficulty: 1, completedAt: 200 },
+                    '1_1': { stars: 3 },
+                    '1_2': { stars: 2 },
                 }
             });
             const count = selectCompletedEncountersCount(useGameStore.getState());

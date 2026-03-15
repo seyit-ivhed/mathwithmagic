@@ -133,7 +133,7 @@ export async function interceptSupabaseAuth(page: Page): Promise<void> {
  * Call this via page.addInitScript() so it runs before any JS.
  */
 export function buildGameStateScript(partial: {
-    encounterResults?: Record<string, { stars: number; difficulty: number; completedAt: number }>;
+    encounterResults?: Record<string, { stars: number }>;
     adventureStatuses?: Record<string, string>;
     activeEncounterDifficulty?: number;
 }): string {

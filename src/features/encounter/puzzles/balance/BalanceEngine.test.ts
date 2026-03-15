@@ -53,18 +53,23 @@ describe('Balance Engine', () => {
             expect(data.leftStack.length).toBeGreaterThan(0);
         });
 
-        it('should handle max retry fallback when puzzle happens to be balanced', () => {
-            // Force the "noise accidentally cancels out" scenario by mocking Math.random
-            // so that noise weights always sum to the same value on both sides.
-            // We force retryCount > MAX_GENERATION_RETRIES by calling directly.
+        it('should recurse and then hit fallback when puzzle is always balanced', () => {
+            // Math.random() = 0 makes getRandomInt always return min,
+            // producing identical noise on both sides → balanced stacks
+            vi.spyOn(Math, 'random').mockReturnValue(0);
             const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-            // Call with retryCount >= 10 (MAX_GENERATION_RETRIES) directly
-            const data = generateBalanceData(1, 11);
-            // Should still return a valid object (fallback adjusts weight)
+            // retryCount=9 will recurse once (covers recursive branch),
+            // then hit MAX_GENERATION_RETRIES=10 (covers fallback branch)
+            const data = generateBalanceData(1, 9);
+
+            expect(consoleSpy).toHaveBeenCalledWith(
+                'Failed to generate unbalanced puzzle after max retries'
+            );
             expect(data).toHaveProperty('leftStack');
 
             consoleSpy.mockRestore();
+            vi.restoreAllMocks();
         });
     });
 

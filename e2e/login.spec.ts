@@ -144,7 +144,7 @@ test.describe('Login Flow', () => {
 
         // Seed game state so the redirect logic has progress to work with
         await page.addInitScript(buildGameStateScript({
-            encounterResults: { '1_1': { stars: 2, difficulty: 1, completedAt: Date.now() } },
+            encounterResults: { '1_1': { stars: 2 } },
             adventureStatuses: { '1': 'COMPLETED', '2': 'AVAILABLE' },
         }));
 

@@ -101,7 +101,7 @@ describe('useInitializeGame', () => {
     it('should merge cloud state with local state when cloud state exists', async () => {
         const cloudState = {
             activeParty: ['tariq'],
-            encounterResults: { '1_1': { stars: 3, difficulty: 3, completedAt: 100 } },
+            encounterResults: { '1_1': { stars: 3 } },
             activeEncounterDifficulty: 2,
             companionStats: { tariq: { level: 5, experience: 0 } },
             adventureStatuses: {},

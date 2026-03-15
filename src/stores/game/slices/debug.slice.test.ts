@@ -64,21 +64,21 @@ describe('debug.slice', () => {
 
         expect(mockSet).toHaveBeenCalledWith({
             encounterResults: expect.objectContaining({
-                '1_1': expect.objectContaining({ stars: 3 })
+                '1_1': { stars: 3 }
             })
         });
     });
 
-    it('should preserve existing difficulty and completedAt in debugSetEncounterStars when result already exists', () => {
+    it('should overwrite existing result with only stars in debugSetEncounterStars', () => {
         vi.mocked(mockSet).mockClear();
-        const existingResult = { stars: 1, difficulty: 2, completedAt: 12345 };
+        const existingResult = { stars: 1 };
         const slice = setupSlice({ encounterResults: { '1_1': existingResult } });
 
         slice.debugSetEncounterStars('1', 1, 3);
 
         expect(mockSet).toHaveBeenCalledWith({
             encounterResults: expect.objectContaining({
-                '1_1': expect.objectContaining({ stars: 3, difficulty: 2, completedAt: 12345 })
+                '1_1': { stars: 3 }
             })
         });
     });
@@ -101,18 +101,17 @@ describe('debug.slice', () => {
             });
         });
 
-        it('should preserve existing difficulty and completedAt in debugSetAdventureStars', () => {
+        it('should overwrite existing result with only stars in debugSetAdventureStars', () => {
             vi.mocked(mockSet).mockClear();
             const adventureId = ADVENTURES[0].id;
-            const existingResult = { stars: 1, difficulty: 2, completedAt: 99999 };
+            const existingResult = { stars: 1 };
             const slice = setupSlice({ encounterResults: { [`${adventureId}_1`]: existingResult } });
 
             slice.debugSetAdventureStars(adventureId, 3);
 
-            const callArg = vi.mocked(mockSet).mock.calls[0][0] as { encounterResults: Record<string, { stars: number; difficulty: number; completedAt: number }> };
+            const callArg = vi.mocked(mockSet).mock.calls[0][0] as { encounterResults: Record<string, { stars: number }> };
             const key = `${adventureId}_1`;
-            expect(callArg.encounterResults[key].difficulty).toBe(2);
-            expect(callArg.encounterResults[key].completedAt).toBe(99999);
+            expect(callArg.encounterResults[key]).toEqual({ stars: 3 });
         });
 
         it('should do nothing for a non-existent adventure ID', () => {

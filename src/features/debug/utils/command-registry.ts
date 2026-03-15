@@ -26,16 +26,16 @@ export const DEBUG_COMMANDS: Record<string, DebugCommand> = {
             });
         }
     },
-    progress: {
-        name: 'progress',
-        description: 'Complete encounters up to index (progress <advId> <index>)',
+    p: {
+        name: 'p',
+        description: 'Complete encounters up to index (p <advId> <index>)',
         execute: (parts, { log, stores }) => {
             const advId = parts[1];
             const targetNode = parseInt(parts[2]);
 
             const adventure = ADVENTURES.find(a => a.id === advId);
             if (!adventure || isNaN(targetNode)) {
-                log('Error: Invalid usage. Usage: progress <advId> <index>');
+                log('Error: Invalid usage. Usage: p <advId> <index>');
                 return;
             }
 

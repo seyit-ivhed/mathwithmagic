@@ -133,11 +133,11 @@ fi
 
 echo -e "${GREEN}Successfully merged $CURRENT_BRANCH into main.${NC}\n"
 
-# Run unit tests on main
-echo -e "${YELLOW}Running unit tests on main...${NC}"
-npm run test -- --run
+# Run unit tests with coverage on main
+echo -e "${YELLOW}Running unit tests with coverage on main...${NC}"
+npm run test:coverage -- --run
 if [ $? -ne 0 ]; then
-    echo -e "${RED}Unit tests failed on main. Rolling back...${NC}"
+    echo -e "${RED}Unit tests or coverage thresholds failed on main. Rolling back...${NC}"
     git reset --hard HEAD~1
     git checkout "$CURRENT_BRANCH"
     exit 1

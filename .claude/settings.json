@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(git commit:*)",
-      "Read(//Users/seyitivhed/.claude/**)"
+      "Read(//Users/seyitivhed/.claude/**)",
+      "Bash(gh pr create *)"
     ]
   }
 }
