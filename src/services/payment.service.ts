@@ -2,6 +2,10 @@ import type { Stripe } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { supabase } from './supabase.service';
 
+export function formatDisplayPrice(amountCents: number, currency: string): string {
+    return `${amountCents / 100} ${currency}`;
+}
+
 /**
  * Service to handle Stripe payment interactions and Edge Function calls.
  */
@@ -26,9 +30,9 @@ export class PaymentService {
     /**
      * Create a Payment Intent via Supabase Edge Function.
      * @param contentPackId The ID of the content pack to purchase (e.g., 'premium_base')
-     * @returns The client secret to initialize Stripe Elements or an alreadyOwned status.
+     * @returns The client secret to initialize Stripe Elements, an alreadyOwned status, and the display price.
      */
-    static async createPaymentIntent(contentPackId: string): Promise<{ clientSecret?: string, alreadyOwned?: boolean }> {
+    static async createPaymentIntent(contentPackId: string): Promise<{ clientSecret?: string, alreadyOwned?: boolean, displayPrice?: string }> {
         const { data, error } = await supabase.functions.invoke('create-payment-intent', {
             body: { contentPackId },
         });
@@ -39,6 +43,27 @@ export class PaymentService {
         }
 
         return data;
+    }
+
+    /**
+     * Fetch the current display price for a content pack directly from the database.
+     * @param contentPackId The ID of the content pack (e.g., 'premium_base')
+     * @returns Formatted price string (e.g., '59 SEK') or null if not found.
+     */
+    static async getContentPackPrice(contentPackId: string): Promise<string | null> {
+        const { data, error } = await supabase
+            .from('content_pack_prices')
+            .select('amount_cents, currency')
+            .eq('content_pack_id', contentPackId)
+            .eq('currency', 'SEK')
+            .single();
+
+        if (error || !data) {
+            console.error('Error fetching content pack price:', error);
+            return null;
+        }
+
+        return formatDisplayPrice(data.amount_cents, data.currency);
     }
 
     /**

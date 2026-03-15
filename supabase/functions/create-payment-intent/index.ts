@@ -113,6 +113,8 @@ export const handler = async (req: Request) => {
             })
         }
 
+        const displayPrice = `${pack.amount_cents / 100} ${pack.currency}`
+
         // 4. Check for existing PENDING purchase intent
         const { data: existingIntent, error: intentError } = await supabaseAdmin
             .from('purchase_intents')
@@ -162,7 +164,7 @@ export const handler = async (req: Request) => {
                 } else {
                     console.log('Reusing existing pending intent:', existingIntent.stripe_payment_intent_id)
                     return new Response(
-                        JSON.stringify({ clientSecret: intent.client_secret }),
+                        JSON.stringify({ clientSecret: intent.client_secret, displayPrice }),
                         { headers: { ...headers, 'Content-Type': 'application/json' } }
                     )
                 }
@@ -182,6 +184,8 @@ export const handler = async (req: Request) => {
             automatic_payment_methods: {
                 enabled: true,
             },
+            description: 'Math with Magic — Premium Access',
+            receipt_email: user.email,
             metadata: {
                 playerId: profile.id,
                 contentPackId: contentPackId,
@@ -210,7 +214,7 @@ export const handler = async (req: Request) => {
         console.log('Created and recorded Payment Intent:', paymentIntent.id)
 
         return new Response(
-            JSON.stringify({ clientSecret: paymentIntent.client_secret }),
+            JSON.stringify({ clientSecret: paymentIntent.client_secret, displayPrice }),
             { headers: { ...headers, 'Content-Type': 'application/json' } }
         )
     } catch (err: unknown) {

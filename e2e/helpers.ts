@@ -189,12 +189,15 @@ export async function mockStripe(page: Page): Promise<void> {
 
 /**
  * Intercepts the create-payment-intent edge function.
- * Defaults to returning a fake clientSecret; pass { alreadyOwned: true } to
+ * Defaults to returning a fake clientSecret and displayPrice; pass { alreadyOwned: true } to
  * simulate a user who has already purchased the content pack.
  */
 export async function mockPaymentIntent(
     page: Page,
-    response: { clientSecret?: string; alreadyOwned?: boolean } = { clientSecret: 'pi_test_123_secret_test456' },
+    response: { clientSecret?: string; alreadyOwned?: boolean; displayPrice?: string } = {
+        clientSecret: 'pi_test_123_secret_test456',
+        displayPrice: '59 SEK',
+    },
 ): Promise<void> {
     await page.route('**/functions/v1/create-payment-intent**', (route) => {
         route.fulfill({
@@ -210,6 +213,7 @@ export async function mockPaymentIntent(
  * - player_profiles: returns success for the upsert in account conversion
  * - player_entitlements: returns an existing entitlement so verifyEntitlement()
  *   resolves on the first poll (no 2-second delay loops)
+ * - content_pack_prices: returns mock pricing for PremiumStoreModal price display
  */
 export async function mockSupabaseRestApis(page: Page): Promise<void> {
     await page.route('**/rest/v1/player_profiles**', (route) => {
@@ -225,6 +229,14 @@ export async function mockSupabaseRestApis(page: Page): Promise<void> {
             status: 200,
             contentType: 'application/json',
             body: JSON.stringify([{ id: 'test-entitlement', content_pack_id: 'premium_base' }]),
+        });
+    });
+
+    await page.route('**/rest/v1/content_pack_prices**', (route) => {
+        route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify({ amount_cents: 5900, currency: 'SEK' }),
         });
     });
 }

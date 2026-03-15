@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ShieldCheck, Sparkles, Map, Users, Skull, Puzzle } from 'lucide-react';
 import { FormCloseButton } from '../../../components/ui/FormCloseButton';
 import { analyticsService } from '../../../services/analytics.service';
+import { PaymentService } from '../../../services/payment.service';
 import { useModalAccessibility } from '../../../hooks/useModalAccessibility';
 import styles from './PremiumStoreModal.module.css';
 import collage from '../../../styles/collage.module.css';
@@ -31,6 +32,23 @@ interface PremiumStoreModalProps {
 export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, onClose, sourceAdventureId }) => {
     const { t } = useTranslation();
     const modalRef = useModalAccessibility(onClose, isOpen);
+    const [displayPrice, setDisplayPrice] = useState<string | null>(null);
+    const [priceLoading, setPriceLoading] = useState(true);
+
+    useEffect(() => {
+        if (!isOpen) {
+            return;
+        }
+        PaymentService.getContentPackPrice('premium_base')
+            .then(price => {
+                setDisplayPrice(price);
+                setPriceLoading(false);
+            })
+            .catch(err => {
+                console.error('Failed to fetch content pack price:', err);
+                setPriceLoading(false);
+            });
+    }, [isOpen]);
 
     useEffect(() => {
         if (isOpen) {
@@ -94,7 +112,11 @@ export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, on
                     </ul>
 
                     <div className={styles.ctaContainer}>
-                        <div className={styles.priceTag}>{t('premium.store.price')}</div>
+                        <div className={styles.priceTag}>
+                            {priceLoading
+                                ? t('premium.store.price_loading', 'Loading price...')
+                                : (displayPrice ?? t('premium.store.price'))}
+                        </div>
                         <button className={styles.unlockButton} onClick={handleUnlock}>
                             {t('premium.store.buy_now')}
                         </button>
