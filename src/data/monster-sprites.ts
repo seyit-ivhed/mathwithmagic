@@ -4,37 +4,37 @@
  * Kept separate from data files to avoid Node.js import issues with image assets.
  */
 
-const duneScorpionImg = new URL('../assets/images/enemies/dune-scorpion.jpg', import.meta.url).href;
-const sandSpiritImg = new URL('../assets/images/enemies/sand-spirit.jpg', import.meta.url).href;
-const tinyScorpionImg = new URL('../assets/images/enemies/tiny-scorpion.jpg', import.meta.url).href;
-const desertScavengerImg = new URL('../assets/images/enemies/desert-scavenger.jpg', import.meta.url).href;
-const sandColossusImg = new URL('../assets/images/enemies/the-sand-colossus.jpg', import.meta.url).href;
-const banditRaiderImg = new URL('../assets/images/enemies/bandit-raider.jpg', import.meta.url).href;
-const stoneGuardianImg = new URL('../assets/images/enemies/stone-guardian.jpg', import.meta.url).href;
-const assyrianGuardianImg = new URL('../assets/images/enemies/assyrian-guardian.jpg', import.meta.url).href;
-const theStoneEmperorImg = new URL('../assets/images/enemies/the-stone-emperor.jpg', import.meta.url).href;
-const banditLeaderImg = new URL('../assets/images/enemies/bandit-leader.jpg', import.meta.url).href;
-const mistRoninImg = new URL('../assets/images/enemies/mist-ronin.jpg', import.meta.url).href;
-const samuraiSoldierImg = new URL('../assets/images/enemies/samurai-soldier.jpg', import.meta.url).href;
-const samuraiCommanderImg = new URL('../assets/images/enemies/samurai-commander.jpg', import.meta.url).href;
-const ninjaScoutImg = new URL('../assets/images/enemies/ninja-scout.jpg', import.meta.url).href;
-const samuraiVanguardImg = new URL('../assets/images/enemies/samurai-vanguard.jpg', import.meta.url).href;
-const samuraiArcherImg = new URL('../assets/images/enemies/samurai-archer.jpg', import.meta.url).href;
-const warHoundImg = new URL('../assets/images/enemies/war-hound.jpg', import.meta.url).href;
-const evilShogunImg = new URL('../assets/images/enemies/the-evil-shogun.jpg', import.meta.url).href;
+const duneScorpionImg = new URL('../assets/images/enemies/dune-scorpion.webp', import.meta.url).href;
+const sandSpiritImg = new URL('../assets/images/enemies/sand-spirit.webp', import.meta.url).href;
+const tinyScorpionImg = new URL('../assets/images/enemies/tiny-scorpion.webp', import.meta.url).href;
+const desertScavengerImg = new URL('../assets/images/enemies/desert-scavenger.webp', import.meta.url).href;
+const sandColossusImg = new URL('../assets/images/enemies/the-sand-colossus.webp', import.meta.url).href;
+const banditRaiderImg = new URL('../assets/images/enemies/bandit-raider.webp', import.meta.url).href;
+const stoneGuardianImg = new URL('../assets/images/enemies/stone-guardian.webp', import.meta.url).href;
+const assyrianGuardianImg = new URL('../assets/images/enemies/assyrian-guardian.webp', import.meta.url).href;
+const theStoneEmperorImg = new URL('../assets/images/enemies/the-stone-emperor.webp', import.meta.url).href;
+const banditLeaderImg = new URL('../assets/images/enemies/bandit-leader.webp', import.meta.url).href;
+const mistRoninImg = new URL('../assets/images/enemies/mist-ronin.webp', import.meta.url).href;
+const samuraiSoldierImg = new URL('../assets/images/enemies/samurai-soldier.webp', import.meta.url).href;
+const samuraiCommanderImg = new URL('../assets/images/enemies/samurai-commander.webp', import.meta.url).href;
+const ninjaScoutImg = new URL('../assets/images/enemies/ninja-scout.webp', import.meta.url).href;
+const samuraiVanguardImg = new URL('../assets/images/enemies/samurai-vanguard.webp', import.meta.url).href;
+const samuraiArcherImg = new URL('../assets/images/enemies/samurai-archer.webp', import.meta.url).href;
+const warHoundImg = new URL('../assets/images/enemies/war-hound.webp', import.meta.url).href;
+const evilShogunImg = new URL('../assets/images/enemies/the-evil-shogun.webp', import.meta.url).href;
 
 // Adventure 5 Monsters
-const blazeHyenaImg = new URL('../assets/images/enemies/blaze-hyena.jpg', import.meta.url).href;
-const emberLionessImg = new URL('../assets/images/enemies/ember-lioness.jpg', import.meta.url).href;
-const sunScorchedRhinoImg = new URL('../assets/images/enemies/sun-scorched-rhino.jpg', import.meta.url).href;
-const mirageSpiritImg = new URL('../assets/images/enemies/mirage-spirit.jpg', import.meta.url).href;
-const infernoManeImg = new URL('../assets/images/enemies/inferno-mane.jpg', import.meta.url).href;
+const blazeHyenaImg = new URL('../assets/images/enemies/blaze-hyena.webp', import.meta.url).href;
+const emberLionessImg = new URL('../assets/images/enemies/ember-lioness.webp', import.meta.url).href;
+const sunScorchedRhinoImg = new URL('../assets/images/enemies/sun-scorched-rhino.webp', import.meta.url).href;
+const mirageSpiritImg = new URL('../assets/images/enemies/mirage-spirit.webp', import.meta.url).href;
+const infernoManeImg = new URL('../assets/images/enemies/inferno-mane.webp', import.meta.url).href;
 
 // Adventure 6 Monsters
-const discordSpiritImg = new URL('../assets/images/enemies/discord-spirit.jpg', import.meta.url).href;
-const hollowShellImg = new URL('../assets/images/enemies/hollow-shell.jpg', import.meta.url).href;
-const twistedReflectionImg = new URL('../assets/images/enemies/twisted-reflection.jpg', import.meta.url).href;
-const spiritKingImg = new URL('../assets/images/enemies/spirit-king.jpg', import.meta.url).href;
+const discordSpiritImg = new URL('../assets/images/enemies/discord-spirit.webp', import.meta.url).href;
+const hollowShellImg = new URL('../assets/images/enemies/hollow-shell.webp', import.meta.url).href;
+const twistedReflectionImg = new URL('../assets/images/enemies/twisted-reflection.webp', import.meta.url).href;
+const spiritKingImg = new URL('../assets/images/enemies/spirit-king.webp', import.meta.url).href;
 
 const MONSTER_SPRITES: Record<string, string> = {
     'scorpion_1': duneScorpionImg,

@@ -59,7 +59,7 @@ export const CheckoutPage: React.FC = () => {
         <>
             <div className={styles.container}>
                 <CheckoutMusic />
-                <FormCloseButton onClick={handleBackToGame} className={styles.closeButton} />
+                <FormCloseButton onClick={handleBackToGame} className={styles.closeButton} color="var(--color-brand-accent)" />
 
                 <main className={styles.main}>
                     {showSuccess ? (

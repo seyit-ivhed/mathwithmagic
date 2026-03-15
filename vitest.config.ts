@@ -32,6 +32,7 @@ export default defineConfig({
                 'data/',
                 'src/features/encounter/abilities/types.ts', // type-only file — no executable runtime code
                 'src/stores/encounter/store.ts', // structural file — typeof window branch cannot be false in jsdom
+                'src/assets/**/*.mp3', // binary audio files — not executable code
             ],
         },
     },

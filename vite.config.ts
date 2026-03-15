@@ -15,7 +15,9 @@ const useHttps =
   fs.existsSync('./localhost+1.pem')
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+  ],
   customLogger: logger,
   server: {
     host: '127.0.0.1',
