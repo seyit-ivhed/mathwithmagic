@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { PaymentService } from '../../../services/payment.service';
 import { CheckoutForm } from './CheckoutForm';
-import { FormCloseButton } from '../../../components/ui/FormCloseButton';
 import { useTranslation } from 'react-i18next';
 import styles from './CheckoutOverlay.module.css';
 
@@ -132,7 +131,6 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
 
     return (
         <div className={styles.container} data-testid="checkout-overlay">
-            <FormCloseButton onClick={onCancel} />
             <Elements key={clientSecret} stripe={stripePromise} options={options}>
                 <CheckoutForm contentPackId={contentPackId} onSuccess={onSuccess} onCancel={onCancel} onRestart={onRestart} price={price} />
             </Elements>

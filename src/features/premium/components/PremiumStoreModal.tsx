@@ -58,7 +58,7 @@ export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, on
             aria-label={t('premium.store.title')}
             ref={modalRef}
         >
-            <FormCloseButton onClick={onClose} className={styles.closeButton} />
+            <FormCloseButton onClick={onClose} className={styles.closeButton} color="var(--color-brand-accent)" />
 
             <div className={styles.singlePageLayout}>
                 {/* Left Side: Information and CTA */}
