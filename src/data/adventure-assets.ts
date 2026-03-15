@@ -4,18 +4,18 @@
  * Kept separate from data files to avoid Node.js import issues with image assets.
  */
 
-const chapter1Illustration = new URL('../assets/images/chapters/chapter-1.jpg', import.meta.url).href;
-const chapter2Illustration = new URL('../assets/images/chapters/chapter-2.jpg', import.meta.url).href;
-const chapter3Illustration = new URL('../assets/images/chapters/chapter-3.jpg', import.meta.url).href;
-const chapter4Illustration = new URL('../assets/images/chapters/chapter-4.jpg', import.meta.url).href;
-const chapter5Illustration = new URL('../assets/images/chapters/chapter-5.jpg', import.meta.url).href;
-const chapter6Illustration = new URL('../assets/images/chapters/chapter-6.jpg', import.meta.url).href;
-const adventure1Map = new URL('../assets/images/maps/adventure-1.jpg', import.meta.url).href;
-const adventure2Map = new URL('../assets/images/maps/adventure-2.jpg', import.meta.url).href;
-const adventure3Map = new URL('../assets/images/maps/adventure-3.jpg', import.meta.url).href;
-const adventure4Map = new URL('../assets/images/maps/adventure-4.jpg', import.meta.url).href;
-const adventure5Map = new URL('../assets/images/maps/adventure-5.jpg', import.meta.url).href;
-const adventure6Map = new URL('../assets/images/maps/adventure-6.jpg', import.meta.url).href;
+const chapter1Illustration = new URL('../assets/images/chapters/chapter-1.webp', import.meta.url).href;
+const chapter2Illustration = new URL('../assets/images/chapters/chapter-2.webp', import.meta.url).href;
+const chapter3Illustration = new URL('../assets/images/chapters/chapter-3.webp', import.meta.url).href;
+const chapter4Illustration = new URL('../assets/images/chapters/chapter-4.webp', import.meta.url).href;
+const chapter5Illustration = new URL('../assets/images/chapters/chapter-5.webp', import.meta.url).href;
+const chapter6Illustration = new URL('../assets/images/chapters/chapter-6.webp', import.meta.url).href;
+const adventure1Map = new URL('../assets/images/maps/adventure-1.webp', import.meta.url).href;
+const adventure2Map = new URL('../assets/images/maps/adventure-2.webp', import.meta.url).href;
+const adventure3Map = new URL('../assets/images/maps/adventure-3.webp', import.meta.url).href;
+const adventure4Map = new URL('../assets/images/maps/adventure-4.webp', import.meta.url).href;
+const adventure5Map = new URL('../assets/images/maps/adventure-5.webp', import.meta.url).href;
+const adventure6Map = new URL('../assets/images/maps/adventure-6.webp', import.meta.url).href;
 
 const ADVENTURE_ILLUSTRATIONS: Record<string, string> = {
     '1': chapter1Illustration,

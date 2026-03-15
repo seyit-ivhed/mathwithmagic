@@ -20,7 +20,7 @@ export const PUZZLE_UI_ASSETS = {
         MIRROR_FRAME: new URL('../assets/images/puzzles/mirror/mirror.webp', import.meta.url).href,
     },
     BALANCE: {
-        BACKGROUND: new URL('../assets/images/puzzles/balance/background.jpg', import.meta.url).href,
+        BACKGROUND: new URL('../assets/images/puzzles/balance/background.webp', import.meta.url).href,
         CHAIN: new URL('../assets/images/puzzles/balance/chain.webp', import.meta.url).href,
         WEIGHT: new URL('../assets/images/puzzles/balance/weight.webp', import.meta.url).href,
         HEAVY_WEIGHT: new URL('../assets/images/puzzles/balance/heavy-weight.webp', import.meta.url).href,
