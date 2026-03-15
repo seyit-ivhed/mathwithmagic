@@ -37,7 +37,7 @@
 .cell {
     width: 64px;
     height: 64px;
-    background-image: url('../../../../assets/images/puzzles/number-path/pressure-plate.png');
+    background-image: url('../../../../assets/images/puzzles/number-path/pressure-plate.webp');
     background-size: cover;
     background-position: center;
     border: 2px solid rgba(255, 255, 255, 0.8);

@@ -47,13 +47,13 @@
 }
 
 .leftSide {
-    background-image: url('../../../../assets/images/puzzles/pedestal.png');
+    background-image: url('../../../../assets/images/puzzles/pedestal.webp');
     border: 4px solid #8b6532;
     filter: brightness(0.9);
 }
 
 .rightSide {
-    background-image: url('../../../../assets/images/puzzles/mirror/mirror.png');
+    background-image: url('../../../../assets/images/puzzles/mirror/mirror.webp');
     border: 4px solid #00d4ff;
     box-shadow: 0 0 30px rgba(0, 212, 255, 0.2), inset 0 0 60px rgba(0, 0, 0, 0.8);
 }

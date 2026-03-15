@@ -4,7 +4,7 @@ import styles from './BookCover.module.css';
 import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
 import { GameParticles } from '../../../../components/ui/GameParticles';
 import { BOOK_MAGIC_OPTIONS } from '../../../../components/ui/GameParticles.constants';
-import coverImage from '../../../../assets/images/tome-cover/cover.png';
+import coverImage from '../../../../assets/images/tome-cover/cover.webp';
 
 interface BookCoverProps {
     onStart: () => void;
