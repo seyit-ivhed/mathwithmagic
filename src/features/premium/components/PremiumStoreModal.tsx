@@ -9,19 +9,19 @@ import styles from './PremiumStoreModal.module.css';
 import collage from '../../../styles/collage.module.css';
 
 // Import Assets
-import adventure2 from '../../../assets/images/maps/adventure-2.jpg';
-import adventure3 from '../../../assets/images/maps/adventure-3.jpg';
-import adventure4 from '../../../assets/images/maps/adventure-4.jpg';
-import adventure5 from '../../../assets/images/maps/adventure-5.jpg';
-import adventure6 from '../../../assets/images/maps/adventure-6.jpg';
+import adventure2 from '../../../assets/images/maps/adventure-2.webp';
+import adventure3 from '../../../assets/images/maps/adventure-3.webp';
+import adventure4 from '../../../assets/images/maps/adventure-4.webp';
+import adventure5 from '../../../assets/images/maps/adventure-5.webp';
+import adventure6 from '../../../assets/images/maps/adventure-6.webp';
 
-import kenjiCard from '../../../assets/images/companions/Kenji/unit-card/kenji-2.jpg';
-import zaharaCard from '../../../assets/images/companions/Zahara/unit-card/zahara-2.jpg';
-import amaraEvo3 from '../../../assets/images/companions/Amara/unit-card/amara-3.jpg';
-import tariqEvo4 from '../../../assets/images/companions/Tariq/unit-card/tariq-3.jpg';
+import kenjiCard from '../../../assets/images/companions/Kenji/unit-card/kenji-2.webp';
+import zaharaCard from '../../../assets/images/companions/Zahara/unit-card/zahara-2.webp';
+import amaraEvo3 from '../../../assets/images/companions/Amara/unit-card/amara-3.webp';
+import tariqEvo4 from '../../../assets/images/companions/Tariq/unit-card/tariq-3.webp';
 
-import shadowMaster from '../../../assets/images/enemies/the-evil-shogun.jpg';
-import spiritKing from '../../../assets/images/enemies/spirit-king.jpg';
+import shadowMaster from '../../../assets/images/enemies/the-evil-shogun.webp';
+import spiritKing from '../../../assets/images/enemies/spirit-king.webp';
 
 interface PremiumStoreModalProps {
     isOpen: boolean;
@@ -73,7 +73,7 @@ export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, on
             aria-label={t('premium.store.title')}
             ref={modalRef}
         >
-            <FormCloseButton onClick={onClose} className={styles.closeButton} />
+            <FormCloseButton onClick={onClose} className={styles.closeButton} color="var(--color-brand-accent)" />
 
             <div className={styles.singlePageLayout}>
                 {/* Left Side: Information and CTA */}

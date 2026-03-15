@@ -13,7 +13,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    background-image: url('../../../../assets/images/puzzles/pedestal.png');
+    background-image: url('../../../../assets/images/puzzles/pedestal.webp');
     background-size: cover;
     background-position: center;
     padding: 140px 160px 200px;

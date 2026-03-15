@@ -3,6 +3,7 @@ import { getCompanionById } from '../../../data/companions.data';
 import './UnitCard.css';
 import '../encounter-animations.css';
 import { useTranslation } from 'react-i18next';
+import { Heart, Sword } from 'lucide-react';
 import { MathCardFace } from './MathCardFace';
 import type { MathProblem } from '../../../types/math.types';
 import { FloatingTextOverlay } from './FloatingTextOverlay';
@@ -133,28 +134,31 @@ export const UnitCard = ({
                 <div className="card-spacer" />
 
                 <div className="unit-info-bottom">
-                    {(companionData || isMonster) && (
+                    {isUltimateReady && unit.specialAbilityId ? (
                         <AbilityCard
-                            abilityName={
-                                isUltimateReady && unit.specialAbilityId
-                                    ? t(`abilities.${unit.specialAbilityId}.name`)
-                                    : t('companions.stats.attack')
-                            }
-                            abilityDescription={
-                                isUltimateReady && unit.specialAbilityId
-                                    ? t(`abilities.${unit.specialAbilityId}.description`, {
-                                        ...unit.specialAbilityVariables,
-                                        value: Object.values(unit.specialAbilityVariables || {})[0]
-                                    })
-                                    : ''
-                            }
+                            abilityName={t(`abilities.${unit.specialAbilityId}.name`)}
+                            abilityDescription={t(`abilities.${unit.specialAbilityId}.description`, {
+                                ...unit.specialAbilityVariables,
+                                value: Object.values(unit.specialAbilityVariables || {})[0]
+                            })}
                             progress={unit.currentSpirit}
-                            isUltimateReady={isUltimateReady}
-                            isSimplified={isMonster || !isUltimateReady}
+                            isUltimateReady={true}
+                            isSimplified={false}
                             isMonster={isMonster}
                             power={unit.damage || 10}
                         />
-                    )}
+                    ) : (companionData || isMonster) ? (
+                        <div className="unit-stats-row">
+                            <div className="unit-stat-item" aria-label={t('companions.stats.hp', 'HP')}>
+                                <Heart size={18} className="unit-stat-hp-icon" aria-hidden="true" />
+                                <span>{unit.maxHealth}</span>
+                            </div>
+                            <div className="unit-stat-item" aria-label={t('companions.stats.attack', 'Attack')}>
+                                <Sword size={20} className="unit-stat-atk-icon" aria-hidden="true" />
+                                <span>{unit.damage || 10}</span>
+                            </div>
+                        </div>
+                    ) : null}
 
                     <HealthBar
                         currentHealth={unit.currentHealth}
