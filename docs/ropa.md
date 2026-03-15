@@ -65,7 +65,7 @@ No Data Protection Officer (DPO) has been appointed.
 | **Purpose** | Understand how the game is played in order to improve the product |
 | **GDPR applicability** | Session IDs are anonymous, tab-scoped, and cannot be linked to any individual. This data does not constitute personal data under GDPR, so no lawful basis is required. Included in this RoPA for completeness. |
 | **Data subjects** | Anonymous game sessions (tab-scoped, not linked to any account or person) |
-| **Personal data** | None — anonymous session ID only (no re-identification possible) |
+| **Personal data** | None — anonymous session ID, first-visit date (date only), and campaign identifier (campaign slug only). No re-identification possible. |
 | **Recipients** | Supabase (database hosting) |
 | **International transfers** | Same as §1 above |
 | **Retention** | Indefinitely — not personal data |
@@ -132,6 +132,7 @@ See [`docs/legal.md §11`](legal.md#11-data-processing-agreements-dpas) for DPA 
 | Supabase session token | Cleared when the browser tab is closed (sessionStorage only) |
 | Game progress data | Until account deletion |
 | Anonymous analytics (session IDs) | Indefinitely — not personal data |
+| Cohort date and campaign identifier | Stored in browser localStorage as part of the player store; cleared on account deletion or storage clear. Server-side: retained indefinitely as part of anonymous analytics (not personal data). |
 | Payment records | Held by Stripe under their own retention policy; not stored by Outlean AB |
 | Product update consent flag | Until account deletion or withdrawal of consent |
 

@@ -16,6 +16,7 @@ Every event shares this base structure:
 | `event_type` | `text` | Event name (see below) |
 | `payload` | `jsonb` | Event-specific data (nullable) |
 | `attribution` | `jsonb` | UTM source/campaign/medium from URL params (nullable) |
+| `cohort` | `jsonb` | First-visit date and campaign identifier for cohort analysis (nullable) |
 | `created_at` | `timestamptz` | Server timestamp |
 
 ---
@@ -23,6 +24,24 @@ Every event shares this base structure:
 ## Attribution
 
 If the URL contains `utm_source` on load, `{ source, campaign, medium }` is captured in `sessionStorage` and attached to every event as `attribution`. Individual-level ad identifiers (`fbclid`, `gclid`) are intentionally excluded.
+
+---
+
+## Cohort Data
+
+Every event includes a `cohort` field sourced from the player store (persisted in `localStorage`):
+
+```json
+{
+  "start_date": "2026-03-15",
+  "campaign": "spring-2026-youtube"
+}
+```
+
+- `cohort.start_date` — set once on the player's very first visit (date only, no time) and never changed. Stored in `localStorage` as part of the player store. Groups players into weekly/monthly cohorts for retention analysis.
+- `cohort.campaign` — captures `utm_campaign` from the URL on the first visit only. If no `utm_campaign` was present on first visit, this is `null` and remains `null` on all subsequent visits, even if a campaign URL is visited later. Stores only the campaign slug — no source, medium, or click-level identifiers.
+
+Unlike `attribution` (session-scoped, clears when the tab closes), cohort data persists in `localStorage` across sessions. Both fields are cleared by `clearAppStorage()`, which is called on account deletion.
 
 ---
 
@@ -145,4 +164,6 @@ The game and checkout pages share the same `session_id` via `sessionStorage`. Wh
 - No user IDs, emails, or device fingerprints are stored.
 - `session_id` is scoped to the browser tab via `sessionStorage` and is cleared when the tab closes.
 - UTM attribution excludes individual-level ad click identifiers (`fbclid`, `gclid`).
+- First-visit date is stored as date only (no time) to ensure cohort buckets remain large.
+- Campaign identifier stores only the campaign slug — no click-level ad identifiers.
 - RLS policy allows anonymous insert only — no read access for clients.

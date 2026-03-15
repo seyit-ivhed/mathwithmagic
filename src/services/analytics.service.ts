@@ -1,4 +1,5 @@
 import { supabase } from './supabase.service';
+import { usePlayerStore } from '../stores/player.store';
 
 // Session ID persisted in sessionStorage so it survives page refreshes and
 // navigations within the same tab (including game ↔ checkout). sessionStorage
@@ -43,11 +44,16 @@ async function trackEvent(
     eventType: string,
     payload?: Record<string, unknown>
 ): Promise<void> {
+    const { cohortDate, campaign } = usePlayerStore.getState();
     const record = {
         session_id: SESSION_ID,
         event_type: eventType,
         payload: payload ?? null,
         attribution: getAttribution(),
+        cohort: {
+            start_date: cohortDate,
+            campaign,
+        },
     };
 
     if (import.meta.env.DEV) {
