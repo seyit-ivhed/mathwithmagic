@@ -71,6 +71,7 @@ Deno.test({
             // 5. Assertions
             assertEquals(res.status, 200);
             assertEquals(data.clientSecret, "pi_mock_secret");
+            assertEquals(data.displayPrice, "99 SEK");
             assertEquals(res.headers.get('Access-Control-Allow-Origin'), "http://localhost:5173");
 
         } finally {
