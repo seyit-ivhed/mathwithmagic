@@ -11,7 +11,6 @@ interface CheckoutOverlayProps {
     onSuccess: () => void;
     onCancel: () => void;
     onRestart: () => void;
-    price: string;
 }
 
 export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
@@ -19,10 +18,10 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
     onSuccess,
     onCancel,
     onRestart,
-    price
 }) => {
     const { t } = useTranslation();
     const [clientSecret, setClientSecret] = useState<string | null>(null);
+    const [displayPrice, setDisplayPrice] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
     const lastFetchedIdRef = useRef<string | null>(null);
     const stripePromise = PaymentService.getStripe();
@@ -41,6 +40,9 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
                 }
                 if (data.clientSecret) {
                     setClientSecret(data.clientSecret);
+                    if (data.displayPrice) {
+                        setDisplayPrice(data.displayPrice);
+                    }
                 } else {
                     throw new Error('No client secret returned');
                 }
@@ -134,7 +136,7 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
         <div className={styles.container} data-testid="checkout-overlay">
             <FormCloseButton onClick={onCancel} />
             <Elements key={clientSecret} stripe={stripePromise} options={options}>
-                <CheckoutForm contentPackId={contentPackId} onSuccess={onSuccess} onCancel={onCancel} onRestart={onRestart} price={price} />
+                <CheckoutForm contentPackId={contentPackId} onSuccess={onSuccess} onCancel={onCancel} onRestart={onRestart} price={displayPrice ?? ''} />
             </Elements>
         </div>
     );

@@ -26,9 +26,9 @@ export class PaymentService {
     /**
      * Create a Payment Intent via Supabase Edge Function.
      * @param contentPackId The ID of the content pack to purchase (e.g., 'premium_base')
-     * @returns The client secret to initialize Stripe Elements or an alreadyOwned status.
+     * @returns The client secret to initialize Stripe Elements, an alreadyOwned status, and the display price.
      */
-    static async createPaymentIntent(contentPackId: string): Promise<{ clientSecret?: string, alreadyOwned?: boolean }> {
+    static async createPaymentIntent(contentPackId: string): Promise<{ clientSecret?: string, alreadyOwned?: boolean, displayPrice?: string }> {
         const { data, error } = await supabase.functions.invoke('create-payment-intent', {
             body: { contentPackId },
         });
@@ -39,6 +39,28 @@ export class PaymentService {
         }
 
         return data;
+    }
+
+    /**
+     * Fetch the current display price for a content pack directly from the database.
+     * Uses the publicly readable content_pack_prices table (no auth required).
+     * @param contentPackId The ID of the content pack (e.g., 'premium_base')
+     * @returns Formatted price string (e.g., '59 SEK') or null if not found.
+     */
+    static async getContentPackPrice(contentPackId: string): Promise<string | null> {
+        const { data, error } = await supabase
+            .from('content_pack_prices')
+            .select('amount_cents, currency')
+            .eq('content_pack_id', contentPackId)
+            .eq('currency', 'SEK')
+            .single();
+
+        if (error || !data) {
+            console.error('Error fetching content pack price:', error);
+            return null;
+        }
+
+        return `${data.amount_cents / 100} ${data.currency}`;
     }
 
     /**

@@ -493,6 +493,7 @@
         "support_title": "Stöd en soloutvecklare"
       },
       "price": "59 KR",
+    "price_loading": "Laddar pris...",
       "buy_now": "Lås upp",
       "account": {
         "title": "Säkra din resa",

@@ -105,7 +105,6 @@ export const CheckoutPage: React.FC = () => {
                                 onSuccess={handleSuccess}
                                 onCancel={handleBackToGame}
                                 onRestart={handleRestart}
-                                price={t('premium.store.price', '59 SEK')}
                             />
                         </div>
                     )}
