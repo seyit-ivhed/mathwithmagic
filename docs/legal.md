@@ -348,7 +348,7 @@ GDPR Article 28 requires a written DPA with every data processor. These are self
 | Processor | DPA location | Status |
 |---|---|---|
 | **Supabase** | Supabase dashboard → Settings → Legal / [supabase.com/legal/dpa](https://supabase.com/legal/dpa) | Not yet signed |
-| **Stripe** | Stripe dashboard → Settings → Legal → Data Processing Agreement | Not yet signed |
+| **Stripe** | [stripe.com/legal/dpa](https://stripe.com/legal/dpa) — automatically incorporated into your Stripe Services Agreement (SSA); no separate signing required | ✅ Included by default |
 | **Resend** | [resend.com/legal/dpa](https://resend.com/legal/dpa) | Not yet signed |
 
 Both DPAs are click-through — no lawyer required. Sign both before launching.
@@ -399,6 +399,6 @@ When a parent deletes their account, **all associated data must be deleted**:
 |---|---|---|---|
 | 1 | Verify Supabase region is EU | Action required | Check Supabase dashboard |
 | 2 | Sign Supabase DPA | Action required | Manual action in Supabase dashboard |
-| 3 | Sign Stripe DPA | Action required | Manual action in Stripe dashboard |
+| 3 | ~~Sign Stripe DPA~~ | ✅ Done | Automatically included in Stripe Services Agreement ([stripe.com/legal/dpa](https://stripe.com/legal/dpa)) |
 | 4 | Sign Resend DPA | Action required | See [resend.com/legal/dpa](https://resend.com/legal/dpa) |
 

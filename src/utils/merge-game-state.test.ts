@@ -20,7 +20,7 @@ describe('mergeGameState', () => {
     describe('encounterResults', () => {
         it('keeps primary encounter result when secondary has none', () => {
             const primary = base({
-                encounterResults: { '1_1': { stars: 3, difficulty: 3, completedAt: 100 } },
+                encounterResults: { '1_1': { stars: 3 } },
             });
             const result = mergeGameState(primary, base());
             expect(result.encounterResults['1_1'].stars).toBe(3);
@@ -28,7 +28,7 @@ describe('mergeGameState', () => {
 
         it('keeps secondary encounter result when primary has none', () => {
             const secondary = base({
-                encounterResults: { '1_1': { stars: 2, difficulty: 2, completedAt: 100 } },
+                encounterResults: { '1_1': { stars: 2 } },
             });
             const result = mergeGameState(base(), secondary);
             expect(result.encounterResults['1_1'].stars).toBe(2);
@@ -36,10 +36,10 @@ describe('mergeGameState', () => {
 
         it('keeps higher stars when primary has better result', () => {
             const primary = base({
-                encounterResults: { '1_1': { stars: 3, difficulty: 3, completedAt: 200 } },
+                encounterResults: { '1_1': { stars: 3 } },
             });
             const secondary = base({
-                encounterResults: { '1_1': { stars: 1, difficulty: 1, completedAt: 100 } },
+                encounterResults: { '1_1': { stars: 1 } },
             });
             const result = mergeGameState(primary, secondary);
             expect(result.encounterResults['1_1'].stars).toBe(3);
@@ -47,40 +47,29 @@ describe('mergeGameState', () => {
 
         it('keeps higher stars when secondary has better result', () => {
             const primary = base({
-                encounterResults: { '1_1': { stars: 1, difficulty: 1, completedAt: 100 } },
+                encounterResults: { '1_1': { stars: 1 } },
             });
             const secondary = base({
-                encounterResults: { '1_1': { stars: 3, difficulty: 3, completedAt: 200 } },
+                encounterResults: { '1_1': { stars: 3 } },
             });
             const result = mergeGameState(primary, secondary);
             expect(result.encounterResults['1_1'].stars).toBe(3);
         });
 
-        it('keeps most recent when stars are equal (primary newer)', () => {
+        it('prefers primary when stars are equal', () => {
             const primary = base({
-                encounterResults: { '1_1': { stars: 2, difficulty: 2, completedAt: 300 } },
+                encounterResults: { '1_1': { stars: 2 } },
             });
             const secondary = base({
-                encounterResults: { '1_1': { stars: 2, difficulty: 2, completedAt: 100 } },
+                encounterResults: { '1_1': { stars: 2 } },
             });
             const result = mergeGameState(primary, secondary);
-            expect(result.encounterResults['1_1'].completedAt).toBe(300);
-        });
-
-        it('keeps secondary when stars are equal but secondary is more recent', () => {
-            const primary = base({
-                encounterResults: { '1_1': { stars: 2, difficulty: 2, completedAt: 100 } },
-            });
-            const secondary = base({
-                encounterResults: { '1_1': { stars: 2, difficulty: 2, completedAt: 300 } },
-            });
-            const result = mergeGameState(primary, secondary);
-            expect(result.encounterResults['1_1'].completedAt).toBe(300);
+            expect(result.encounterResults['1_1']).toBe(primary.encounterResults['1_1']);
         });
 
         it('includes encounters only in secondary', () => {
             const secondary = base({
-                encounterResults: { '2_1': { stars: 2, difficulty: 2, completedAt: 100 } },
+                encounterResults: { '2_1': { stars: 2 } },
             });
             const result = mergeGameState(base(), secondary);
             expect(result.encounterResults['2_1']).toBeDefined();
@@ -88,10 +77,10 @@ describe('mergeGameState', () => {
 
         it('includes encounters from both states (union)', () => {
             const primary = base({
-                encounterResults: { '1_1': { stars: 3, difficulty: 3, completedAt: 100 } },
+                encounterResults: { '1_1': { stars: 3 } },
             });
             const secondary = base({
-                encounterResults: { '2_1': { stars: 2, difficulty: 2, completedAt: 100 } },
+                encounterResults: { '2_1': { stars: 2 } },
             });
             const result = mergeGameState(primary, secondary);
             expect(result.encounterResults['1_1']).toBeDefined();
@@ -278,8 +267,8 @@ describe('mergeGameState', () => {
                     kenji: { level: 3, experience: 0 },
                 },
                 encounterResults: {
-                    '1_1': { stars: 3, difficulty: 3, completedAt: 200 },
-                    '1_2': { stars: 2, difficulty: 2, completedAt: 210 },
+                    '1_1': { stars: 3 },
+                    '1_2': { stars: 2 },
                 },
                 adventureStatuses: {
                     '1': AdventureStatus.COMPLETED,
@@ -295,8 +284,8 @@ describe('mergeGameState', () => {
                     zahara: { level: 2, experience: 0 },
                 },
                 encounterResults: {
-                    '1_1': { stars: 1, difficulty: 1, completedAt: 100 }, // older/worse
-                    '2_1': { stars: 3, difficulty: 3, completedAt: 300 }, // only in B
+                    '1_1': { stars: 1 }, // worse
+                    '2_1': { stars: 3 }, // only in B
                 },
                 adventureStatuses: {
                     '1': AdventureStatus.COMPLETED,

@@ -30,7 +30,7 @@ describe('adventure-progress.slice - completeEncounter', () => {
     it('should update stars if new performance is better', () => {
         vi.mocked(mockSet).mockClear();
         const encounterKey = `${adventureId}_1`;
-        const initialResult = { stars: 1, difficulty: 1, completedAt: 100 };
+        const initialResult = { stars: 1 };
         const slice = setupSlice({
             encounterResults: { [encounterKey]: initialResult },
             activeEncounterDifficulty: 3
@@ -48,7 +48,7 @@ describe('adventure-progress.slice - completeEncounter', () => {
     it('should not update stars if new performance is worse', () => {
         vi.mocked(mockSet).mockClear();
         const encounterKey = `${adventureId}_1`;
-        const initialResult = { stars: 3, difficulty: 3, completedAt: 100 };
+        const initialResult = { stars: 3 };
         const slice = setupSlice({
             encounterResults: { [encounterKey]: initialResult },
             activeEncounterDifficulty: 1
@@ -181,7 +181,7 @@ describe('adventure-progress.slice - getAdventureNodes', () => {
     it('should unlock the next node when the first is completed with stars', () => {
         const firstNodeKey = `${adventureId}_1`;
         const encounterResults = {
-            [firstNodeKey]: { stars: 3, difficulty: 1, completedAt: 123 }
+            [firstNodeKey]: { stars: 3 }
         };
         const slice = setupSlice(encounterResults);
         const nodes = slice.getAdventureNodes(adventureId);
@@ -194,9 +194,9 @@ describe('adventure-progress.slice - getAdventureNodes', () => {
 
     it('should keep completed nodes unlocked even if they are not the latest', () => {
         const encounterResults = {
-            [`${adventureId}_1`]: { stars: 3, difficulty: 1, completedAt: 123 },
-            [`${adventureId}_2`]: { stars: 2, difficulty: 1, completedAt: 124 },
-            [`${adventureId}_3`]: { stars: 1, difficulty: 1, completedAt: 125 },
+            [`${adventureId}_1`]: { stars: 3 },
+            [`${adventureId}_2`]: { stars: 2 },
+            [`${adventureId}_3`]: { stars: 1 },
         };
         const slice = setupSlice(encounterResults);
         const nodes = slice.getAdventureNodes(adventureId);
@@ -210,7 +210,7 @@ describe('adventure-progress.slice - getAdventureNodes', () => {
     it('should correct the bug: Replaying Node 1 should not lock Node 3 if Node 2 is completed', () => {
         const node3Key = `${adventureId}_3`;
         const encounterResults = {
-            [node3Key]: { stars: 3, difficulty: 1, completedAt: 123 }
+            [node3Key]: { stars: 3 }
         };
 
         const slice = setupSlice(encounterResults);
