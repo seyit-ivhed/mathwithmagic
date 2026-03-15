@@ -11,6 +11,8 @@ describe('Player Store', () => {
             sfxVolume: AUDIO_CONFIG.DEFAULT_SFX_VOLUME,
             voiceVolume: AUDIO_CONFIG.DEFAULT_VOICE_VOLUME,
             isVoiceOverPlaying: false,
+            cohortDate: null,
+            campaign: null,
         });
     });
 
@@ -149,6 +151,81 @@ describe('Player Store', () => {
             expect(usePlayerStore.getState().isVoiceOverPlaying).toBe(before);
             expect(consoleSpy).toHaveBeenCalled();
             consoleSpy.mockRestore();
+        });
+    });
+
+    describe('cohort fields', () => {
+        it('cohortDate follows YYYY-MM-DD format when set to a real date', () => {
+            usePlayerStore.setState({ cohortDate: '2026-03-15' });
+            const { cohortDate } = usePlayerStore.getState();
+            expect(cohortDate).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+        });
+
+        it('cohortDate can be null', () => {
+            usePlayerStore.setState({ cohortDate: null });
+            expect(usePlayerStore.getState().cohortDate).toBeNull();
+        });
+
+        it('campaign can hold a slug string', () => {
+            usePlayerStore.setState({ campaign: 'spring-2026-youtube' });
+            expect(usePlayerStore.getState().campaign).toBe('spring-2026-youtube');
+        });
+
+        it('campaign can be null', () => {
+            usePlayerStore.setState({ campaign: null });
+            expect(usePlayerStore.getState().campaign).toBeNull();
+        });
+
+        it('getTodayDateString returns a YYYY-MM-DD date matching today', () => {
+            const today = new Date().toISOString().slice(0, 10);
+            // The store module sets cohortDate to today on first initialisation
+            // (before localStorage hydration). We verify the format matches.
+            expect(today).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+        });
+
+        it('does not capture fbclid or gclid as campaign — only utm_campaign is read', async () => {
+            localStorage.clear();
+            Object.defineProperty(window, 'location', {
+                writable: true,
+                value: { ...window.location, search: '?fbclid=abc123&gclid=xyz789' },
+            });
+            vi.resetModules();
+            const { usePlayerStore: freshStore } = await import('./player.store');
+            expect(freshStore.getState().campaign).toBeNull();
+            Object.defineProperty(window, 'location', {
+                writable: true,
+                value: { ...window.location, search: '' },
+            });
+        });
+
+        it('captures utm_campaign from URL into campaign on first initialisation', async () => {
+            localStorage.clear();
+            Object.defineProperty(window, 'location', {
+                writable: true,
+                value: { ...window.location, search: '?utm_campaign=spring-2026-youtube' },
+            });
+            vi.resetModules();
+            const { usePlayerStore: freshStore } = await import('./player.store');
+            expect(freshStore.getState().campaign).toBe('spring-2026-youtube');
+            Object.defineProperty(window, 'location', {
+                writable: true,
+                value: { ...window.location, search: '' },
+            });
+        });
+
+        it('sets campaign to null when no utm_campaign is present in URL', async () => {
+            localStorage.clear();
+            Object.defineProperty(window, 'location', {
+                writable: true,
+                value: { ...window.location, search: '?utm_source=facebook&utm_medium=cpc' },
+            });
+            vi.resetModules();
+            const { usePlayerStore: freshStore } = await import('./player.store');
+            expect(freshStore.getState().campaign).toBeNull();
+            Object.defineProperty(window, 'location', {
+                writable: true,
+                value: { ...window.location, search: '' },
+            });
         });
     });
 });

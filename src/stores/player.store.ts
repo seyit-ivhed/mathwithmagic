@@ -14,6 +14,10 @@ interface PlayerState {
     voiceVolume: number; // 0.0 to 1.0
     isVoiceOverPlaying: boolean;
 
+    // Cohort analytics (write-once, persisted in localStorage)
+    cohortDate: string | null;
+    campaign: string | null;
+
     // Actions
 
     setLanguage: (lang: 'en' | 'sv') => void;
@@ -22,6 +26,15 @@ interface PlayerState {
     setSfxVolume: (volume: number) => void;
     setVoiceVolume: (volume: number) => void;
     setVoiceOverPlaying: (isPlaying: boolean) => void;
+}
+
+function getTodayDateString(): string {
+    return new Date().toISOString().slice(0, 10);
+}
+
+function getInitialCampaign(): string | null {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('utm_campaign');
 }
 
 export const usePlayerStore = create<PlayerState>()(
@@ -35,6 +48,12 @@ export const usePlayerStore = create<PlayerState>()(
             sfxVolume: AUDIO_CONFIG.DEFAULT_SFX_VOLUME,
             voiceVolume: AUDIO_CONFIG.DEFAULT_VOICE_VOLUME,
             isVoiceOverPlaying: false,
+
+            // cohortDate and campaign are write-once: the initial state factory sets them on first
+            // visit. On return visits, Zustand's persist middleware hydrates stored values from
+            // localStorage, overwriting these initial values and preserving the originals.
+            cohortDate: getTodayDateString(),
+            campaign: getInitialCampaign(),
 
             setLanguage: (language) => set({ language }),
             setMasterVolume: (volume) => {
@@ -81,6 +100,8 @@ export const usePlayerStore = create<PlayerState>()(
                 musicVolume: state.musicVolume,
                 sfxVolume: state.sfxVolume,
                 voiceVolume: state.voiceVolume,
+                cohortDate: state.cohortDate,
+                campaign: state.campaign,
             }),
         }
     )

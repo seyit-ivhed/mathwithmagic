@@ -60,6 +60,8 @@
 | Password (hashed) | Parent/guardian | Account access | Contract | Supabase |
 | Supabase session token | System-generated | Authentication after login | Contract necessity | Browser sessionStorage |
 | Anonymous session ID | System-generated (tab-scoped) | Analytics | Legitimate interest | Supabase (`play_events`) |
+| First-visit date (date only) | System-generated | Cohort analysis | Legitimate interest | Browser localStorage (player store) + Supabase (`play_events.cohort`) |
+| Campaign identifier (utm_campaign slug) | From URL parameter on first visit | Marketing campaign analysis | Legitimate interest | Browser localStorage (player store) + Supabase (`play_events.cohort`) |
 | Game progress data | System-generated | Cross-device save, gameplay | Contract | Supabase |
 | Payment data | Parent/guardian | Purchase processing | Contract | Stripe (we never store card data) |
 
@@ -300,6 +302,7 @@ When drafting the Privacy Policy, include all of the following:
 - [ ] Stripe cookies are blocked in our implementation
 - [ ] Supabase stores a session token in `sessionStorage` only while you are logged in; it is cleared when the browser tab is closed
 - [ ] No third-party analytics cookies
+- [ ] A first-visit date (date only) and marketing campaign name (if you arrived via a campaign link) are stored in `localStorage` as part of the player store for anonymous cohort analysis; they cannot identify you individually
 
 ### Contact for Privacy Requests
 - [ ] How to exercise rights (email address)

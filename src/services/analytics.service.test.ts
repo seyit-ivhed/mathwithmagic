@@ -9,6 +9,16 @@ vi.mock('./supabase.service', () => ({
     },
 }));
 
+// Mock the player store so cohort values are predictable
+vi.mock('../stores/player.store', () => ({
+    usePlayerStore: {
+        getState: vi.fn().mockReturnValue({
+            cohortDate: '2026-03-15',
+            campaign: 'test-campaign',
+        }),
+    },
+}));
+
 // Mock crypto.randomUUID so session_id is predictable
 const MOCK_UUID = 'test-session-uuid-1234';
 vi.stubGlobal('crypto', { randomUUID: () => MOCK_UUID });
@@ -148,6 +158,45 @@ describe('analyticsService', () => {
                 event_type: 'test_window_event',
                 payload: { key: 'val' },
             });
+        });
+    });
+
+    describe('cohort', () => {
+        it('includes cohort field in every tracked event', async () => {
+            const { supabase } = await import('./supabase.service');
+            const insertMock = vi.fn().mockResolvedValue({ error: null });
+            vi.mocked(supabase.from).mockReturnValue({ insert: insertMock } as unknown as ReturnType<typeof supabase.from>);
+
+            await analyticsService.trackEvent('test_event_with_cohort');
+
+            expect(insertMock).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    cohort: expect.objectContaining({
+                        start_date: '2026-03-15',
+                        campaign: 'test-campaign',
+                    }),
+                })
+            );
+        });
+
+        it('includes cohort with null values when player store has no cohort data', async () => {
+            const { usePlayerStore } = await import('../stores/player.store');
+            vi.mocked(usePlayerStore.getState).mockReturnValueOnce({
+                cohortDate: null,
+                campaign: null,
+            } as ReturnType<typeof usePlayerStore.getState>);
+
+            const { supabase } = await import('./supabase.service');
+            const insertMock = vi.fn().mockResolvedValue({ error: null });
+            vi.mocked(supabase.from).mockReturnValue({ insert: insertMock } as unknown as ReturnType<typeof supabase.from>);
+
+            await analyticsService.trackEvent('test_event_null_cohort');
+
+            expect(insertMock).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    cohort: { start_date: null, campaign: null },
+                })
+            );
         });
     });
 

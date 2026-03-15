@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './LegalModal.module.css';
 
-const LAST_UPDATED = '2026-03-08';
+const LAST_UPDATED = '2026-03-15';
 
 export const PrivacyPolicyContent: React.FC = () => (
     <div className={styles.legalDocument}>
@@ -77,6 +77,18 @@ export const PrivacyPolicyContent: React.FC = () => (
                     <td>Art. 6(1)(a) — Consent</td>
                     <td>Supabase</td>
                 </tr>
+                <tr>
+                    <td>First-visit date</td>
+                    <td>Understand when players discover the game (cohort analysis)</td>
+                    <td>Art. 6(1)(f) — Legitimate interest</td>
+                    <td>Browser localStorage + Supabase</td>
+                </tr>
+                <tr>
+                    <td>Campaign identifier</td>
+                    <td>Compare how players from different marketing campaigns use the game</td>
+                    <td>Art. 6(1)(f) — Legitimate interest</td>
+                    <td>Browser localStorage + Supabase</td>
+                </tr>
             </tbody>
         </table>
 
@@ -136,6 +148,11 @@ export const PrivacyPolicyContent: React.FC = () => (
             </li>
             <li>Stripe cookies are blocked in our implementation.</li>
             <li>No third-party analytics or advertising cookies are used.</li>
+            <li>
+                A first-visit date (date only, e.g. 2026-03-15) and marketing campaign name (if you
+                arrived via a campaign link) are stored in <code>localStorage</code> for anonymous
+                cohort analysis. These cannot identify you individually.
+            </li>
         </ul>
 
         <h2>7. Data Retention</h2>
@@ -147,7 +164,10 @@ export const PrivacyPolicyContent: React.FC = () => (
             <li>
                 <strong>Anonymous gameplay analytics:</strong> May be retained indefinitely. Because
                 the session IDs are tab-scoped and cleared on tab close, they cannot be linked to any
-                person and are not considered personal data under GDPR.
+                person and are not considered personal data under GDPR. Cohort data (first-visit date
+                and campaign identifier) follows the same retention policy — it is stored in browser
+                localStorage and cleared on account deletion; server-side it is retained indefinitely
+                as part of anonymous analytics.
             </li>
             <li>
                 <strong>Purchase records:</strong> We store purchase intent and entitlement status
