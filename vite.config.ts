@@ -23,6 +23,11 @@ export default defineConfig({
       jpeg: { quality: 80 },
       png: { quality: 80 },
       webp: { quality: 75 },
+      svg: {
+        plugins: [
+          { name: 'preset-default' },
+        ],
+      },
     }),
   ],
   customLogger: logger,
