@@ -11,12 +11,19 @@ export const HealthBar = ({ currentHealth, maxHealth, isMonster }: HealthBarProp
     const healthPercent = (currentHealth / maxHealth) * 100;
 
     return (
-        <div className="health-bar-container">
+        <div
+            className="health-bar-container"
+            role="progressbar"
+            aria-valuenow={currentHealth}
+            aria-valuemin={0}
+            aria-valuemax={maxHealth}
+            aria-label={`Health: ${currentHealth} of ${maxHealth}`}
+        >
             <div
                 className={`health-bar-fill ${isMonster ? 'monster' : 'player'}`}
                 style={{ width: `${healthPercent}%` }}
             />
-            <div className="health-text">
+            <div className="health-text" aria-hidden="true">
                 {currentHealth}
             </div>
         </div>

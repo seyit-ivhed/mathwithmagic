@@ -150,11 +150,11 @@ export const UnitCard = ({
                     ) : (companionData || isMonster) ? (
                         <div className="unit-stats-row">
                             <div className="unit-stat-item" aria-label={t('companions.stats.hp', 'HP')}>
-                                <Heart size={13} className="unit-stat-hp-icon" aria-hidden="true" />
+                                <Heart size={18} className="unit-stat-hp-icon" aria-hidden="true" />
                                 <span>{unit.maxHealth}</span>
                             </div>
                             <div className="unit-stat-item" aria-label={t('companions.stats.attack', 'Attack')}>
-                                <Sword size={13} className="unit-stat-atk-icon" aria-hidden="true" />
+                                <Sword size={20} className="unit-stat-atk-icon" aria-hidden="true" />
                                 <span>{unit.damage || 10}</span>
                             </div>
                         </div>
