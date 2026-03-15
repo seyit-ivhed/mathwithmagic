@@ -27,7 +27,7 @@ vi.mock('./supabase.service', () => ({
 
 // Mock mergeGameState
 vi.mock('../utils/merge-game-state', () => ({
-    mergeGameState: vi.fn((primary, _secondary) => ({ ...primary, merged: true })),
+    mergeGameState: vi.fn((primary) => ({ ...primary, merged: true })),
 }));
 
 // Mock DebouncedQueue to call processor synchronously
