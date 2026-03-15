@@ -2,6 +2,10 @@ import type { Stripe } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { supabase } from './supabase.service';
 
+export function formatDisplayPrice(amountCents: number, currency: string): string {
+    return `${amountCents / 100} ${currency}`;
+}
+
 /**
  * Service to handle Stripe payment interactions and Edge Function calls.
  */
@@ -43,7 +47,6 @@ export class PaymentService {
 
     /**
      * Fetch the current display price for a content pack directly from the database.
-     * Uses the publicly readable content_pack_prices table (no auth required).
      * @param contentPackId The ID of the content pack (e.g., 'premium_base')
      * @returns Formatted price string (e.g., '59 SEK') or null if not found.
      */
@@ -60,7 +63,7 @@ export class PaymentService {
             return null;
         }
 
-        return `${data.amount_cents / 100} ${data.currency}`;
+        return formatDisplayPrice(data.amount_cents, data.currency);
     }
 
     /**

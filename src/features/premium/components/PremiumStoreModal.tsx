@@ -36,6 +36,9 @@ export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, on
     const [priceLoading, setPriceLoading] = useState(true);
 
     useEffect(() => {
+        if (!isOpen) {
+            return;
+        }
         PaymentService.getContentPackPrice('premium_base')
             .then(price => {
                 setDisplayPrice(price);
@@ -45,7 +48,7 @@ export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, on
                 console.error('Failed to fetch content pack price:', err);
                 setPriceLoading(false);
             });
-    }, []);
+    }, [isOpen]);
 
     useEffect(() => {
         if (isOpen) {
